@@ -3,14 +3,15 @@
 //  OpenStreetPad
 //
 //  Created by Thomas Davie on 06/08/2011.
-//  Copyright 2011 In The Beginning... All rights reserved.
+//  Copyright 2011 Thomas Davie All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 
 #import "OSPMapArea.h"
 
-@interface OSPMapView : UIScrollView <UIScrollViewDelegate>
+@interface OSPMapView : UIView
 
 @property (readwrite, assign) OSPMapArea mapArea;
 

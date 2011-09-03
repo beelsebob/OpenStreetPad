@@ -3,7 +3,7 @@
 //  OpenStreetPad
 //
 //  Created by Thomas Davie on 06/08/2011.
-//  Copyright 2011 In The Beginning... All rights reserved.
+//  Copyright 2011 Thomas Davie All rights reserved.
 //
 
 #import "OSPMapView.h"
@@ -11,13 +11,17 @@
 #import "OSPMapServer.h"
 
 #import "OSPAPIObject.h"
-#import "OSPNode.h"
 #import "OSPWay.h"
+#import "OSPNode.h"
+
 #import "OSPMap.h"
+
 
 @interface OSPMapView () <OSPMapServerDelegate>
 
 @property (readwrite, strong) OSPMapServer *server;
+
+- (void)commonInit;
 
 - (void)renderWay:(OSPWay *)way inContext:(CGContextRef)ctx;
 
@@ -41,10 +45,8 @@
     {
         [self setServer:[OSPMapServer serverWithURL:[NSURL URLWithString:@"http://api.openstreetmap.org"]]];
         [self setMapArea:OSPMapAreaMake(OSPCoordinate2DMake(0.4908, 0.303), 16.0)];
-        [self setContentSize:CGSizeApplyAffineTransform([self bounds].size, CGAffineTransformMakeScale(2.0, 2.0))];
-        [self setDelegate:self];
-        [[self server] setDelegate:self];
-        [[self server] loadObjectsInBounds:OSPRectForMapAreaInRect([self mapArea], [self bounds])];
+        
+        [self commonInit];
     }
     
     return self;
@@ -58,27 +60,41 @@
     {
         [self setServer:[OSPMapServer serverWithURL:serverURL]];
         [self setMapArea:initMapArea];
-        [[self server] setDelegate:self];
-        [[self server] loadObjectsInBounds:OSPRectForMapAreaInRect([self mapArea], [self bounds])];
+        
+        [self commonInit];
     }
     
     return self;
 }
 
-- (void)drawRect:(CGRect)rect
+- (void)commonInit
 {
-    NSLog(@"%@", NSStringFromCGPoint([self contentOffset]));
+    [[self server] setDelegate:self];
+    [[self server] loadObjectsInBounds:OSPRectForMapAreaInRect([self mapArea], [self bounds])];
     
+    [[self layer] setDelegate:self];
+    [[self layer] setFrame:CGRectMake(-1024.0, -1024, 4096, 4096)];
+    
+}
+
++ (Class)layerClass
+{
+    return [CATiledLayer class];
+}
+
+- (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx
+{
     OSPCoordinateRect r = OSPRectForMapAreaInRect([self mapArea], [self bounds]);
     
     CGFloat scale = [self bounds].size.width / r.size.x;
     
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(ctx, [[UIColor whiteColor] CGColor]);
+    CGContextFillRect(ctx, [layer bounds]);
     
     CGContextScaleCTM(ctx, scale, scale);
     CGContextSetLineWidth(ctx, 2.0 / scale);
     CGContextTranslateCTM(ctx, -r.origin.x, -r.origin.y);
-        
+    
     NSSet *objects = [[self server] objectsInBounds:r];
     
     for (OSPAPIObject *object in objects)
@@ -114,12 +130,7 @@
 
 - (void)mapServerDidLoadObjects:(OSPMapServer *)mapServer
 {
-    [self setNeedsDisplay];
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    [self setNeedsDisplay];
+    [[self layer] setNeedsDisplay];
 }
 
 @end

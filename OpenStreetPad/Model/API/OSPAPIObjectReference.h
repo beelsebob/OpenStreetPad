@@ -3,7 +3,7 @@
 //  OpenStreetPad
 //
 //  Created by Thomas Davie on 29/08/2011.
-//  Copyright (c) 2011 In The Beginning... All rights reserved.
+//  Copyright (c) 2011 Thomas Davie All rights reserved.
 //
 
 #import "OSPAPIObject.h"
