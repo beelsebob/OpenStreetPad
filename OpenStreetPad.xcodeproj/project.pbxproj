@@ -7,30 +7,68 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F2C266A13F6DB7B00D3AE25 /* OSPCoordinateRect.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C266913F6DB7B00D3AE25 /* OSPCoordinateRect.m */; };
+		1F2C267213F6E41D00D3AE25 /* OSPMapArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C267113F6E41D00D3AE25 /* OSPMapArea.m */; };
+		1F2C267613F6FC2500D3AE25 /* OSPMaths.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C267513F6FC2500D3AE25 /* OSPMaths.m */; };
+		1F70747B13ED9DA00031BA84 /* OSPMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70747A13ED9DA00031BA84 /* OSPMap.m */; };
+		1F7074A713EEA4620031BA84 /* OSPMapServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7074A613EEA4610031BA84 /* OSPMapServer.m */; };
+		1FA7B5B9140BAE1B0015D400 /* OSPAPIObjectReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA7B5B8140BAE1B0015D400 /* OSPAPIObjectReference.m */; };
 		1FD8C52413ED378600ADD20A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD8C52313ED378600ADD20A /* UIKit.framework */; };
 		1FD8C52613ED378600ADD20A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD8C52513ED378600ADD20A /* Foundation.framework */; };
 		1FD8C52813ED378600ADD20A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD8C52713ED378600ADD20A /* CoreGraphics.framework */; };
 		1FD8C52E13ED378600ADD20A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1FD8C52C13ED378600ADD20A /* InfoPlist.strings */; };
 		1FD8C53013ED378600ADD20A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8C52F13ED378600ADD20A /* main.m */; };
-		1FD8C53413ED378600ADD20A /* OpenStreetPadAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8C53313ED378600ADD20A /* OpenStreetPadAppDelegate.m */; };
-		1FD8C53713ED378600ADD20A /* OpenStreetPadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8C53613ED378600ADD20A /* OpenStreetPadViewController.m */; };
-		1FD8C53A13ED378600ADD20A /* OpenStreetPadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FD8C53813ED378600ADD20A /* OpenStreetPadViewController.xib */; };
+		1FD8C53413ED378600ADD20A /* OSPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8C53313ED378600ADD20A /* OSPAppDelegate.m */; };
+		1FD8C53713ED378600ADD20A /* OSPMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8C53613ED378600ADD20A /* OSPMainViewController.m */; };
+		1FD8C53A13ED378600ADD20A /* OSPMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FD8C53813ED378600ADD20A /* OSPMainViewController.xib */; };
+		1FD8C54213ED384B00ADD20A /* OSPMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8C54113ED384B00ADD20A /* OSPMapView.m */; };
+		1FD8C55413ED39C800ADD20A /* OSPAPIObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8C55313ED39C800ADD20A /* OSPAPIObject.m */; };
+		1FD8C55713ED3AFF00ADD20A /* OSPNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8C55613ED3AFF00ADD20A /* OSPNode.m */; };
+		1FD8C55913ED3B3500ADD20A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD8C55813ED3B3500ADD20A /* CoreLocation.framework */; };
+		1FD8C55C13ED3B5E00ADD20A /* OSPWay.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8C55B13ED3B5E00ADD20A /* OSPWay.m */; };
+		1FD8C55F13ED3C2600ADD20A /* OSPRelation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8C55E13ED3C2600ADD20A /* OSPRelation.m */; };
+		1FD8C56613ED3D6700ADD20A /* OSPMember.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8C56513ED3D6700ADD20A /* OSPMember.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F2C266913F6DB7B00D3AE25 /* OSPCoordinateRect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPCoordinateRect.m; sourceTree = "<group>"; };
+		1F2C266B13F6DB8F00D3AE25 /* OSPCoordinateRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPCoordinateRect.h; sourceTree = "<group>"; };
+		1F2C267013F6E41D00D3AE25 /* OSPMapArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapArea.h; sourceTree = "<group>"; };
+		1F2C267113F6E41D00D3AE25 /* OSPMapArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapArea.m; sourceTree = "<group>"; };
+		1F2C267413F6FC2500D3AE25 /* OSPMaths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMaths.h; sourceTree = "<group>"; };
+		1F2C267513F6FC2500D3AE25 /* OSPMaths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMaths.m; sourceTree = "<group>"; };
+		1F70747913ED9DA00031BA84 /* OSPMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMap.h; sourceTree = "<group>"; };
+		1F70747A13ED9DA00031BA84 /* OSPMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMap.m; sourceTree = "<group>"; };
+		1F7074A513EEA4610031BA84 /* OSPMapServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapServer.h; sourceTree = "<group>"; };
+		1F7074A613EEA4610031BA84 /* OSPMapServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapServer.m; sourceTree = "<group>"; };
+		1FA7B5B7140BAE1B0015D400 /* OSPAPIObjectReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPAPIObjectReference.h; sourceTree = "<group>"; };
+		1FA7B5B8140BAE1B0015D400 /* OSPAPIObjectReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPAPIObjectReference.m; sourceTree = "<group>"; };
 		1FD8C51F13ED378500ADD20A /* OpenStreetPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenStreetPad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FD8C52313ED378600ADD20A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1FD8C52513ED378600ADD20A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1FD8C52713ED378600ADD20A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		1FD8C52B13ED378600ADD20A /* OpenStreetPad-Info.plist */ = {isa = PBXFileReference; path = "OpenStreetPad-Info.plist"; sourceTree = "<group>"; };
+		1FD8C52B13ED378600ADD20A /* OpenStreetPad-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OpenStreetPad-Info.plist"; sourceTree = "<group>"; };
 		1FD8C52D13ED378600ADD20A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1FD8C52F13ED378600ADD20A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		1FD8C53113ED378600ADD20A /* OpenStreetPad-Prefix.pch */ = {isa = PBXFileReference; path = "OpenStreetPad-Prefix.pch"; sourceTree = "<group>"; };
-		1FD8C53213ED378600ADD20A /* OpenStreetPadAppDelegate.h */ = {isa = PBXFileReference; path = OpenStreetPadAppDelegate.h; sourceTree = "<group>"; };
-		1FD8C53313ED378600ADD20A /* OpenStreetPadAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenStreetPadAppDelegate.m; sourceTree = "<group>"; };
-		1FD8C53513ED378600ADD20A /* OpenStreetPadViewController.h */ = {isa = PBXFileReference; path = OpenStreetPadViewController.h; sourceTree = "<group>"; };
-		1FD8C53613ED378600ADD20A /* OpenStreetPadViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenStreetPadViewController.m; sourceTree = "<group>"; };
-		1FD8C53913ED378600ADD20A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/OpenStreetPadViewController.xib; sourceTree = "<group>"; };
+		1FD8C53113ED378600ADD20A /* OpenStreetPad-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OpenStreetPad-Prefix.pch"; sourceTree = "<group>"; };
+		1FD8C53213ED378600ADD20A /* OSPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSPAppDelegate.h; sourceTree = "<group>"; };
+		1FD8C53313ED378600ADD20A /* OSPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSPAppDelegate.m; sourceTree = "<group>"; };
+		1FD8C53513ED378600ADD20A /* OSPMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSPMainViewController.h; sourceTree = "<group>"; };
+		1FD8C53613ED378600ADD20A /* OSPMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSPMainViewController.m; sourceTree = "<group>"; };
+		1FD8C53913ED378600ADD20A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/OSPMainViewController.xib; sourceTree = "<group>"; };
+		1FD8C54013ED384B00ADD20A /* OSPMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapView.h; sourceTree = "<group>"; };
+		1FD8C54113ED384B00ADD20A /* OSPMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapView.m; sourceTree = "<group>"; };
+		1FD8C55213ED39C800ADD20A /* OSPAPIObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPAPIObject.h; sourceTree = "<group>"; };
+		1FD8C55313ED39C800ADD20A /* OSPAPIObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPAPIObject.m; sourceTree = "<group>"; };
+		1FD8C55513ED3AFF00ADD20A /* OSPNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPNode.h; sourceTree = "<group>"; };
+		1FD8C55613ED3AFF00ADD20A /* OSPNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPNode.m; sourceTree = "<group>"; };
+		1FD8C55813ED3B3500ADD20A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		1FD8C55A13ED3B5E00ADD20A /* OSPWay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPWay.h; sourceTree = "<group>"; };
+		1FD8C55B13ED3B5E00ADD20A /* OSPWay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPWay.m; sourceTree = "<group>"; };
+		1FD8C55D13ED3C2600ADD20A /* OSPRelation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPRelation.h; sourceTree = "<group>"; };
+		1FD8C55E13ED3C2600ADD20A /* OSPRelation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPRelation.m; sourceTree = "<group>"; };
+		1FD8C56413ED3D6700ADD20A /* OSPMember.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMember.h; sourceTree = "<group>"; };
+		1FD8C56513ED3D6700ADD20A /* OSPMember.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMember.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FD8C55913ED3B3500ADD20A /* CoreLocation.framework in Frameworks */,
 				1FD8C52413ED378600ADD20A /* UIKit.framework in Frameworks */,
 				1FD8C52613ED378600ADD20A /* Foundation.framework in Frameworks */,
 				1FD8C52813ED378600ADD20A /* CoreGraphics.framework in Frameworks */,
@@ -67,6 +106,7 @@
 		1FD8C52213ED378600ADD20A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1FD8C55813ED3B3500ADD20A /* CoreLocation.framework */,
 				1FD8C52313ED378600ADD20A /* UIKit.framework */,
 				1FD8C52513ED378600ADD20A /* Foundation.framework */,
 				1FD8C52713ED378600ADD20A /* CoreGraphics.framework */,
@@ -77,11 +117,16 @@
 		1FD8C52913ED378600ADD20A /* OpenStreetPad */ = {
 			isa = PBXGroup;
 			children = (
-				1FD8C53213ED378600ADD20A /* OpenStreetPadAppDelegate.h */,
-				1FD8C53313ED378600ADD20A /* OpenStreetPadAppDelegate.m */,
-				1FD8C53513ED378600ADD20A /* OpenStreetPadViewController.h */,
-				1FD8C53613ED378600ADD20A /* OpenStreetPadViewController.m */,
-				1FD8C53813ED378600ADD20A /* OpenStreetPadViewController.xib */,
+				1FD8C55013ED395800ADD20A /* Model */,
+				1FD8C53213ED378600ADD20A /* OSPAppDelegate.h */,
+				1FD8C53313ED378600ADD20A /* OSPAppDelegate.m */,
+				1FD8C53513ED378600ADD20A /* OSPMainViewController.h */,
+				1FD8C53613ED378600ADD20A /* OSPMainViewController.m */,
+				1FD8C54013ED384B00ADD20A /* OSPMapView.h */,
+				1FD8C54113ED384B00ADD20A /* OSPMapView.m */,
+				1F7074A513EEA4610031BA84 /* OSPMapServer.h */,
+				1F7074A613EEA4610031BA84 /* OSPMapServer.m */,
+				1FD8C53813ED378600ADD20A /* OSPMainViewController.xib */,
 				1FD8C52A13ED378600ADD20A /* Supporting Files */,
 			);
 			path = OpenStreetPad;
@@ -96,6 +141,41 @@
 				1FD8C53113ED378600ADD20A /* OpenStreetPad-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1FD8C55013ED395800ADD20A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1FD8C55113ED399400ADD20A /* API */,
+				1F70747913ED9DA00031BA84 /* OSPMap.h */,
+				1F70747A13ED9DA00031BA84 /* OSPMap.m */,
+				1F2C266B13F6DB8F00D3AE25 /* OSPCoordinateRect.h */,
+				1F2C266913F6DB7B00D3AE25 /* OSPCoordinateRect.m */,
+				1F2C267013F6E41D00D3AE25 /* OSPMapArea.h */,
+				1F2C267113F6E41D00D3AE25 /* OSPMapArea.m */,
+				1F2C267413F6FC2500D3AE25 /* OSPMaths.h */,
+				1F2C267513F6FC2500D3AE25 /* OSPMaths.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		1FD8C55113ED399400ADD20A /* API */ = {
+			isa = PBXGroup;
+			children = (
+				1FD8C55213ED39C800ADD20A /* OSPAPIObject.h */,
+				1FD8C55313ED39C800ADD20A /* OSPAPIObject.m */,
+				1FA7B5B7140BAE1B0015D400 /* OSPAPIObjectReference.h */,
+				1FA7B5B8140BAE1B0015D400 /* OSPAPIObjectReference.m */,
+				1FD8C55513ED3AFF00ADD20A /* OSPNode.h */,
+				1FD8C55613ED3AFF00ADD20A /* OSPNode.m */,
+				1FD8C55A13ED3B5E00ADD20A /* OSPWay.h */,
+				1FD8C55B13ED3B5E00ADD20A /* OSPWay.m */,
+				1FD8C55D13ED3C2600ADD20A /* OSPRelation.h */,
+				1FD8C55E13ED3C2600ADD20A /* OSPRelation.m */,
+				1FD8C56413ED3D6700ADD20A /* OSPMember.h */,
+				1FD8C56513ED3D6700ADD20A /* OSPMember.m */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,7 +204,8 @@
 		1FD8C51613ED378500ADD20A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				ORGANIZATIONNAME = "Hunted Cow Studios";
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "In The Beginning...";
 			};
 			buildConfigurationList = 1FD8C51913ED378500ADD20A /* Build configuration list for PBXProject "OpenStreetPad" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -149,7 +230,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FD8C52E13ED378600ADD20A /* InfoPlist.strings in Resources */,
-				1FD8C53A13ED378600ADD20A /* OpenStreetPadViewController.xib in Resources */,
+				1FD8C53A13ED378600ADD20A /* OSPMainViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,8 +242,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FD8C53013ED378600ADD20A /* main.m in Sources */,
-				1FD8C53413ED378600ADD20A /* OpenStreetPadAppDelegate.m in Sources */,
-				1FD8C53713ED378600ADD20A /* OpenStreetPadViewController.m in Sources */,
+				1FD8C53413ED378600ADD20A /* OSPAppDelegate.m in Sources */,
+				1FD8C53713ED378600ADD20A /* OSPMainViewController.m in Sources */,
+				1FD8C54213ED384B00ADD20A /* OSPMapView.m in Sources */,
+				1FD8C55413ED39C800ADD20A /* OSPAPIObject.m in Sources */,
+				1FD8C55713ED3AFF00ADD20A /* OSPNode.m in Sources */,
+				1FD8C55C13ED3B5E00ADD20A /* OSPWay.m in Sources */,
+				1FD8C55F13ED3C2600ADD20A /* OSPRelation.m in Sources */,
+				1FD8C56613ED3D6700ADD20A /* OSPMember.m in Sources */,
+				1F70747B13ED9DA00031BA84 /* OSPMap.m in Sources */,
+				1F7074A713EEA4620031BA84 /* OSPMapServer.m in Sources */,
+				1F2C266A13F6DB7B00D3AE25 /* OSPCoordinateRect.m in Sources */,
+				1F2C267213F6E41D00D3AE25 /* OSPMapArea.m in Sources */,
+				1F2C267613F6FC2500D3AE25 /* OSPMaths.m in Sources */,
+				1FA7B5B9140BAE1B0015D400 /* OSPAPIObjectReference.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,12 +270,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		1FD8C53813ED378600ADD20A /* OpenStreetPadViewController.xib */ = {
+		1FD8C53813ED378600ADD20A /* OSPMainViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				1FD8C53913ED378600ADD20A /* en */,
 			);
-			name = OpenStreetPadViewController.xib;
+			name = OSPMainViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -276,6 +369,7 @@
 				1FD8C53F13ED378600ADD20A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
