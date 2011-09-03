@@ -3,7 +3,7 @@
 //  OpenStreetPad
 //
 //  Created by Thomas Davie on 06/08/2011.
-//  Copyright 2011 In The Beginning... All rights reserved.
+//  Copyright 2011 Thomas Davie All rights reserved.
 //
 
 #import "OSPMap.h"
@@ -28,6 +28,8 @@ typedef enum
 
 @property (readwrite, strong) CFMutableSetRef __attribute__((NSObject)) completeContents;
 @property (readwrite, strong) CFMutableSetRef __attribute__((NSObject)) contents;
+
+@property (readwrite, strong) NSLock *readLock;
 
 - (id)initWithBounds:(OSPCoordinateRect)initBounds;
 
@@ -59,6 +61,8 @@ Boolean APIObjectEqual (const void *value1, const void *value2)
 
 @synthesize completeContents;
 @synthesize contents;
+
+@synthesize readLock;
 
 - (id)init
 {
@@ -122,7 +126,9 @@ Boolean APIObjectEqual (const void *value1, const void *value2)
     }
     else
     {
+        [[self readLock] lock];
         CFSetAddValue([self contents], (__bridge const void *)apiObject);
+        [[self readLock] unlock];
     }
 }
 
@@ -147,7 +153,9 @@ Boolean APIObjectEqual (const void *value1, const void *value2)
     }
     else
     {
+        [[self readLock] lock];
         CFSetAddValue([self contents], (__bridge const void *) apiObject);
+        [[self readLock] unlock];
     }
 }
 
@@ -194,6 +202,7 @@ Boolean APIObjectEqual (const void *value1, const void *value2)
         callbacks.equal = APIObjectEqual;
         CFMutableSetRef objects = CFSetCreateMutable(NULL, 0, &callbacks);
         
+        [[self readLock] lock];
         for (OSPAPIObject *object in (__bridge NSSet *)[self contents])
         {
             if (OSPCoordinateRectIntersectsRect([object bounds], searchBounds))
@@ -201,6 +210,7 @@ Boolean APIObjectEqual (const void *value1, const void *value2)
                 CFSetAddValue(objects, (__bridge const void *)object);
             }
         }
+        [[self readLock] unlock];
 
         if ([self hasChildMaps])
         {
@@ -224,6 +234,7 @@ Boolean APIObjectEqual (const void *value1, const void *value2)
 {
     if (OSPCoordinateRectIntersectsRect([self bounds], searchBounds))
     {
+        [[self readLock] lock];
         for (OSPAPIObject *object in (__bridge NSSet *)[self contents])
         {
             if (OSPCoordinateRectIntersectsRect([object bounds], searchBounds))
@@ -231,6 +242,7 @@ Boolean APIObjectEqual (const void *value1, const void *value2)
                 CFSetAddValue(set, (__bridge const void *)object);
             }
         }
+        [[self readLock] unlock];
         
         if ([self hasChildMaps])
         {

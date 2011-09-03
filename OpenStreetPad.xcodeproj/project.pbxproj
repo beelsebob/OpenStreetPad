@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F0007D11412662900220FAA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F0007D01412662900220FAA /* QuartzCore.framework */; };
 		1F2C266A13F6DB7B00D3AE25 /* OSPCoordinateRect.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C266913F6DB7B00D3AE25 /* OSPCoordinateRect.m */; };
 		1F2C267213F6E41D00D3AE25 /* OSPMapArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C267113F6E41D00D3AE25 /* OSPMapArea.m */; };
 		1F2C267613F6FC2500D3AE25 /* OSPMaths.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C267513F6FC2500D3AE25 /* OSPMaths.m */; };
@@ -31,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F0007D01412662900220FAA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		1F2C266913F6DB7B00D3AE25 /* OSPCoordinateRect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPCoordinateRect.m; sourceTree = "<group>"; };
 		1F2C266B13F6DB8F00D3AE25 /* OSPCoordinateRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPCoordinateRect.h; sourceTree = "<group>"; };
 		1F2C267013F6E41D00D3AE25 /* OSPMapArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapArea.h; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F0007D11412662900220FAA /* QuartzCore.framework in Frameworks */,
 				1FD8C55913ED3B3500ADD20A /* CoreLocation.framework in Frameworks */,
 				1FD8C52413ED378600ADD20A /* UIKit.framework in Frameworks */,
 				1FD8C52613ED378600ADD20A /* Foundation.framework in Frameworks */,
@@ -89,6 +92,7 @@
 		1FD8C51413ED378500ADD20A = {
 			isa = PBXGroup;
 			children = (
+				1F0007D01412662900220FAA /* QuartzCore.framework */,
 				1FD8C52913ED378600ADD20A /* OpenStreetPad */,
 				1FD8C52213ED378600ADD20A /* Frameworks */,
 				1FD8C52013ED378500ADD20A /* Products */,
@@ -205,7 +209,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0420;
-				ORGANIZATIONNAME = "In The Beginning...";
+				ORGANIZATIONNAME = "Thomas Davie";
 			};
 			buildConfigurationList = 1FD8C51913ED378500ADD20A /* Build configuration list for PBXProject "OpenStreetPad" */;
 			compatibilityVersion = "Xcode 3.2";
