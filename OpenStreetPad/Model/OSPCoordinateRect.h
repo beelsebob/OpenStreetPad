@@ -38,8 +38,16 @@ double OSPCoordinateRectGetMaxLatitude(OSPCoordinateRect r);
 double OSPCoordinateRectGetWidth(OSPCoordinateRect r);
 double OSPCoordinateRectGetHeight(OSPCoordinateRect r);
 
+double OSPCoordinateRectArea(OSPCoordinateRect r);
+
 OSPCoordinate2D OSPCoordinateRectGetMinCoord(OSPCoordinateRect r);
 OSPCoordinate2D OSPCoordinateRectGetMaxCoord(OSPCoordinateRect r);
 
 BOOL OSPCoordinateRectContainsRect(OSPCoordinateRect a, OSPCoordinateRect b);
 BOOL OSPCoordinateRectIntersectsRect(OSPCoordinateRect a, OSPCoordinateRect b);
+
+OSPCoordinateRect OSPCoordinateRectOutset(OSPCoordinateRect r, double xOutset, double yOutset);
+
+NSArray *OSPCoordinateRectSubtract(OSPCoordinateRect a, OSPCoordinateRect b);
+
+NSString *NSStringFromOSPCoordinateRect(OSPCoordinateRect r);

@@ -79,8 +79,7 @@
 
 - (BOOL)isEqualToAPIObject:(OSPAPIObject *)object
 {
-    OSPAPIObject *o = (OSPAPIObject *)object;
-    return [self identity] == [o identity] && [o memberType] == [self memberType];
+    return [self identity] == [object identity] && [object memberType] == [self memberType];
 }
 
 - (NSUInteger)hash

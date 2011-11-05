@@ -11,6 +11,9 @@
 		1F2C266A13F6DB7B00D3AE25 /* OSPCoordinateRect.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C266913F6DB7B00D3AE25 /* OSPCoordinateRect.m */; };
 		1F2C267213F6E41D00D3AE25 /* OSPMapArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C267113F6E41D00D3AE25 /* OSPMapArea.m */; };
 		1F2C267613F6FC2500D3AE25 /* OSPMaths.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C267513F6FC2500D3AE25 /* OSPMaths.m */; };
+		1F5CF1B514139FEA0032C761 /* OSPMetaTileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CF1B414139FEA0032C761 /* OSPMetaTileView.m */; };
+		1F5CF1B81413BA850032C761 /* OSPNonRectangularArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CF1B71413BA850032C761 /* OSPNonRectangularArea.m */; };
+		1F5CF1BB1413BB420032C761 /* OSPValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CF1BA1413BB420032C761 /* OSPValue.m */; };
 		1F70747B13ED9DA00031BA84 /* OSPMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70747A13ED9DA00031BA84 /* OSPMap.m */; };
 		1F7074A713EEA4620031BA84 /* OSPMapServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7074A613EEA4610031BA84 /* OSPMapServer.m */; };
 		1FA7B5B9140BAE1B0015D400 /* OSPAPIObjectReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA7B5B8140BAE1B0015D400 /* OSPAPIObjectReference.m */; };
@@ -39,6 +42,12 @@
 		1F2C267113F6E41D00D3AE25 /* OSPMapArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapArea.m; sourceTree = "<group>"; };
 		1F2C267413F6FC2500D3AE25 /* OSPMaths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMaths.h; sourceTree = "<group>"; };
 		1F2C267513F6FC2500D3AE25 /* OSPMaths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMaths.m; sourceTree = "<group>"; };
+		1F5CF1B314139FEA0032C761 /* OSPMetaTileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMetaTileView.h; sourceTree = "<group>"; };
+		1F5CF1B414139FEA0032C761 /* OSPMetaTileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMetaTileView.m; sourceTree = "<group>"; };
+		1F5CF1B61413BA850032C761 /* OSPNonRectangularArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPNonRectangularArea.h; sourceTree = "<group>"; };
+		1F5CF1B71413BA850032C761 /* OSPNonRectangularArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPNonRectangularArea.m; sourceTree = "<group>"; };
+		1F5CF1B91413BB420032C761 /* OSPValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPValue.h; sourceTree = "<group>"; };
+		1F5CF1BA1413BB420032C761 /* OSPValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPValue.m; sourceTree = "<group>"; };
 		1F70747913ED9DA00031BA84 /* OSPMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMap.h; sourceTree = "<group>"; };
 		1F70747A13ED9DA00031BA84 /* OSPMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMap.m; sourceTree = "<group>"; };
 		1F7074A513EEA4610031BA84 /* OSPMapServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapServer.h; sourceTree = "<group>"; };
@@ -92,7 +101,6 @@
 		1FD8C51413ED378500ADD20A = {
 			isa = PBXGroup;
 			children = (
-				1F0007D01412662900220FAA /* QuartzCore.framework */,
 				1FD8C52913ED378600ADD20A /* OpenStreetPad */,
 				1FD8C52213ED378600ADD20A /* Frameworks */,
 				1FD8C52013ED378500ADD20A /* Products */,
@@ -110,6 +118,7 @@
 		1FD8C52213ED378600ADD20A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1F0007D01412662900220FAA /* QuartzCore.framework */,
 				1FD8C55813ED3B3500ADD20A /* CoreLocation.framework */,
 				1FD8C52313ED378600ADD20A /* UIKit.framework */,
 				1FD8C52513ED378600ADD20A /* Foundation.framework */,
@@ -128,6 +137,8 @@
 				1FD8C53613ED378600ADD20A /* OSPMainViewController.m */,
 				1FD8C54013ED384B00ADD20A /* OSPMapView.h */,
 				1FD8C54113ED384B00ADD20A /* OSPMapView.m */,
+				1F5CF1B314139FEA0032C761 /* OSPMetaTileView.h */,
+				1F5CF1B414139FEA0032C761 /* OSPMetaTileView.m */,
 				1F7074A513EEA4610031BA84 /* OSPMapServer.h */,
 				1F7074A613EEA4610031BA84 /* OSPMapServer.m */,
 				1FD8C53813ED378600ADD20A /* OSPMainViewController.xib */,
@@ -159,6 +170,10 @@
 				1F2C267113F6E41D00D3AE25 /* OSPMapArea.m */,
 				1F2C267413F6FC2500D3AE25 /* OSPMaths.h */,
 				1F2C267513F6FC2500D3AE25 /* OSPMaths.m */,
+				1F5CF1B61413BA850032C761 /* OSPNonRectangularArea.h */,
+				1F5CF1B71413BA850032C761 /* OSPNonRectangularArea.m */,
+				1F5CF1B91413BB420032C761 /* OSPValue.h */,
+				1F5CF1BA1413BB420032C761 /* OSPValue.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -260,6 +275,9 @@
 				1F2C267213F6E41D00D3AE25 /* OSPMapArea.m in Sources */,
 				1F2C267613F6FC2500D3AE25 /* OSPMaths.m in Sources */,
 				1FA7B5B9140BAE1B0015D400 /* OSPAPIObjectReference.m in Sources */,
+				1F5CF1B514139FEA0032C761 /* OSPMetaTileView.m in Sources */,
+				1F5CF1B81413BA850032C761 /* OSPNonRectangularArea.m in Sources */,
+				1F5CF1BB1413BB420032C761 /* OSPValue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

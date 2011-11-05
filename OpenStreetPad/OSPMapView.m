@@ -16,14 +16,16 @@
 
 #import "OSPMap.h"
 
-
 @interface OSPMapView () <OSPMapServerDelegate>
 
 @property (readwrite, strong) OSPMapServer *server;
 
+@property (readwrite, strong) OSPMetaTileView *metaView;
+@property (readwrite, assign) OSPCoordinate2D startPoint;
+
 - (void)commonInit;
 
-- (void)renderWay:(OSPWay *)way inContext:(CGContextRef)ctx;
+- (IBAction)pan:(id)sender;
 
 @end
 
@@ -31,6 +33,8 @@
 
 @synthesize server;
 @synthesize mapArea;
+@synthesize metaView;
+@synthesize startPoint;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -44,7 +48,7 @@
     if (nil != self)
     {
         [self setServer:[OSPMapServer serverWithURL:[NSURL URLWithString:@"http://api.openstreetmap.org"]]];
-        [self setMapArea:OSPMapAreaMake(OSPCoordinate2DMake(0.4908, 0.303), 16.0)];
+        [self setMapArea:OSPMapAreaMake(OSPCoordinate2DMake(0.4908, 0.303), 17.0)];
         
         [self commonInit];
     }
@@ -70,67 +74,42 @@
 - (void)commonInit
 {
     [[self server] setDelegate:self];
-    [[self server] loadObjectsInBounds:OSPRectForMapAreaInRect([self mapArea], [self bounds])];
+    double outsetSize = 1.0 / pow(2.0, [self mapArea].zoomLevel + 1.0);
+    [[self server] loadObjectsInBounds:OSPRectForMapAreaInRect([self mapArea], [self bounds]) withOutset:outsetSize];
     
-    [[self layer] setDelegate:self];
-    [[self layer] setFrame:CGRectMake(-1024.0, -1024, 4096, 4096)];
+    [self setClipsToBounds:YES];
     
+    [self setMetaView:[[OSPMetaTileView alloc] initWithFrame:CGRectMake(-1664.0, -1568.0, 4096.0, 4096.0)]];
+    [[self metaView] setMapArea:[self mapArea]];
+    [[self metaView] setServer:[self server]];
+    [self addSubview:[self metaView]];
+    
+    UIPanGestureRecognizer *gestureRecogniser = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
+    [gestureRecogniser setMaximumNumberOfTouches:1];
+    [gestureRecogniser setMinimumNumberOfTouches:1];
+    [self addGestureRecognizer:gestureRecogniser];
 }
 
-+ (Class)layerClass
+- (void)mapServer:(OSPMapServer *)mapServer didLoadObjectsInArea:(OSPCoordinateRect)area
 {
-    return [CATiledLayer class];
+    [[self metaView] setNeedsDisplayInMapArea:area];
 }
 
-- (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    OSPCoordinateRect r = OSPRectForMapAreaInRect([self mapArea], [self bounds]);
-    
-    CGFloat scale = [self bounds].size.width / r.size.x;
-    
-    CGContextSetFillColorWithColor(ctx, [[UIColor whiteColor] CGColor]);
-    CGContextFillRect(ctx, [layer bounds]);
-    
-    CGContextScaleCTM(ctx, scale, scale);
-    CGContextSetLineWidth(ctx, 2.0 / scale);
-    CGContextTranslateCTM(ctx, -r.origin.x, -r.origin.y);
-    
-    NSSet *objects = [[self server] objectsInBounds:r];
-    
-    for (OSPAPIObject *object in objects)
-    {
-        if ([object isKindOfClass:[OSPWay class]])
-        {
-            [self renderWay:(OSPWay *)object inContext:ctx];
-        }
-    }
+    [self setStartPoint:[self mapArea].centre];
 }
 
-- (void)renderWay:(OSPWay *)way inContext:(CGContextRef)ctx
+- (IBAction)pan:(UIPanGestureRecognizer *)sender
 {
-    NSArray *nodes = [way nodes];
-    if ([nodes count] > 1)
-    {
-        OSPMap *m = [way map];
-        NSNumber *firstNodeId = [nodes objectAtIndex:0];
-        OSPNode *firstNode = [m nodeWithId:[firstNodeId integerValue]];
-        OSPCoordinate2D l = [firstNode projectedLocation];
-        
-        CGContextBeginPath(ctx);
-        CGContextMoveToPoint(ctx, l.x, l.y);
-        for (NSNumber *nodeId in [nodes subarrayWithRange:NSMakeRange(1, [nodes count] - 1)])
-        {
-            OSPNode *node = [m nodeWithId:[nodeId integerValue]];
-            OSPCoordinate2D nl = [node projectedLocation];
-            CGContextAddLineToPoint(ctx, nl.x, nl.y);
-        }
-        CGContextStrokePath(ctx);
-    }
-}
-
-- (void)mapServerDidLoadObjects:(OSPMapServer *)mapServer
-{
-    [[self layer] setNeedsDisplay];
+    CGPoint t = [sender translationInView:self];
+    double invPixelSize = pow(2.0, [self mapArea].zoomLevel + 8.0);
+    double pixelSize = 1.0 / invPixelSize;
+    OSPCoordinate2D newC = OSPCoordinate2DMake([self startPoint].x - t.x * pixelSize, [self startPoint].y - t.y * pixelSize);
+    [self setMapArea:OSPMapAreaMake(newC, [self mapArea].zoomLevel)];
+    [[self server] loadObjectsInBounds:OSPRectForMapAreaInRect([self mapArea], [self bounds]) withOutset:128.0 * pixelSize];
+    OSPCoordinate2D c = [[self metaView] mapArea].centre;
+    [[self metaView] setCenter:CGPointMake((c.x - newC.x) * invPixelSize + [self center].x, (c.y - newC.y) * invPixelSize + [self center].y)];
 }
 
 @end

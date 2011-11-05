@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "OSPMapArea.h"
+#import "OSPMetaTileView.h"
 
 @interface OSPMapView : UIView
 
