@@ -84,4 +84,14 @@
     return OSPMemberTypeWay;
 }
 
+- (NSSet *)childObjects
+{
+    NSMutableSet *childNodes = [NSMutableSet setWithCapacity:[[self nodes] count]];
+    for (NSNumber *childId in [self nodes])
+    {
+        [childNodes addObject:[[self map] nodeWithId:[childId integerValue]]];
+    }
+    return childNodes;
+}
+
 @end

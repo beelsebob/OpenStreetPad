@@ -41,8 +41,8 @@ typedef enum
 @property (readwrite, strong) NSMutableData *data;
 @property (readwrite, weak  ) id<OSPConnectionDelegate> delegate;
 
-@property (readwrite, strong) OSPWay *currentWay;
-@property (readwrite, strong) OSPRelation *currentRelation;
+@property (readwrite, strong) NSMutableDictionary *currentObjectTags;
+@property (readwrite, strong) OSPAPIObject *currentObject;
 
 - (void)attemptToWriteToStream;
 
@@ -61,8 +61,8 @@ typedef enum
 @synthesize data;
 @synthesize delegate;
 
-@synthesize currentWay;
-@synthesize currentRelation;
+@synthesize currentObject;
+@synthesize currentObjectTags;
 
 - (id)init
 {
@@ -126,36 +126,47 @@ typedef enum
 {
     @autoreleasepool
     {
-        if ([elementName isEqualToString:@"node"])
+        if ([elementName isEqualToString:@"tag"])
+        {
+            [[self currentObjectTags] setObject:[attributeDict objectForKey:@"v"] forKey:[attributeDict objectForKey:@"k"]];
+        }
+        else if ([elementName isEqualToString:@"node"])
         {
             OSPNode *node = [[OSPNode alloc] init];
             
+            [self setCurrentObject:node];
+            [self setCurrentObjectTags:[NSMutableDictionary dictionary]];
             [self setupAPIObject:node withAttributes:attributeDict];
             [node setLocation:CLLocationCoordinate2DMake([[attributeDict objectForKey:@"lat"] doubleValue], [[attributeDict objectForKey:@"lon"] doubleValue])];
-            
-            [[self delegate] connection:self didReceiveAPIObject:node];
+        }
+        else if ([elementName isEqualToString:@"nd"])
+        {
+            [(OSPWay *)[self currentObject] addNodeWithId:[[attributeDict objectForKey:@"ref"] integerValue]];
         }
         else if ([elementName isEqualToString:@"way"])
         {
-            [self setCurrentWay:[[OSPWay alloc] init]];
+            [self setCurrentObject:[[OSPWay alloc] init]];
+            [self setCurrentObjectTags:[NSMutableDictionary dictionary]];
             
-            [self setupAPIObject:[self currentWay] withAttributes:attributeDict];
-        }
-        else if (nil != [self currentWay] && [elementName isEqualToString:@"nd"])
-        {
-            [[self currentWay] addNodeWithId:[[attributeDict objectForKey:@"ref"] integerValue]];
+            [self setupAPIObject:[self currentObject] withAttributes:attributeDict];
         }
         else if ([elementName isEqualToString:@"relation"])
         {
-            [self setCurrentRelation:[[OSPRelation alloc] init]];
+            OSPRelation *rel = [[OSPRelation alloc] init];
+            [self setCurrentObject:rel];
+            [self setCurrentObjectTags:[NSMutableDictionary dictionary]];
             
-            [self setupAPIObject:[self currentRelation] withAttributes:attributeDict];
+            [self setupAPIObject:rel withAttributes:attributeDict];
         }
-        else if (nil != [self currentRelation] && [elementName isEqualToString:@"member"])
+        else if ([elementName isEqualToString:@"member"])
         {
             NSString *typeString = [attributeDict objectForKey:@"type"];
             OSPMemberType t = [typeString isEqualToString:@"node"] ? OSPMemberTypeNode : [typeString isEqualToString:@"way"] ? OSPMemberTypeWay : OSPMemberTypeRelation;
-            [[self currentRelation] addMember:[OSPMember memberWithType:t referencedObjectId:[[attributeDict objectForKey:@"ref"] integerValue] role:[attributeDict objectForKey:@"role"]]];
+            [(OSPRelation *)[self currentObject] addMember:[OSPMember memberWithType:t referencedObjectId:[[attributeDict objectForKey:@"ref"] integerValue] role:[attributeDict objectForKey:@"role"]]];
+        }
+        else
+        {
+            NSLog(@"Element name: %@", elementName);
         }
     }
 }
@@ -164,15 +175,11 @@ typedef enum
 {
     @autoreleasepool
     {
-        if (nil != [self currentWay] && [elementName isEqualToString:@"way"])
+        if (nil != [self currentObject] && ([elementName isEqualToString:@"node"] || [elementName isEqualToString:@"way"] || [elementName isEqualToString:@"relation"]))
         {
-            [[self delegate] connection:self didReceiveAPIObject:[self currentWay]];
-            [self setCurrentWay:nil];
-        }
-        else if (nil != [self currentRelation] && [elementName isEqualToString:@"relation"])
-        {
-            [[self delegate] connection:self didReceiveAPIObject:[self currentRelation]];
-            [self setCurrentRelation:nil];
+            [[self currentObject] setTags:[self currentObjectTags]];
+            [[self delegate] connection:self didReceiveAPIObject:[self currentObject]];
+            [self setCurrentObject:nil];
         }
     }
 }

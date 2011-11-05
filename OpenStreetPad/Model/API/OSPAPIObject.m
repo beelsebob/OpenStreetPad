@@ -88,4 +88,9 @@
     return [self identity] << 2 + [self memberType];
 }
 
+- (NSSet *)childObjects
+{
+    return [NSSet set];
+}
+
 @end

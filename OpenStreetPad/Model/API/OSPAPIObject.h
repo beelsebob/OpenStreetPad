@@ -41,4 +41,6 @@ typedef enum
 
 - (BOOL)isEqualToAPIObject:(OSPAPIObject *)object;
 
+- (NSSet *)childObjects;
+
 @end

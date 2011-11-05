@@ -8,11 +8,40 @@
 
 /* Begin PBXBuildFile section */
 		1F0007D11412662900220FAA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F0007D01412662900220FAA /* QuartzCore.framework */; };
+		1F08A1E6145F450A007F6C19 /* ColourSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A1E5145F450A007F6C19 /* ColourSpecifier.m */; };
+		1F08A1EA145F4560007F6C19 /* URLSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A1E9145F4560007F6C19 /* URLSpecifier.m */; };
+		1F08A1ED145F45A1007F6C19 /* EvalSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A1EC145F45A1007F6C19 /* EvalSpecifier.m */; };
+		1F08A1F0145F467A007F6C19 /* Key.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A1EF145F467A007F6C19 /* Key.m */; };
+		1F08A1F3145F46FC007F6C19 /* OSPMapCSSStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A1F2145F46FB007F6C19 /* OSPMapCSSStyle.m */; };
+		1F08A1F6145F49DC007F6C19 /* Declaration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A1F5145F49DC007F6C19 /* Declaration.m */; };
+		1F08A1F9145F4C4A007F6C19 /* OSPMapCSSObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A1F8145F4C4A007F6C19 /* OSPMapCSSObject.m */; };
+		1F08A1FC145F4F79007F6C19 /* OSPMapCSSClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A1FB145F4F79007F6C19 /* OSPMapCSSClass.m */; };
+		1F08A1FF145F584A007F6C19 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A1FE145F584A007F6C19 /* Tag.m */; };
+		1F08A202145F5B70007F6C19 /* Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A201145F5B6F007F6C19 /* Test.m */; };
+		1F08A205145F5CFE007F6C19 /* UnaryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A204145F5CFD007F6C19 /* UnaryTest.m */; };
+		1F08A208145F5DD9007F6C19 /* BinaryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A207145F5DD8007F6C19 /* BinaryTest.m */; };
+		1F08A21E14606CC0007F6C19 /* PlaceholderSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A21D14606CC0007F6C19 /* PlaceholderSpecifier.m */; };
+		1F08A22214606DBE007F6C19 /* PlaceholderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A22114606DBE007F6C19 /* PlaceholderTest.m */; };
+		1F08A22514606EDC007F6C19 /* Zoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A22414606EDC007F6C19 /* Zoom.m */; };
+		1F09C63214612A5F003BBE17 /* Subselector.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F09C63114612A5F003BBE17 /* Subselector.m */; };
+		1F09C63614612D97003BBE17 /* CommaSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F09C63514612D97003BBE17 /* CommaSelector.m */; };
+		1F09C63914612DDF003BBE17 /* Rule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F09C63814612DDF003BBE17 /* Rule.m */; };
+		1F09C63C14612F31003BBE17 /* Import.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F09C63B14612F31003BBE17 /* Import.m */; };
+		1F09C63F14613063003BBE17 /* Ruleset.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F09C63E14613062003BBE17 /* Ruleset.m */; };
 		1F2C266A13F6DB7B00D3AE25 /* OSPCoordinateRect.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C266913F6DB7B00D3AE25 /* OSPCoordinateRect.m */; };
 		1F2C267213F6E41D00D3AE25 /* OSPMapArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C267113F6E41D00D3AE25 /* OSPMapArea.m */; };
 		1F2C267613F6FC2500D3AE25 /* OSPMaths.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C267513F6FC2500D3AE25 /* OSPMaths.m */; };
 		1F70747B13ED9DA00031BA84 /* OSPMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70747A13ED9DA00031BA84 /* OSPMap.m */; };
 		1F7074A713EEA4620031BA84 /* OSPMapServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7074A613EEA4610031BA84 /* OSPMapServer.m */; };
+		1F73F296145F295100037860 /* Eval.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F295145F295100037860 /* Eval.m */; };
+		1F73F29C145F2B5700037860 /* Url.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F29B145F2B5700037860 /* Url.m */; };
+		1F73F29F145F2CAF00037860 /* Colour.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F29E145F2CAF00037860 /* Colour.m */; };
+		1F73F2A2145F321C00037860 /* CommaSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F2A1145F321C00037860 /* CommaSize.m */; };
+		1F73F2A5145F326D00037860 /* MapCSSSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F2A4145F326D00037860 /* MapCSSSize.m */; };
+		1F73F2AE145F3A6200037860 /* Specifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F2AD145F3A6200037860 /* Specifier.m */; };
+		1F73F2B1145F406E00037860 /* NamedSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F2B0145F406E00037860 /* NamedSpecifier.m */; };
+		1F73F2B4145F409A00037860 /* Named.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F2B3145F409900037860 /* Named.m */; };
+		1F73F2B7145F416600037860 /* SizeListSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F2B6145F416600037860 /* SizeListSpecifier.m */; };
 		1FA7B5B9140BAE1B0015D400 /* OSPAPIObjectReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA7B5B8140BAE1B0015D400 /* OSPAPIObjectReference.m */; };
 		1FD8C52413ED378600ADD20A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD8C52313ED378600ADD20A /* UIKit.framework */; };
 		1FD8C52613ED378600ADD20A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD8C52513ED378600ADD20A /* Foundation.framework */; };
@@ -29,10 +58,102 @@
 		1FD8C55C13ED3B5E00ADD20A /* OSPWay.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8C55B13ED3B5E00ADD20A /* OSPWay.m */; };
 		1FD8C55F13ED3C2600ADD20A /* OSPRelation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8C55E13ED3C2600ADD20A /* OSPRelation.m */; };
 		1FD8C56613ED3D6700ADD20A /* OSPMember.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8C56513ED3D6700ADD20A /* OSPMember.m */; };
+		1FFE3A51145C2C0B00B47ED0 /* OSPMapCSSParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFE3A50145C2C0B00B47ED0 /* OSPMapCSSParser.m */; };
+		1FFE3A73145C3B9600B47ED0 /* libCoreParse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FFE3A72145C3B9600B47ED0 /* libCoreParse.a */; };
+		1FFFC23814653FD10052D1B6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD8C52513ED378600ADD20A /* Foundation.framework */; };
+		1FFFC23B14653FD10052D1B6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFFC23A14653FD10052D1B6 /* main.m */; };
+		1FFFC23F14653FD10052D1B6 /* OSPParserGenerator.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1FFFC23E14653FD10052D1B6 /* OSPParserGenerator.1 */; };
+		1FFFC2491465405B0052D1B6 /* CoreParse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FFFC2481465405B0052D1B6 /* CoreParse.framework */; };
+		1FFFC24B146541F70052D1B6 /* parser.osp in Resources */ = {isa = PBXBuildFile; fileRef = 1FFFC24A146541F70052D1B6 /* parser.osp */; };
+		1FFFC254146546C70052D1B6 /* Eval.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F295145F295100037860 /* Eval.m */; };
+		1FFFC255146546C90052D1B6 /* Url.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F29B145F2B5700037860 /* Url.m */; };
+		1FFFC256146546CA0052D1B6 /* Colour.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F29E145F2CAF00037860 /* Colour.m */; };
+		1FFFC257146546CC0052D1B6 /* CommaSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F2A1145F321C00037860 /* CommaSize.m */; };
+		1FFFC258146546CD0052D1B6 /* MapCSSSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F2A4145F326D00037860 /* MapCSSSize.m */; };
+		1FFFC259146546E80052D1B6 /* Named.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F2B3145F409900037860 /* Named.m */; };
+		1FFFC25A146546E80052D1B6 /* Specifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F2AD145F3A6200037860 /* Specifier.m */; };
+		1FFFC25B146546E80052D1B6 /* PlaceholderSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A21D14606CC0007F6C19 /* PlaceholderSpecifier.m */; };
+		1FFFC25C146546E80052D1B6 /* NamedSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F2B0145F406E00037860 /* NamedSpecifier.m */; };
+		1FFFC25D146546E80052D1B6 /* SizeListSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F2B6145F416600037860 /* SizeListSpecifier.m */; };
+		1FFFC25E146546E80052D1B6 /* ColourSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A1E5145F450A007F6C19 /* ColourSpecifier.m */; };
+		1FFFC25F146546E80052D1B6 /* URLSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A1E9145F4560007F6C19 /* URLSpecifier.m */; };
+		1FFFC260146546E80052D1B6 /* EvalSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A1EC145F45A1007F6C19 /* EvalSpecifier.m */; };
+		1FFFC261146546E80052D1B6 /* Key.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A1EF145F467A007F6C19 /* Key.m */; };
+		1FFFC262146546E80052D1B6 /* OSPMapCSSStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A1F2145F46FB007F6C19 /* OSPMapCSSStyle.m */; };
+		1FFFC263146546E80052D1B6 /* Declaration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A1F5145F49DC007F6C19 /* Declaration.m */; };
+		1FFFC264146546E80052D1B6 /* OSPMapCSSObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A1F8145F4C4A007F6C19 /* OSPMapCSSObject.m */; };
+		1FFFC265146546E80052D1B6 /* OSPMapCSSClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A1FB145F4F79007F6C19 /* OSPMapCSSClass.m */; };
+		1FFFC266146546E80052D1B6 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A1FE145F584A007F6C19 /* Tag.m */; };
+		1FFFC267146546E80052D1B6 /* Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A201145F5B6F007F6C19 /* Test.m */; };
+		1FFFC268146546E80052D1B6 /* PlaceholderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A22114606DBE007F6C19 /* PlaceholderTest.m */; };
+		1FFFC269146546E80052D1B6 /* UnaryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A204145F5CFD007F6C19 /* UnaryTest.m */; };
+		1FFFC26A146546E80052D1B6 /* BinaryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A207145F5DD8007F6C19 /* BinaryTest.m */; };
+		1FFFC26B146546E80052D1B6 /* Zoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08A22414606EDC007F6C19 /* Zoom.m */; };
+		1FFFC26C146546E80052D1B6 /* Subselector.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F09C63114612A5F003BBE17 /* Subselector.m */; };
+		1FFFC26D146546E80052D1B6 /* CommaSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F09C63514612D97003BBE17 /* CommaSelector.m */; };
+		1FFFC26E146546E80052D1B6 /* Rule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F09C63814612DDF003BBE17 /* Rule.m */; };
+		1FFFC26F146546E80052D1B6 /* Import.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F09C63B14612F31003BBE17 /* Import.m */; };
+		1FFFC270146546E80052D1B6 /* Ruleset.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F09C63E14613062003BBE17 /* Ruleset.m */; };
+		1FFFC272146558B00052D1B6 /* osm.mcs in Resources */ = {isa = PBXBuildFile; fileRef = 1FFFC271146558B00052D1B6 /* osm.mcs */; };
+		1FFFC27514655B460052D1B6 /* OSPMapCSSStyleSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFFC27414655B460052D1B6 /* OSPMapCSSStyleSheet.m */; };
+		1FFFC27814657CDC0052D1B6 /* NSString+OpenStreetPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFFC27714657CDB0052D1B6 /* NSString+OpenStreetPad.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1FFFC23414653FD10052D1B6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				1FFFC23F14653FD10052D1B6 /* OSPParserGenerator.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1F0007D01412662900220FAA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		1F08A1E4145F450A007F6C19 /* ColourSpecifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColourSpecifier.h; sourceTree = "<group>"; };
+		1F08A1E5145F450A007F6C19 /* ColourSpecifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColourSpecifier.m; sourceTree = "<group>"; };
+		1F08A1E8145F4560007F6C19 /* URLSpecifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLSpecifier.h; sourceTree = "<group>"; };
+		1F08A1E9145F4560007F6C19 /* URLSpecifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLSpecifier.m; sourceTree = "<group>"; };
+		1F08A1EB145F45A1007F6C19 /* EvalSpecifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvalSpecifier.h; sourceTree = "<group>"; };
+		1F08A1EC145F45A1007F6C19 /* EvalSpecifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvalSpecifier.m; sourceTree = "<group>"; };
+		1F08A1EE145F467A007F6C19 /* Key.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Key.h; sourceTree = "<group>"; };
+		1F08A1EF145F467A007F6C19 /* Key.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Key.m; sourceTree = "<group>"; };
+		1F08A1F1145F46FB007F6C19 /* OSPMapCSSStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapCSSStyle.h; sourceTree = "<group>"; };
+		1F08A1F2145F46FB007F6C19 /* OSPMapCSSStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapCSSStyle.m; sourceTree = "<group>"; };
+		1F08A1F4145F49DC007F6C19 /* Declaration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Declaration.h; sourceTree = "<group>"; };
+		1F08A1F5145F49DC007F6C19 /* Declaration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Declaration.m; sourceTree = "<group>"; };
+		1F08A1F7145F4C4A007F6C19 /* OSPMapCSSObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapCSSObject.h; sourceTree = "<group>"; };
+		1F08A1F8145F4C4A007F6C19 /* OSPMapCSSObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapCSSObject.m; sourceTree = "<group>"; };
+		1F08A1FA145F4F79007F6C19 /* OSPMapCSSClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapCSSClass.h; sourceTree = "<group>"; };
+		1F08A1FB145F4F79007F6C19 /* OSPMapCSSClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapCSSClass.m; sourceTree = "<group>"; };
+		1F08A1FD145F584A007F6C19 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
+		1F08A1FE145F584A007F6C19 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
+		1F08A200145F5B6F007F6C19 /* Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test.h; sourceTree = "<group>"; };
+		1F08A201145F5B6F007F6C19 /* Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Test.m; sourceTree = "<group>"; };
+		1F08A203145F5CFC007F6C19 /* UnaryTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnaryTest.h; sourceTree = "<group>"; };
+		1F08A204145F5CFD007F6C19 /* UnaryTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnaryTest.m; sourceTree = "<group>"; };
+		1F08A206145F5DD7007F6C19 /* BinaryTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BinaryTest.h; sourceTree = "<group>"; };
+		1F08A207145F5DD8007F6C19 /* BinaryTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BinaryTest.m; sourceTree = "<group>"; };
+		1F08A21C14606CC0007F6C19 /* PlaceholderSpecifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceholderSpecifier.h; sourceTree = "<group>"; };
+		1F08A21D14606CC0007F6C19 /* PlaceholderSpecifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceholderSpecifier.m; sourceTree = "<group>"; };
+		1F08A22014606DBE007F6C19 /* PlaceholderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceholderTest.h; sourceTree = "<group>"; };
+		1F08A22114606DBE007F6C19 /* PlaceholderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceholderTest.m; sourceTree = "<group>"; };
+		1F08A22314606EDB007F6C19 /* Zoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Zoom.h; sourceTree = "<group>"; };
+		1F08A22414606EDC007F6C19 /* Zoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Zoom.m; sourceTree = "<group>"; };
+		1F09C63014612A5F003BBE17 /* Subselector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Subselector.h; sourceTree = "<group>"; };
+		1F09C63114612A5F003BBE17 /* Subselector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Subselector.m; sourceTree = "<group>"; };
+		1F09C63414612D97003BBE17 /* CommaSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommaSelector.h; sourceTree = "<group>"; };
+		1F09C63514612D97003BBE17 /* CommaSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommaSelector.m; sourceTree = "<group>"; };
+		1F09C63714612DDF003BBE17 /* Rule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rule.h; sourceTree = "<group>"; };
+		1F09C63814612DDF003BBE17 /* Rule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Rule.m; sourceTree = "<group>"; };
+		1F09C63A14612F31003BBE17 /* Import.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Import.h; sourceTree = "<group>"; };
+		1F09C63B14612F31003BBE17 /* Import.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Import.m; sourceTree = "<group>"; };
+		1F09C63D14613062003BBE17 /* Ruleset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ruleset.h; sourceTree = "<group>"; };
+		1F09C63E14613062003BBE17 /* Ruleset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ruleset.m; sourceTree = "<group>"; };
 		1F2C266913F6DB7B00D3AE25 /* OSPCoordinateRect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPCoordinateRect.m; sourceTree = "<group>"; };
 		1F2C266B13F6DB8F00D3AE25 /* OSPCoordinateRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPCoordinateRect.h; sourceTree = "<group>"; };
 		1F2C267013F6E41D00D3AE25 /* OSPMapArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapArea.h; sourceTree = "<group>"; };
@@ -43,6 +164,24 @@
 		1F70747A13ED9DA00031BA84 /* OSPMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMap.m; sourceTree = "<group>"; };
 		1F7074A513EEA4610031BA84 /* OSPMapServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapServer.h; sourceTree = "<group>"; };
 		1F7074A613EEA4610031BA84 /* OSPMapServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapServer.m; sourceTree = "<group>"; };
+		1F73F294145F295100037860 /* Eval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Eval.h; sourceTree = "<group>"; };
+		1F73F295145F295100037860 /* Eval.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Eval.m; sourceTree = "<group>"; };
+		1F73F29A145F2B5700037860 /* Url.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Url.h; sourceTree = "<group>"; };
+		1F73F29B145F2B5700037860 /* Url.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Url.m; sourceTree = "<group>"; };
+		1F73F29D145F2CAF00037860 /* Colour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Colour.h; sourceTree = "<group>"; };
+		1F73F29E145F2CAF00037860 /* Colour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Colour.m; sourceTree = "<group>"; };
+		1F73F2A0145F321C00037860 /* CommaSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommaSize.h; sourceTree = "<group>"; };
+		1F73F2A1145F321C00037860 /* CommaSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommaSize.m; sourceTree = "<group>"; };
+		1F73F2A3145F326D00037860 /* MapCSSSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapCSSSize.h; sourceTree = "<group>"; };
+		1F73F2A4145F326D00037860 /* MapCSSSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapCSSSize.m; sourceTree = "<group>"; };
+		1F73F2AC145F3A6100037860 /* Specifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Specifier.h; sourceTree = "<group>"; };
+		1F73F2AD145F3A6200037860 /* Specifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Specifier.m; sourceTree = "<group>"; };
+		1F73F2AF145F406D00037860 /* NamedSpecifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NamedSpecifier.h; sourceTree = "<group>"; };
+		1F73F2B0145F406E00037860 /* NamedSpecifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NamedSpecifier.m; sourceTree = "<group>"; };
+		1F73F2B2145F409900037860 /* Named.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Named.h; sourceTree = "<group>"; };
+		1F73F2B3145F409900037860 /* Named.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Named.m; sourceTree = "<group>"; };
+		1F73F2B5145F416600037860 /* SizeListSpecifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SizeListSpecifier.h; sourceTree = "<group>"; };
+		1F73F2B6145F416600037860 /* SizeListSpecifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SizeListSpecifier.m; sourceTree = "<group>"; };
 		1FA7B5B7140BAE1B0015D400 /* OSPAPIObjectReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPAPIObjectReference.h; sourceTree = "<group>"; };
 		1FA7B5B8140BAE1B0015D400 /* OSPAPIObjectReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPAPIObjectReference.m; sourceTree = "<group>"; };
 		1FD8C51F13ED378500ADD20A /* OpenStreetPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenStreetPad.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -71,6 +210,46 @@
 		1FD8C55E13ED3C2600ADD20A /* OSPRelation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPRelation.m; sourceTree = "<group>"; };
 		1FD8C56413ED3D6700ADD20A /* OSPMember.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMember.h; sourceTree = "<group>"; };
 		1FD8C56513ED3D6700ADD20A /* OSPMember.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMember.m; sourceTree = "<group>"; };
+		1FFE3A4F145C2C0B00B47ED0 /* OSPMapCSSParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapCSSParser.h; sourceTree = "<group>"; };
+		1FFE3A50145C2C0B00B47ED0 /* OSPMapCSSParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapCSSParser.m; sourceTree = "<group>"; };
+		1FFE3A55145C2D1D00B47ED0 /* CoreParse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CoreParse.h; path = ../CoreParse/CoreParse.h; sourceTree = "<group>"; };
+		1FFE3A56145C2D1D00B47ED0 /* CPEOFToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPEOFToken.h; path = ../CoreParse/CPEOFToken.h; sourceTree = "<group>"; };
+		1FFE3A57145C2D1D00B47ED0 /* CPGrammar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPGrammar.h; path = ../CoreParse/CPGrammar.h; sourceTree = "<group>"; };
+		1FFE3A58145C2D1D00B47ED0 /* CPGrammarSymbol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPGrammarSymbol.h; path = ../CoreParse/CPGrammarSymbol.h; sourceTree = "<group>"; };
+		1FFE3A59145C2D1D00B47ED0 /* CPIdentifierRecogniser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPIdentifierRecogniser.h; path = ../CoreParse/CPIdentifierRecogniser.h; sourceTree = "<group>"; };
+		1FFE3A5A145C2D1D00B47ED0 /* CPIdentifierToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPIdentifierToken.h; path = ../CoreParse/CPIdentifierToken.h; sourceTree = "<group>"; };
+		1FFE3A5B145C2D1D00B47ED0 /* CPJSONParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPJSONParser.h; path = ../CoreParse/CPJSONParser.h; sourceTree = "<group>"; };
+		1FFE3A5C145C2D1D00B47ED0 /* CPKeywordRecogniser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPKeywordRecogniser.h; path = ../CoreParse/CPKeywordRecogniser.h; sourceTree = "<group>"; };
+		1FFE3A5D145C2D1D00B47ED0 /* CPKeywordToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPKeywordToken.h; path = ../CoreParse/CPKeywordToken.h; sourceTree = "<group>"; };
+		1FFE3A5E145C2D1D00B47ED0 /* CPLALR1Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPLALR1Parser.h; path = ../CoreParse/CPLALR1Parser.h; sourceTree = "<group>"; };
+		1FFE3A5F145C2D1D00B47ED0 /* CPLR1Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPLR1Parser.h; path = ../CoreParse/CPLR1Parser.h; sourceTree = "<group>"; };
+		1FFE3A60145C2D1D00B47ED0 /* CPNumberRecogniser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPNumberRecogniser.h; path = ../CoreParse/CPNumberRecogniser.h; sourceTree = "<group>"; };
+		1FFE3A61145C2D1D00B47ED0 /* CPNumberToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPNumberToken.h; path = ../CoreParse/CPNumberToken.h; sourceTree = "<group>"; };
+		1FFE3A62145C2D1D00B47ED0 /* CPParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPParser.h; path = ../CoreParse/CPParser.h; sourceTree = "<group>"; };
+		1FFE3A63145C2D1D00B47ED0 /* CPQuotedRecogniser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPQuotedRecogniser.h; path = ../CoreParse/CPQuotedRecogniser.h; sourceTree = "<group>"; };
+		1FFE3A64145C2D1D00B47ED0 /* CPQuotedToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPQuotedToken.h; path = ../CoreParse/CPQuotedToken.h; sourceTree = "<group>"; };
+		1FFE3A65145C2D1D00B47ED0 /* CPRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPRule.h; path = ../CoreParse/CPRule.h; sourceTree = "<group>"; };
+		1FFE3A66145C2D1D00B47ED0 /* CPSLRParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPSLRParser.h; path = ../CoreParse/CPSLRParser.h; sourceTree = "<group>"; };
+		1FFE3A67145C2D1D00B47ED0 /* CPSyntaxTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPSyntaxTree.h; path = ../CoreParse/CPSyntaxTree.h; sourceTree = "<group>"; };
+		1FFE3A68145C2D1D00B47ED0 /* CPToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPToken.h; path = ../CoreParse/CPToken.h; sourceTree = "<group>"; };
+		1FFE3A69145C2D1D00B47ED0 /* CPTokeniser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPTokeniser.h; path = ../CoreParse/CPTokeniser.h; sourceTree = "<group>"; };
+		1FFE3A6A145C2D1D00B47ED0 /* CPTokenRecogniser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPTokenRecogniser.h; path = ../CoreParse/CPTokenRecogniser.h; sourceTree = "<group>"; };
+		1FFE3A6B145C2D1D00B47ED0 /* CPTokenStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPTokenStream.h; path = ../CoreParse/CPTokenStream.h; sourceTree = "<group>"; };
+		1FFE3A6C145C2D1D00B47ED0 /* CPWhiteSpaceRecogniser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPWhiteSpaceRecogniser.h; path = ../CoreParse/CPWhiteSpaceRecogniser.h; sourceTree = "<group>"; };
+		1FFE3A6D145C2D1D00B47ED0 /* CPWhiteSpaceToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPWhiteSpaceToken.h; path = ../CoreParse/CPWhiteSpaceToken.h; sourceTree = "<group>"; };
+		1FFE3A71145C3AB200B47ED0 /* CPShiftReduceParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPShiftReduceParser.h; sourceTree = "<group>"; };
+		1FFE3A72145C3B9600B47ED0 /* libCoreParse.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCoreParse.a; path = OpenStreetPad/CoreParse/libCoreParse.a; sourceTree = "<group>"; };
+		1FFFC23614653FD10052D1B6 /* OSPParserGenerator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OSPParserGenerator; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FFFC23A14653FD10052D1B6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1FFFC23D14653FD10052D1B6 /* OSPParserGenerator-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OSPParserGenerator-Prefix.pch"; sourceTree = "<group>"; };
+		1FFFC23E14653FD10052D1B6 /* OSPParserGenerator.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = OSPParserGenerator.1; sourceTree = "<group>"; };
+		1FFFC2481465405B0052D1B6 /* CoreParse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CoreParse.framework; sourceTree = "<group>"; };
+		1FFFC24A146541F70052D1B6 /* parser.osp */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = parser.osp; sourceTree = "<group>"; };
+		1FFFC271146558B00052D1B6 /* osm.mcs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = osm.mcs; sourceTree = "<group>"; };
+		1FFFC27314655B460052D1B6 /* OSPMapCSSStyleSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapCSSStyleSheet.h; sourceTree = "<group>"; };
+		1FFFC27414655B460052D1B6 /* OSPMapCSSStyleSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapCSSStyleSheet.m; sourceTree = "<group>"; };
+		1FFFC27614657CDB0052D1B6 /* NSString+OpenStreetPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+OpenStreetPad.h"; sourceTree = "<group>"; };
+		1FFFC27714657CDB0052D1B6 /* NSString+OpenStreetPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+OpenStreetPad.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +257,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FFE3A73145C3B9600B47ED0 /* libCoreParse.a in Frameworks */,
 				1F0007D11412662900220FAA /* QuartzCore.framework in Frameworks */,
 				1FD8C55913ED3B3500ADD20A /* CoreLocation.framework in Frameworks */,
 				1FD8C52413ED378600ADD20A /* UIKit.framework in Frameworks */,
@@ -86,14 +266,93 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1FFFC23314653FD10052D1B6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1FFFC2491465405B0052D1B6 /* CoreParse.framework in Frameworks */,
+				1FFFC23814653FD10052D1B6 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F73F292145F293000037860 /* MapCSS */ = {
+			isa = PBXGroup;
+			children = (
+				1F73F294145F295100037860 /* Eval.h */,
+				1F73F295145F295100037860 /* Eval.m */,
+				1F73F29A145F2B5700037860 /* Url.h */,
+				1F73F29B145F2B5700037860 /* Url.m */,
+				1F73F29D145F2CAF00037860 /* Colour.h */,
+				1F73F29E145F2CAF00037860 /* Colour.m */,
+				1F73F2A0145F321C00037860 /* CommaSize.h */,
+				1F73F2A1145F321C00037860 /* CommaSize.m */,
+				1F73F2A3145F326D00037860 /* MapCSSSize.h */,
+				1F73F2A4145F326D00037860 /* MapCSSSize.m */,
+				1F73F2B2145F409900037860 /* Named.h */,
+				1F73F2B3145F409900037860 /* Named.m */,
+				1F73F2AC145F3A6100037860 /* Specifier.h */,
+				1F73F2AD145F3A6200037860 /* Specifier.m */,
+				1F08A21C14606CC0007F6C19 /* PlaceholderSpecifier.h */,
+				1F08A21D14606CC0007F6C19 /* PlaceholderSpecifier.m */,
+				1F73F2AF145F406D00037860 /* NamedSpecifier.h */,
+				1F73F2B0145F406E00037860 /* NamedSpecifier.m */,
+				1F73F2B5145F416600037860 /* SizeListSpecifier.h */,
+				1F73F2B6145F416600037860 /* SizeListSpecifier.m */,
+				1F08A1E4145F450A007F6C19 /* ColourSpecifier.h */,
+				1F08A1E5145F450A007F6C19 /* ColourSpecifier.m */,
+				1F08A1E8145F4560007F6C19 /* URLSpecifier.h */,
+				1F08A1E9145F4560007F6C19 /* URLSpecifier.m */,
+				1F08A1EB145F45A1007F6C19 /* EvalSpecifier.h */,
+				1F08A1EC145F45A1007F6C19 /* EvalSpecifier.m */,
+				1F08A1EE145F467A007F6C19 /* Key.h */,
+				1F08A1EF145F467A007F6C19 /* Key.m */,
+				1F08A1F1145F46FB007F6C19 /* OSPMapCSSStyle.h */,
+				1F08A1F2145F46FB007F6C19 /* OSPMapCSSStyle.m */,
+				1F08A1F4145F49DC007F6C19 /* Declaration.h */,
+				1F08A1F5145F49DC007F6C19 /* Declaration.m */,
+				1F08A1F7145F4C4A007F6C19 /* OSPMapCSSObject.h */,
+				1F08A1F8145F4C4A007F6C19 /* OSPMapCSSObject.m */,
+				1F08A1FA145F4F79007F6C19 /* OSPMapCSSClass.h */,
+				1F08A1FB145F4F79007F6C19 /* OSPMapCSSClass.m */,
+				1F08A1FD145F584A007F6C19 /* Tag.h */,
+				1F08A1FE145F584A007F6C19 /* Tag.m */,
+				1F08A200145F5B6F007F6C19 /* Test.h */,
+				1F08A201145F5B6F007F6C19 /* Test.m */,
+				1F08A22014606DBE007F6C19 /* PlaceholderTest.h */,
+				1F08A22114606DBE007F6C19 /* PlaceholderTest.m */,
+				1F08A203145F5CFC007F6C19 /* UnaryTest.h */,
+				1F08A204145F5CFD007F6C19 /* UnaryTest.m */,
+				1F08A206145F5DD7007F6C19 /* BinaryTest.h */,
+				1F08A207145F5DD8007F6C19 /* BinaryTest.m */,
+				1F08A22314606EDB007F6C19 /* Zoom.h */,
+				1F08A22414606EDC007F6C19 /* Zoom.m */,
+				1F09C63014612A5F003BBE17 /* Subselector.h */,
+				1F09C63114612A5F003BBE17 /* Subselector.m */,
+				1F09C63414612D97003BBE17 /* CommaSelector.h */,
+				1F09C63514612D97003BBE17 /* CommaSelector.m */,
+				1F09C63714612DDF003BBE17 /* Rule.h */,
+				1F09C63814612DDF003BBE17 /* Rule.m */,
+				1F09C63A14612F31003BBE17 /* Import.h */,
+				1F09C63B14612F31003BBE17 /* Import.m */,
+				1F09C63D14613062003BBE17 /* Ruleset.h */,
+				1F09C63E14613062003BBE17 /* Ruleset.m */,
+				1FFFC27314655B460052D1B6 /* OSPMapCSSStyleSheet.h */,
+				1FFFC27414655B460052D1B6 /* OSPMapCSSStyleSheet.m */,
+				1FFFC27614657CDB0052D1B6 /* NSString+OpenStreetPad.h */,
+				1FFFC27714657CDB0052D1B6 /* NSString+OpenStreetPad.m */,
+			);
+			path = MapCSS;
+			sourceTree = "<group>";
+		};
 		1FD8C51413ED378500ADD20A = {
 			isa = PBXGroup;
 			children = (
-				1F0007D01412662900220FAA /* QuartzCore.framework */,
+				1FFE3A53145C2C3200B47ED0 /* CoreParse */,
 				1FD8C52913ED378600ADD20A /* OpenStreetPad */,
+				1FFFC23914653FD10052D1B6 /* OSPParserGenerator */,
 				1FD8C52213ED378600ADD20A /* Frameworks */,
 				1FD8C52013ED378500ADD20A /* Products */,
 			);
@@ -103,6 +362,7 @@
 			isa = PBXGroup;
 			children = (
 				1FD8C51F13ED378500ADD20A /* OpenStreetPad.app */,
+				1FFFC23614653FD10052D1B6 /* OSPParserGenerator */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -110,6 +370,8 @@
 		1FD8C52213ED378600ADD20A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1FFE3A72145C3B9600B47ED0 /* libCoreParse.a */,
+				1F0007D01412662900220FAA /* QuartzCore.framework */,
 				1FD8C55813ED3B3500ADD20A /* CoreLocation.framework */,
 				1FD8C52313ED378600ADD20A /* UIKit.framework */,
 				1FD8C52513ED378600ADD20A /* Foundation.framework */,
@@ -132,6 +394,8 @@
 				1F7074A613EEA4610031BA84 /* OSPMapServer.m */,
 				1FD8C53813ED378600ADD20A /* OSPMainViewController.xib */,
 				1FD8C52A13ED378600ADD20A /* Supporting Files */,
+				1FFE3A4F145C2C0B00B47ED0 /* OSPMapCSSParser.h */,
+				1FFE3A50145C2C0B00B47ED0 /* OSPMapCSSParser.m */,
 			);
 			path = OpenStreetPad;
 			sourceTree = "<group>";
@@ -139,6 +403,8 @@
 		1FD8C52A13ED378600ADD20A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1FFFC271146558B00052D1B6 /* osm.mcs */,
+				1FFFC24A146541F70052D1B6 /* parser.osp */,
 				1FD8C52B13ED378600ADD20A /* OpenStreetPad-Info.plist */,
 				1FD8C52C13ED378600ADD20A /* InfoPlist.strings */,
 				1FD8C52F13ED378600ADD20A /* main.m */,
@@ -150,6 +416,7 @@
 		1FD8C55013ED395800ADD20A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1F73F292145F293000037860 /* MapCSS */,
 				1FD8C55113ED399400ADD20A /* API */,
 				1F70747913ED9DA00031BA84 /* OSPMap.h */,
 				1F70747A13ED9DA00031BA84 /* OSPMap.m */,
@@ -182,6 +449,59 @@
 			path = API;
 			sourceTree = "<group>";
 		};
+		1FFE3A53145C2C3200B47ED0 /* CoreParse */ = {
+			isa = PBXGroup;
+			children = (
+				1FFFC2481465405B0052D1B6 /* CoreParse.framework */,
+				1FFE3A71145C3AB200B47ED0 /* CPShiftReduceParser.h */,
+				1FFE3A55145C2D1D00B47ED0 /* CoreParse.h */,
+				1FFE3A56145C2D1D00B47ED0 /* CPEOFToken.h */,
+				1FFE3A57145C2D1D00B47ED0 /* CPGrammar.h */,
+				1FFE3A58145C2D1D00B47ED0 /* CPGrammarSymbol.h */,
+				1FFE3A59145C2D1D00B47ED0 /* CPIdentifierRecogniser.h */,
+				1FFE3A5A145C2D1D00B47ED0 /* CPIdentifierToken.h */,
+				1FFE3A5B145C2D1D00B47ED0 /* CPJSONParser.h */,
+				1FFE3A5C145C2D1D00B47ED0 /* CPKeywordRecogniser.h */,
+				1FFE3A5D145C2D1D00B47ED0 /* CPKeywordToken.h */,
+				1FFE3A5E145C2D1D00B47ED0 /* CPLALR1Parser.h */,
+				1FFE3A5F145C2D1D00B47ED0 /* CPLR1Parser.h */,
+				1FFE3A60145C2D1D00B47ED0 /* CPNumberRecogniser.h */,
+				1FFE3A61145C2D1D00B47ED0 /* CPNumberToken.h */,
+				1FFE3A62145C2D1D00B47ED0 /* CPParser.h */,
+				1FFE3A63145C2D1D00B47ED0 /* CPQuotedRecogniser.h */,
+				1FFE3A64145C2D1D00B47ED0 /* CPQuotedToken.h */,
+				1FFE3A65145C2D1D00B47ED0 /* CPRule.h */,
+				1FFE3A66145C2D1D00B47ED0 /* CPSLRParser.h */,
+				1FFE3A67145C2D1D00B47ED0 /* CPSyntaxTree.h */,
+				1FFE3A68145C2D1D00B47ED0 /* CPToken.h */,
+				1FFE3A69145C2D1D00B47ED0 /* CPTokeniser.h */,
+				1FFE3A6A145C2D1D00B47ED0 /* CPTokenRecogniser.h */,
+				1FFE3A6B145C2D1D00B47ED0 /* CPTokenStream.h */,
+				1FFE3A6C145C2D1D00B47ED0 /* CPWhiteSpaceRecogniser.h */,
+				1FFE3A6D145C2D1D00B47ED0 /* CPWhiteSpaceToken.h */,
+			);
+			name = CoreParse;
+			path = OpenStreetPad/CoreParse;
+			sourceTree = "<group>";
+		};
+		1FFFC23914653FD10052D1B6 /* OSPParserGenerator */ = {
+			isa = PBXGroup;
+			children = (
+				1FFFC23A14653FD10052D1B6 /* main.m */,
+				1FFFC23E14653FD10052D1B6 /* OSPParserGenerator.1 */,
+				1FFFC23C14653FD10052D1B6 /* Supporting Files */,
+			);
+			path = OSPParserGenerator;
+			sourceTree = "<group>";
+		};
+		1FFFC23C14653FD10052D1B6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1FFFC23D14653FD10052D1B6 /* OSPParserGenerator-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -201,6 +521,23 @@
 			productName = OpenStreetPad;
 			productReference = 1FD8C51F13ED378500ADD20A /* OpenStreetPad.app */;
 			productType = "com.apple.product-type.application";
+		};
+		1FFFC23514653FD10052D1B6 /* OSPParserGenerator */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1FFFC24214653FD10052D1B6 /* Build configuration list for PBXNativeTarget "OSPParserGenerator" */;
+			buildPhases = (
+				1FFFC23214653FD10052D1B6 /* Sources */,
+				1FFFC23314653FD10052D1B6 /* Frameworks */,
+				1FFFC23414653FD10052D1B6 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OSPParserGenerator;
+			productName = OSPParserGenerator;
+			productReference = 1FFFC23614653FD10052D1B6 /* OSPParserGenerator */;
+			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
@@ -224,6 +561,7 @@
 			projectRoot = "";
 			targets = (
 				1FD8C51E13ED378500ADD20A /* OpenStreetPad */,
+				1FFFC23514653FD10052D1B6 /* OSPParserGenerator */,
 			);
 		};
 /* End PBXProject section */
@@ -235,6 +573,8 @@
 			files = (
 				1FD8C52E13ED378600ADD20A /* InfoPlist.strings in Resources */,
 				1FD8C53A13ED378600ADD20A /* OSPMainViewController.xib in Resources */,
+				1FFFC24B146541F70052D1B6 /* parser.osp in Resources */,
+				1FFFC272146558B00052D1B6 /* osm.mcs in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,6 +600,75 @@
 				1F2C267213F6E41D00D3AE25 /* OSPMapArea.m in Sources */,
 				1F2C267613F6FC2500D3AE25 /* OSPMaths.m in Sources */,
 				1FA7B5B9140BAE1B0015D400 /* OSPAPIObjectReference.m in Sources */,
+				1FFE3A51145C2C0B00B47ED0 /* OSPMapCSSParser.m in Sources */,
+				1F73F296145F295100037860 /* Eval.m in Sources */,
+				1F73F29C145F2B5700037860 /* Url.m in Sources */,
+				1F73F29F145F2CAF00037860 /* Colour.m in Sources */,
+				1F73F2A2145F321C00037860 /* CommaSize.m in Sources */,
+				1F73F2A5145F326D00037860 /* MapCSSSize.m in Sources */,
+				1F73F2AE145F3A6200037860 /* Specifier.m in Sources */,
+				1F73F2B1145F406E00037860 /* NamedSpecifier.m in Sources */,
+				1F73F2B4145F409A00037860 /* Named.m in Sources */,
+				1F73F2B7145F416600037860 /* SizeListSpecifier.m in Sources */,
+				1F08A1E6145F450A007F6C19 /* ColourSpecifier.m in Sources */,
+				1F08A1EA145F4560007F6C19 /* URLSpecifier.m in Sources */,
+				1F08A1ED145F45A1007F6C19 /* EvalSpecifier.m in Sources */,
+				1F08A1F0145F467A007F6C19 /* Key.m in Sources */,
+				1F08A1F3145F46FC007F6C19 /* OSPMapCSSStyle.m in Sources */,
+				1F08A1F6145F49DC007F6C19 /* Declaration.m in Sources */,
+				1F08A1F9145F4C4A007F6C19 /* OSPMapCSSObject.m in Sources */,
+				1F08A1FC145F4F79007F6C19 /* OSPMapCSSClass.m in Sources */,
+				1F08A1FF145F584A007F6C19 /* Tag.m in Sources */,
+				1F08A202145F5B70007F6C19 /* Test.m in Sources */,
+				1F08A205145F5CFE007F6C19 /* UnaryTest.m in Sources */,
+				1F08A208145F5DD9007F6C19 /* BinaryTest.m in Sources */,
+				1F08A21E14606CC0007F6C19 /* PlaceholderSpecifier.m in Sources */,
+				1F08A22214606DBE007F6C19 /* PlaceholderTest.m in Sources */,
+				1F08A22514606EDC007F6C19 /* Zoom.m in Sources */,
+				1F09C63214612A5F003BBE17 /* Subselector.m in Sources */,
+				1F09C63614612D97003BBE17 /* CommaSelector.m in Sources */,
+				1F09C63914612DDF003BBE17 /* Rule.m in Sources */,
+				1F09C63C14612F31003BBE17 /* Import.m in Sources */,
+				1F09C63F14613063003BBE17 /* Ruleset.m in Sources */,
+				1FFFC27514655B460052D1B6 /* OSPMapCSSStyleSheet.m in Sources */,
+				1FFFC27814657CDC0052D1B6 /* NSString+OpenStreetPad.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FFFC23214653FD10052D1B6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1FFFC259146546E80052D1B6 /* Named.m in Sources */,
+				1FFFC25A146546E80052D1B6 /* Specifier.m in Sources */,
+				1FFFC25B146546E80052D1B6 /* PlaceholderSpecifier.m in Sources */,
+				1FFFC25C146546E80052D1B6 /* NamedSpecifier.m in Sources */,
+				1FFFC25D146546E80052D1B6 /* SizeListSpecifier.m in Sources */,
+				1FFFC25E146546E80052D1B6 /* ColourSpecifier.m in Sources */,
+				1FFFC25F146546E80052D1B6 /* URLSpecifier.m in Sources */,
+				1FFFC260146546E80052D1B6 /* EvalSpecifier.m in Sources */,
+				1FFFC261146546E80052D1B6 /* Key.m in Sources */,
+				1FFFC262146546E80052D1B6 /* OSPMapCSSStyle.m in Sources */,
+				1FFFC263146546E80052D1B6 /* Declaration.m in Sources */,
+				1FFFC264146546E80052D1B6 /* OSPMapCSSObject.m in Sources */,
+				1FFFC265146546E80052D1B6 /* OSPMapCSSClass.m in Sources */,
+				1FFFC266146546E80052D1B6 /* Tag.m in Sources */,
+				1FFFC267146546E80052D1B6 /* Test.m in Sources */,
+				1FFFC268146546E80052D1B6 /* PlaceholderTest.m in Sources */,
+				1FFFC269146546E80052D1B6 /* UnaryTest.m in Sources */,
+				1FFFC26A146546E80052D1B6 /* BinaryTest.m in Sources */,
+				1FFFC26B146546E80052D1B6 /* Zoom.m in Sources */,
+				1FFFC26C146546E80052D1B6 /* Subselector.m in Sources */,
+				1FFFC26D146546E80052D1B6 /* CommaSelector.m in Sources */,
+				1FFFC26E146546E80052D1B6 /* Rule.m in Sources */,
+				1FFFC26F146546E80052D1B6 /* Import.m in Sources */,
+				1FFFC270146546E80052D1B6 /* Ruleset.m in Sources */,
+				1FFFC23B14653FD10052D1B6 /* main.m in Sources */,
+				1FFFC254146546C70052D1B6 /* Eval.m in Sources */,
+				1FFFC256146546CA0052D1B6 /* Colour.m in Sources */,
+				1FFFC257146546CC0052D1B6 /* CommaSize.m in Sources */,
+				1FFFC255146546C90052D1B6 /* Url.m in Sources */,
+				1FFFC258146546CD0052D1B6 /* MapCSSSize.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,6 +747,15 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenStreetPad/OpenStreetPad-Prefix.pch";
 				INFOPLIST_FILE = "OpenStreetPad/OpenStreetPad-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/CoreParse\"",
+					"\"$(SRCROOT)/OpenStreetPad/CoreParse\"",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -349,8 +767,55 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenStreetPad/OpenStreetPad-Prefix.pch";
 				INFOPLIST_FILE = "OpenStreetPad/OpenStreetPad-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/CoreParse\"",
+					"\"$(SRCROOT)/OpenStreetPad/CoreParse\"",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		1FFFC24014653FD10052D1B6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/OpenStreetPad/CoreParse\"",
+				);
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OSPParserGenerator/OSPParserGenerator-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		1FFFC24114653FD10052D1B6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/OpenStreetPad/CoreParse\"",
+				);
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OSPParserGenerator/OSPParserGenerator-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -374,6 +839,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		1FFFC24214653FD10052D1B6 /* Build configuration list for PBXNativeTarget "OSPParserGenerator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1FFFC24014653FD10052D1B6 /* Debug */,
+				1FFFC24114653FD10052D1B6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

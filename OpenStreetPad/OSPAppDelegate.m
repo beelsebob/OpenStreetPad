@@ -10,6 +10,8 @@
 
 #import "OSPMainViewController.h"
 
+#import "OSPMapCSSParser.h"
+
 @implementation OSPAppDelegate
 
 @synthesize window;
@@ -22,6 +24,7 @@
     [self setViewController:[[OSPMainViewController alloc] initWithNibName:@"OSPMainViewController" bundle:nil]]; 
     [[self window] setRootViewController:[self viewController]];
     [[self window] makeKeyAndVisible];
+    
     return YES;
 }
 

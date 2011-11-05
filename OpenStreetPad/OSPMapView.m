@@ -16,6 +16,12 @@
 
 #import "OSPMap.h"
 
+#import "OSPMapCSSParser.h"
+
+#import "Specifier.h"
+#import "SizeListSpecifier.h"
+#import "ColourSpecifier.h"
+#import "MapCSSSize.h"
 
 @interface OSPMapView () <OSPMapServerDelegate>
 
@@ -23,7 +29,7 @@
 
 - (void)commonInit;
 
-- (void)renderWay:(OSPWay *)way inContext:(CGContextRef)ctx;
+- (void)renderWay:(OSPWay *)way inContext:(CGContextRef)ctx atScale:(CGFloat)scale;
 
 @end
 
@@ -31,6 +37,8 @@
 
 @synthesize server;
 @synthesize mapArea;
+
+@synthesize stylesheet;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -45,7 +53,7 @@
     {
         [self setServer:[OSPMapServer serverWithURL:[NSURL URLWithString:@"http://api.openstreetmap.org"]]];
         [self setMapArea:OSPMapAreaMake(OSPCoordinate2DMake(0.4908, 0.303), 16.0)];
-        
+                
         [self commonInit];
     }
     
@@ -69,6 +77,14 @@
 
 - (void)commonInit
 {
+    NSError *err;
+    NSString *style = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"osm" ofType:@"mcs"] encoding:NSASCIIStringEncoding error:&err];
+    if (nil != style)
+    {
+        OSPMapCSSParser *p = [[OSPMapCSSParser alloc] init];
+        [self setStylesheet:[p parse:style]];
+    }
+    
     [[self server] setDelegate:self];
     [[self server] loadObjectsInBounds:OSPRectForMapAreaInRect([self mapArea], [self bounds])];
     
@@ -101,13 +117,15 @@
     {
         if ([object isKindOfClass:[OSPWay class]])
         {
-            [self renderWay:(OSPWay *)object inContext:ctx];
+            [self renderWay:(OSPWay *)object inContext:ctx atScale:scale];
         }
     }
 }
 
-- (void)renderWay:(OSPWay *)way inContext:(CGContextRef)ctx
+- (void)renderWay:(OSPWay *)way inContext:(CGContextRef)ctx atScale:(CGFloat)scale
 {
+    NSDictionary *style = [[self stylesheet] stylesForObject:way];
+    
     NSArray *nodes = [way nodes];
     if ([nodes count] > 1)
     {
@@ -124,7 +142,30 @@
             OSPCoordinate2D nl = [node projectedLocation];
             CGContextAddLineToPoint(ctx, nl.x, nl.y);
         }
-        CGContextStrokePath(ctx);
+        
+        Specifier *widthSpec = [style objectForKey:@"width"];
+        if ([widthSpec isKindOfClass:[SizeListSpecifier class]])
+        {
+            CGContextSetLineWidth(ctx, [(MapCSSSize *)[[(SizeListSpecifier *)widthSpec sizes] objectAtIndex:0] value] / scale);
+        }
+        else
+        {
+            CGContextSetLineWidth(ctx, 2.0f / scale);
+        }
+        Specifier *colourSpec = [style objectForKey:@"color"];
+        if ([colourSpec isKindOfClass:[ColourSpecifier class]])
+        {
+            CGContextSetStrokeColorWithColor(ctx, [[(ColourSpecifier *)colourSpec colour] CGColor]);
+        }
+        else
+        {
+            CGContextSetStrokeColorWithColor(ctx, [[UIColor blackColor] CGColor]);
+        }
+        
+        if (nil != widthSpec)
+        {
+            CGContextStrokePath(ctx);
+        }
     }
 }
 

@@ -11,9 +11,12 @@
 
 #import "OSPMapArea.h"
 
+#import "OSPMapCSSStyleSheet.h"
+
 @interface OSPMapView : UIView
 
 @property (readwrite, assign) OSPMapArea mapArea;
+@property (readwrite, strong) OSPMapCSSStyleSheet *stylesheet;
 
 - (id)initWithFrame:(CGRect)frame serverURL:(NSURL *)serverURL mapBounds:(OSPMapArea)mapArea;
 

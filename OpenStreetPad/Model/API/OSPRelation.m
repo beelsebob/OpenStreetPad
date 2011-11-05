@@ -10,6 +10,8 @@
 
 #import "OSPMember.h"
 
+#import "OSPMap.h"
+
 @implementation OSPRelation
 {
     __strong NSMutableArray *members;
@@ -70,6 +72,29 @@
 - (OSPMemberType)memberType
 {
     return OSPMemberTypeRelation;
+}
+
+- (NSSet *)childObjects
+{
+    NSMutableSet *childNodes = [NSMutableSet setWithCapacity:[[self members] count]];
+    for (OSPMember *child in [self members])
+    {
+        switch ([child referencedObjectType])
+        {
+            case OSPMemberTypeNode:
+                [childNodes addObject:[[self map] nodeWithId:[child referencedObjectId]]];
+                break;
+            case OSPMemberTypeWay:
+                [childNodes addObject:[[self map] wayWithId:[child referencedObjectId]]];
+                break;
+            case OSPMemberTypeRelation:
+                [childNodes addObject:[[self map] relationWithId:[child referencedObjectId]]];
+                break;
+            default:
+                break;
+        }
+    }
+    return childNodes;
 }
 
 @end

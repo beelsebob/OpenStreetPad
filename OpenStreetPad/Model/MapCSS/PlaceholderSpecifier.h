@@ -1,0 +1,13 @@
+//
+//  PlaceholderSpecifier.h
+//  OpenStreetPad
+//
+//  Created by Thomas Davie on 01/11/2011.
+//  Copyright (c) 2011 Thomas Davie. All rights reserved.
+//
+
+#import "Specifier.h"
+
+@interface PlaceholderSpecifier : Specifier
+
+@end

@@ -1,0 +1,32 @@
+//
+//  EvalSpecifier.m
+//  OpenStreetPad
+//
+//  Created by Thomas Davie on 31/10/2011.
+//  Copyright (c) 2011 Thomas Davie. All rights reserved.
+//
+
+#import "EvalSpecifier.h"
+
+@implementation EvalSpecifier
+
+@synthesize eval;
+
+- (id)initWithSyntaxTree:(CPSyntaxTree *)syntaxTree
+{
+    self = [super initWithSyntaxTree:syntaxTree];
+    
+    if (nil != self)
+    {
+        [self setEval:[[syntaxTree children] objectAtIndex:0]];
+    }
+    
+    return self;
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"eval(\"%@\")", [[self eval] expression]];
+}
+
+@end
