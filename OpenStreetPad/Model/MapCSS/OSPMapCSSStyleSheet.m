@@ -8,6 +8,11 @@
 
 #import "OSPMapCSSStyleSheet.h"
 
+#import <objc/runtime.h>
+
+char styleKey;
+
+
 @implementation OSPMapCSSStyleSheet
 
 @synthesize ruleset;
@@ -24,9 +29,22 @@
     return self;
 }
 
-- (NSDictionary *)stylesForObject:(OSPAPIObject *)apiObject
+- (void)styleObjects:(NSSet *)objects
 {
-    return [[self ruleset] applyToObjcet:apiObject];
+    for (OSPAPIObject *object in objects)
+    {
+        id style = objc_getAssociatedObject(object, &styleKey);
+        
+        if (nil == style)
+        {
+            objc_setAssociatedObject(object, &styleKey, [[self ruleset] applyToObjcet:object], OBJC_ASSOCIATION_RETAIN);
+        }
+    }
+}
+
+- (NSDictionary *)styleForCanvas
+{
+    return [[self ruleset] styleForCanvas];
 }
 
 @end

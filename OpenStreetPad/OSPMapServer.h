@@ -14,7 +14,7 @@
 
 @protocol OSPMapServerDelegate <NSObject>
 
-- (void)mapServerDidLoadObjects:(OSPMapServer *)mapServer;
+- (void)mapServer:(OSPMapServer *)mapServer didLoadObjectsInArea:(OSPCoordinateRect)area;
 
 @end
 
@@ -26,7 +26,7 @@
 @property (readonly , copy) NSURL *serverURL;
 @property (readwrite, weak) id<OSPMapServerDelegate> delegate;
 
-- (void)loadObjectsInBounds:(OSPCoordinateRect)bounds;
+- (void)loadObjectsInBounds:(OSPCoordinateRect)bounds withOutset:(double)outsetSize;
 - (NSSet *)objectsInBounds:(OSPCoordinateRect)bounds;
 
 @end

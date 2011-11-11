@@ -15,6 +15,7 @@ typedef enum
     OSPMapCSSUnitPt     ,
     OSPMapCSSUnitPx     ,
     OSPMapCSSUnitPercent,
+    OSPMapCSSUnitNone
 } OSPMapCSSUnit;
 
 OSPMapCSSUnit OSPMapCSSUnitFromNSString(NSString *s);

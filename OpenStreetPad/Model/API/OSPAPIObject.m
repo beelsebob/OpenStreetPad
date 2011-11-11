@@ -13,6 +13,7 @@
 @implementation OSPAPIObject
 {
     __strong NSMutableDictionary *tags;
+    __strong NSMutableSet *parents;
 }
 
 @synthesize identity;
@@ -35,6 +36,16 @@
     tags = [newTags mutableCopy];
 }
 
+- (NSSet *)parents
+{
+    return parents;
+}
+
+- (void)setParents:(NSSet *)newParents
+{
+    parents = [newParents mutableCopy];
+}
+
 - (id)initUnsafely
 {
     return [super init];
@@ -49,6 +60,7 @@
         [self setUser:@""];
         [self setTimestamp:[NSDate date]];
         [self setTags:[NSDictionary dictionary]];
+        [self setParents:[NSSet set]];
     }
     
     return self;
@@ -79,8 +91,7 @@
 
 - (BOOL)isEqualToAPIObject:(OSPAPIObject *)object
 {
-    OSPAPIObject *o = (OSPAPIObject *)object;
-    return [self identity] == [o identity] && [o memberType] == [self memberType];
+    return [self identity] == [object identity] && [object memberType] == [self memberType];
 }
 
 - (NSUInteger)hash
@@ -91,6 +102,11 @@
 - (NSSet *)childObjects
 {
     return [NSSet set];
+}
+
+- (void)addParent:(OSPAPIObjectReference *)newParent
+{
+    [parents addObject:newParent];
 }
 
 @end

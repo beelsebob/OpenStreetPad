@@ -20,6 +20,8 @@ typedef enum
 
 @class OSPMap;
 
+@class OSPAPIObjectReference;
+
 @interface OSPAPIObject : NSObject
 
 @property (readwrite, assign) NSInteger identity;
@@ -32,6 +34,8 @@ typedef enum
 
 @property (readwrite, copy  ) NSDictionary *tags;
 
+@property (readwrite, copy  ) NSSet *parents;
+
 @property (readwrite, weak) OSPMap *map;
 @property (readonly) OSPCoordinateRect bounds;
 
@@ -42,5 +46,6 @@ typedef enum
 - (BOOL)isEqualToAPIObject:(OSPAPIObject *)object;
 
 - (NSSet *)childObjects;
+- (void)addParent:(OSPAPIObjectReference *)newParent;
 
 @end

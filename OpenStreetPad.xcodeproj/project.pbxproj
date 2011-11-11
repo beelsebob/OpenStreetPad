@@ -31,6 +31,10 @@
 		1F2C266A13F6DB7B00D3AE25 /* OSPCoordinateRect.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C266913F6DB7B00D3AE25 /* OSPCoordinateRect.m */; };
 		1F2C267213F6E41D00D3AE25 /* OSPMapArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C267113F6E41D00D3AE25 /* OSPMapArea.m */; };
 		1F2C267613F6FC2500D3AE25 /* OSPMaths.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C267513F6FC2500D3AE25 /* OSPMaths.m */; };
+		1F4D13B7146C4E97007EF1B4 /* fills in Resources */ = {isa = PBXBuildFile; fileRef = 1F4D13B6146C4E97007EF1B4 /* fills */; };
+		1F5CF1B514139FEA0032C761 /* OSPMetaTileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CF1B414139FEA0032C761 /* OSPMetaTileView.m */; };
+		1F5CF1B81413BA850032C761 /* OSPNonRectangularArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CF1B71413BA850032C761 /* OSPNonRectangularArea.m */; };
+		1F5CF1BB1413BB420032C761 /* OSPValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CF1BA1413BB420032C761 /* OSPValue.m */; };
 		1F70747B13ED9DA00031BA84 /* OSPMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70747A13ED9DA00031BA84 /* OSPMap.m */; };
 		1F7074A713EEA4620031BA84 /* OSPMapServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7074A613EEA4610031BA84 /* OSPMapServer.m */; };
 		1F73F296145F295100037860 /* Eval.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F295145F295100037860 /* Eval.m */; };
@@ -160,6 +164,13 @@
 		1F2C267113F6E41D00D3AE25 /* OSPMapArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapArea.m; sourceTree = "<group>"; };
 		1F2C267413F6FC2500D3AE25 /* OSPMaths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMaths.h; sourceTree = "<group>"; };
 		1F2C267513F6FC2500D3AE25 /* OSPMaths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMaths.m; sourceTree = "<group>"; };
+		1F4D13B6146C4E97007EF1B4 /* fills */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fills; sourceTree = "<group>"; };
+		1F5CF1B314139FEA0032C761 /* OSPMetaTileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMetaTileView.h; sourceTree = "<group>"; };
+		1F5CF1B414139FEA0032C761 /* OSPMetaTileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMetaTileView.m; sourceTree = "<group>"; };
+		1F5CF1B61413BA850032C761 /* OSPNonRectangularArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPNonRectangularArea.h; sourceTree = "<group>"; };
+		1F5CF1B71413BA850032C761 /* OSPNonRectangularArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPNonRectangularArea.m; sourceTree = "<group>"; };
+		1F5CF1B91413BB420032C761 /* OSPValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPValue.h; sourceTree = "<group>"; };
+		1F5CF1BA1413BB420032C761 /* OSPValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPValue.m; sourceTree = "<group>"; };
 		1F70747913ED9DA00031BA84 /* OSPMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMap.h; sourceTree = "<group>"; };
 		1F70747A13ED9DA00031BA84 /* OSPMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMap.m; sourceTree = "<group>"; };
 		1F7074A513EEA4610031BA84 /* OSPMapServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapServer.h; sourceTree = "<group>"; };
@@ -390,12 +401,14 @@
 				1FD8C53613ED378600ADD20A /* OSPMainViewController.m */,
 				1FD8C54013ED384B00ADD20A /* OSPMapView.h */,
 				1FD8C54113ED384B00ADD20A /* OSPMapView.m */,
+				1F5CF1B314139FEA0032C761 /* OSPMetaTileView.h */,
+				1F5CF1B414139FEA0032C761 /* OSPMetaTileView.m */,
 				1F7074A513EEA4610031BA84 /* OSPMapServer.h */,
 				1F7074A613EEA4610031BA84 /* OSPMapServer.m */,
-				1FD8C53813ED378600ADD20A /* OSPMainViewController.xib */,
-				1FD8C52A13ED378600ADD20A /* Supporting Files */,
 				1FFE3A4F145C2C0B00B47ED0 /* OSPMapCSSParser.h */,
 				1FFE3A50145C2C0B00B47ED0 /* OSPMapCSSParser.m */,
+				1FD8C53813ED378600ADD20A /* OSPMainViewController.xib */,
+				1FD8C52A13ED378600ADD20A /* Supporting Files */,
 			);
 			path = OpenStreetPad;
 			sourceTree = "<group>";
@@ -403,6 +416,7 @@
 		1FD8C52A13ED378600ADD20A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1F4D13B6146C4E97007EF1B4 /* fills */,
 				1FFFC271146558B00052D1B6 /* osm.mcs */,
 				1FFFC24A146541F70052D1B6 /* parser.osp */,
 				1FD8C52B13ED378600ADD20A /* OpenStreetPad-Info.plist */,
@@ -426,6 +440,10 @@
 				1F2C267113F6E41D00D3AE25 /* OSPMapArea.m */,
 				1F2C267413F6FC2500D3AE25 /* OSPMaths.h */,
 				1F2C267513F6FC2500D3AE25 /* OSPMaths.m */,
+				1F5CF1B61413BA850032C761 /* OSPNonRectangularArea.h */,
+				1F5CF1B71413BA850032C761 /* OSPNonRectangularArea.m */,
+				1F5CF1B91413BB420032C761 /* OSPValue.h */,
+				1F5CF1BA1413BB420032C761 /* OSPValue.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -575,6 +593,7 @@
 				1FD8C53A13ED378600ADD20A /* OSPMainViewController.xib in Resources */,
 				1FFFC24B146541F70052D1B6 /* parser.osp in Resources */,
 				1FFFC272146558B00052D1B6 /* osm.mcs in Resources */,
+				1F4D13B7146C4E97007EF1B4 /* fills in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -600,6 +619,9 @@
 				1F2C267213F6E41D00D3AE25 /* OSPMapArea.m in Sources */,
 				1F2C267613F6FC2500D3AE25 /* OSPMaths.m in Sources */,
 				1FA7B5B9140BAE1B0015D400 /* OSPAPIObjectReference.m in Sources */,
+				1F5CF1B514139FEA0032C761 /* OSPMetaTileView.m in Sources */,
+				1F5CF1B81413BA850032C761 /* OSPNonRectangularArea.m in Sources */,
+				1F5CF1BB1413BB420032C761 /* OSPValue.m in Sources */,
 				1FFE3A51145C2C0B00B47ED0 /* OSPMapCSSParser.m in Sources */,
 				1F73F296145F295100037860 /* Eval.m in Sources */,
 				1F73F29C145F2B5700037860 /* Url.m in Sources */,
@@ -847,6 +869,7 @@
 				1FFFC24114653FD10052D1B6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

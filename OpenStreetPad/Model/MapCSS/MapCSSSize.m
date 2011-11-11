@@ -34,6 +34,8 @@ NSString *NSStringFromOSPMapCSSUnit(OSPMapCSSUnit u)
             return @"px";
         case OSPMapCSSUnitPercent:
             return @"%";
+        case OSPMapCSSUnitNone:
+            return @"";
     }
 }
 
@@ -49,7 +51,14 @@ NSString *NSStringFromOSPMapCSSUnit(OSPMapCSSUnit u)
     if (nil != self)
     {
         [self setValue:[[[[syntaxTree children] objectAtIndex:0] number] floatValue]];
-        [self setUnit:OSPMapCSSUnitFromNSString([[[[[syntaxTree children] objectAtIndex:1] children] objectAtIndex:0] keyword])];
+        if ([[[[syntaxTree children] objectAtIndex:1] children] count] > 0)
+        {
+            [self setUnit:OSPMapCSSUnitFromNSString([[[[[syntaxTree children] objectAtIndex:1] children] objectAtIndex:0] keyword])];
+        }
+        else
+        {
+            [self setUnit:OSPMapCSSUnitNone];
+        }
     }
     
     return self;

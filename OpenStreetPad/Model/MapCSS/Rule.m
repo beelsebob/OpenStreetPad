@@ -11,11 +11,18 @@
 #import "Subselector.h"
 #import "Declaration.h"
 
+#import "OSPAPIObjectReference.h"
+#import "OSPMap.h"
+
 #import "OSPMapCSSStyle.h"
+
+#import "OSPMapCSSStyleSheet.h"
+
+#import <objc/runtime.h>
 
 @interface Rule ()
 
-- (void)addObjectsDerivedFrom:(OSPAPIObject *)root matchingSelector:(NSArray *)selector to:(NSMutableArray *)matches;
+- (BOOL)selector:(NSArray *)selector matchesObject:(OSPAPIObject *)object;
 
 @end
 
@@ -72,19 +79,24 @@
     return desc;
 }
 
-- (void)applyToObjcet:(OSPAPIObject *)object addingToStyle:(NSMutableDictionary *)style
+extern char styleKey;
+
+- (NSDictionary *)applyToObjcet:(OSPAPIObject *)object
 {
-    NSMutableArray *matchingObjects = [NSMutableArray array];
+    BOOL matched = NO;
     
     for (NSArray *selector in [self selectors])
     {
-        [self addObjectsDerivedFrom:object matchingSelector:selector to:matchingObjects];
+        if ([self selector:selector matchesObject:object])
+        {
+            matched = YES;
+            break;
+        }
     }
     
-/*    for (OSPAPIObject *o in matchingObjects)
-    {*/
-    if ([matchingObjects containsObject:object])
+    if (matched)
     {
+        NSMutableDictionary *style = [[NSMutableDictionary alloc] init];
         for (Declaration *decl in [self declarations])
         {
             for (OSPMapCSSStyle *st in [decl styles])
@@ -92,29 +104,43 @@
                 [style setObject:[st specifier] forKey:[[st key] description]];
             }
         }
+        return [style copy];
     }
+    
+    return [NSDictionary dictionary];
 }
 
-- (void)addObjectsDerivedFrom:(OSPAPIObject *)root matchingSelector:(NSArray *)selector to:(NSMutableArray *)matches
+- (BOOL)selector:(NSArray *)selector matchesObject:(OSPAPIObject *)object
 {
     NSUInteger c = [selector count];
+    
     if (c == 1)
     {
-        if ([[selector objectAtIndex:0] matchesObject:root])
-        {
-            [matches addObject:root];
-        }
+        return [[selector objectAtIndex:0] matchesObject:object];
     }
     else if (c > 0)
     {
-        if ([[selector objectAtIndex:0] matchesObject:root])
+        if ([[selector lastObject] matchesObject:object])
         {
-            NSSet *children = [root childObjects];
-            for (OSPAPIObject *o in children)
+            OSPMap *m = [object map];
+            for (OSPAPIObjectReference *parent in [object parents])
             {
-                [self addObjectsDerivedFrom:o matchingSelector:[selector subarrayWithRange:NSMakeRange(1, c - 1)] to:matches];
+                if ([self selector:[selector subarrayWithRange:NSMakeRange(0, c - 1)]
+                     matchesObject:[m apiObjectOfType:[parent memberType] withId:[parent identity]]])
+                {
+                    return YES;
+                }
             }
+            return NO;
         }
+        else
+        {
+            return NO;
+        }
+    }
+    else
+    {
+        return YES;
     }
 }
 

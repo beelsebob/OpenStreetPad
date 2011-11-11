@@ -49,6 +49,7 @@ int main (int argc, const char * argv[])
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@";"]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"@import"]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"|z"]];
+            [mapCssTokeniser addTokenRecogniser:[CPNumberRecogniser numberRecogniser]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"-"]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"!="]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"=~"]];
@@ -62,7 +63,6 @@ int main (int argc, const char * argv[])
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"#"]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"%"]];
             [mapCssTokeniser addTokenRecogniser:[CPWhiteSpaceRecogniser whiteSpaceRecogniser]];
-            [mapCssTokeniser addTokenRecogniser:[CPNumberRecogniser numberRecogniser]];
             [mapCssTokeniser addTokenRecogniser:[CPQuotedRecogniser quotedRecogniserWithStartQuote:@"/*" endQuote:@"*/" name:@"Comment"]];
             [mapCssTokeniser addTokenRecogniser:[CPQuotedRecogniser quotedRecogniserWithStartQuote:@"//" endQuote:@"\n" name:@"Comment"]];
             [mapCssTokeniser addTokenRecogniser:[CPQuotedRecogniser quotedRecogniserWithStartQuote:@"/"  endQuote:@"/"  escapeSequence:@"\\" name:@"Regex"]];
@@ -104,11 +104,18 @@ int main (int argc, const char * argv[])
                                   @"Eval            ::= \"eval\" \"(\" \"String\" \")\";"];
             CPParser *mapCssParser = [[CPLALR1Parser alloc] initWithGrammar:grammar];
             
-            [NSKeyedArchiver archiveRootObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                mapCssTokeniser, @"tokeniser",
-                                                mapCssParser   , @"parser",
-                                                nil]
-                                        toFile:[[NSString stringWithCString:argv[1] encoding:NSASCIIStringEncoding] stringByExpandingTildeInPath]];
+            if (nil == mapCssParser)
+            {
+                NSLog(@"Parser could not be constructed");
+            }
+            else
+            {
+                [NSKeyedArchiver archiveRootObject:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                    mapCssTokeniser, @"tokeniser",
+                                                    mapCssParser   , @"parser",
+                                                    nil]
+                                            toFile:[[NSString stringWithCString:argv[1] encoding:NSASCIIStringEncoding] stringByExpandingTildeInPath]];
+            }
         }
         else
         {

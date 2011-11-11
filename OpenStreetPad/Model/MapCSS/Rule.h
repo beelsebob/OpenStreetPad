@@ -17,6 +17,6 @@
 @property (readwrite, copy) NSArray *selectors;
 @property (readwrite, copy) NSArray *declarations;
 
-- (void)applyToObjcet:(OSPAPIObject *)object addingToStyle:(NSMutableDictionary *)style;
+- (NSDictionary *)applyToObjcet:(OSPAPIObject *)object;
 
 @end

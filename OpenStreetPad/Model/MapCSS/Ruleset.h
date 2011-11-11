@@ -17,5 +17,6 @@
 @property (readwrite, copy) NSArray *rules;
 
 - (NSDictionary *)applyToObjcet:(OSPAPIObject *)object;
+- (NSDictionary *)styleForCanvas;
 
 @end

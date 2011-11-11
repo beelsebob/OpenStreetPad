@@ -79,19 +79,10 @@
     NSMutableSet *childNodes = [NSMutableSet setWithCapacity:[[self members] count]];
     for (OSPMember *child in [self members])
     {
-        switch ([child referencedObjectType])
+        id ch = [[self map] apiObjectOfType:[child referencedObjectType] withId:[child referencedObjectId]];
+        if (nil != ch)
         {
-            case OSPMemberTypeNode:
-                [childNodes addObject:[[self map] nodeWithId:[child referencedObjectId]]];
-                break;
-            case OSPMemberTypeWay:
-                [childNodes addObject:[[self map] wayWithId:[child referencedObjectId]]];
-                break;
-            case OSPMemberTypeRelation:
-                [childNodes addObject:[[self map] relationWithId:[child referencedObjectId]]];
-                break;
-            default:
-                break;
+            [childNodes addObject:ch];
         }
     }
     return childNodes;

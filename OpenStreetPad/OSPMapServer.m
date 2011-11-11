@@ -14,6 +14,10 @@
 #import "OSPWay.h"
 #import "OSPRelation.h"
 #import "OSPMember.h"
+#import "OSPAPIObjectReference.h"
+
+#import "OSPNonRectangularArea.h"
+#import "OSPValue.h"
 
 typedef enum
 {
@@ -27,6 +31,7 @@ typedef enum
 
 - (void)connection:(OSPConnection *)connection didReceiveAPIObject:(OSPAPIObject *)object;
 - (void)connectionDidFinishLoading:(OSPConnection *)connection;
+- (void)connection:(OSPConnection *)connection didFailWithError:(NSError *)err;
 
 @end
 
@@ -41,16 +46,25 @@ typedef enum
 @property (readwrite, strong) NSMutableData *data;
 @property (readwrite, weak  ) id<OSPConnectionDelegate> delegate;
 
+@property (readwrite, assign) OSPCoordinateRect mapArea;
+
 @property (readwrite, strong) NSMutableDictionary *currentObjectTags;
 @property (readwrite, strong) OSPAPIObject *currentObject;
+
+@property (readwrite, copy  ) NSArray *receivedObjects;
 
 - (void)attemptToWriteToStream;
 
 - (void)setupAPIObject:(OSPAPIObject *)object withAttributes:(NSDictionary *)attributes;
 
+- (void)notifyDelegateParserDidEndDocument;
+
 @end
 
 @implementation OSPConnection
+{
+    __strong NSMutableArray *receivedObjects;
+}
 
 @synthesize connection;
 @synthesize request;
@@ -64,6 +78,18 @@ typedef enum
 @synthesize currentObject;
 @synthesize currentObjectTags;
 
+@synthesize mapArea;
+
+- (NSArray *)receivedObjects
+{
+    return receivedObjects;
+}
+
+- (void)setReceivedObjects:(NSArray *)newReceivedObjects
+{
+    receivedObjects = [newReceivedObjects mutableCopy];
+}
+
 - (id)init
 {
     self = [super init];
@@ -72,6 +98,7 @@ typedef enum
     {
         [self setCompleted:NO];
         [self setData:[NSMutableData data]];
+        [self setReceivedObjects:[NSArray array]];
     }
     
     return self;
@@ -109,7 +136,7 @@ typedef enum
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    NSLog(@"Asplode");
+    [[self delegate] connection:self didFailWithError:error];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
@@ -164,10 +191,6 @@ typedef enum
             OSPMemberType t = [typeString isEqualToString:@"node"] ? OSPMemberTypeNode : [typeString isEqualToString:@"way"] ? OSPMemberTypeWay : OSPMemberTypeRelation;
             [(OSPRelation *)[self currentObject] addMember:[OSPMember memberWithType:t referencedObjectId:[[attributeDict objectForKey:@"ref"] integerValue] role:[attributeDict objectForKey:@"role"]]];
         }
-        else
-        {
-            NSLog(@"Element name: %@", elementName);
-        }
     }
 }
 
@@ -178,6 +201,7 @@ typedef enum
         if (nil != [self currentObject] && ([elementName isEqualToString:@"node"] || [elementName isEqualToString:@"way"] || [elementName isEqualToString:@"relation"]))
         {
             [[self currentObject] setTags:[self currentObjectTags]];
+            [receivedObjects addObject:[self currentObject]];
             [[self delegate] connection:self didReceiveAPIObject:[self currentObject]];
             [self setCurrentObject:nil];
         }
@@ -194,9 +218,19 @@ typedef enum
     [object setVisible:[[attributes objectForKey:@"visible"] boolValue]];
 }
 
-- (void)parserDidEndDocument:(NSXMLParser *)parser
+- (void)parserDidEndDocument:(NSXMLParser *)p
+{
+    [self performSelectorOnMainThread:@selector(notifyDelegateParserDidEndDocument) withObject:nil waitUntilDone:NO];
+}
+
+- (void)notifyDelegateParserDidEndDocument
 {
     [[self delegate] connectionDidFinishLoading:self];
+}
+
+- (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError
+{
+    [[self delegate] connection:self didFailWithError:parseError];
 }
 
 @end
@@ -213,7 +247,9 @@ typedef enum
 @property (readwrite, strong) NSMutableArray *currentConnections;
 @property (readwrite, strong) NSMutableArray *connectionQueue;
 
-- (void)makeRequestForURL:(NSURL *)url ofType:(OSPRequestType)type;
+@property (readwrite, strong) OSPNonRectangularArea *requestedArea;
+
+- (void)makeRequestForURL:(NSURL *)url ofType:(OSPRequestType)type withArea:(OSPCoordinateRect)area;
 - (void)queueConnection:(OSPConnection *)rec;
 - (void)popConnectionQueue;
 
@@ -226,6 +262,7 @@ typedef enum
 @synthesize delegate;
 @synthesize currentConnections;
 @synthesize connectionQueue;
+@synthesize requestedArea;
 
 + (id)serverWithURL:(NSURL *)serverURL
 {
@@ -240,6 +277,7 @@ typedef enum
     {
         [self setServerURL:initServerURL];
         [self setMapCache:[[OSPMap alloc] init]];
+        [self setRequestedArea:[OSPNonRectangularArea emptyArea]];
         [self setCurrentConnections:[[NSMutableArray alloc] initWithCapacity:OSPMapServerMaxSimultaneousConnections]];
         [self setConnectionQueue:[NSMutableArray array]];
     }
@@ -257,26 +295,51 @@ typedef enum
     return [[self mapCache] objectsInBounds:bounds];
 }
 
-- (void)loadObjectsInBounds:(OSPCoordinateRect)bounds
+- (void)loadObjectsInBounds:(OSPCoordinateRect)bounds withOutset:(double)outsetSize
 {
-    CLLocationCoordinate2D from = OSPCoordinate2DUnproject(OSPCoordinateRectGetMinCoord(bounds));
-    CLLocationCoordinate2D to = OSPCoordinate2DUnproject(OSPCoordinateRectGetMaxCoord(bounds));
+    OSPNonRectangularArea *rectanglesToLoad = [[OSPNonRectangularArea areaWithRects:[NSArray arrayWithObject:[OSPValue valueWithRect:bounds]]] areaBySubtractingArea:[self requestedArea]];
     
-    NSURL *mapURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/api/0.6/map?bbox=%f,%f,%f,%f", [self serverURL], from.longitude, to.latitude, to.longitude, from.latitude]];
+    NSArray *bigEnoughRects = [[rectanglesToLoad allRects] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^ BOOL (OSPValue *rect, id bindings)
+                                                                                        {
+                                                                                            OSPCoordinateRect r = [rect rectValue];
+                                                                                            return r.size.x > 0.000005 && r.size.y > 0.000005;
+                                                                                        }]];
     
-    [self makeRequestForURL:mapURL ofType:OSPRequestTypeMapArea];
+    if ([bigEnoughRects count] > 0)
+    {
+        rectanglesToLoad = [[OSPNonRectangularArea areaWithRects:[NSArray arrayWithObject:[OSPValue valueWithRect:OSPCoordinateRectOutset(bounds, outsetSize, outsetSize)]]] areaBySubtractingArea:[self requestedArea]];
+        bigEnoughRects = [[rectanglesToLoad allRects] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^ BOOL (OSPValue *rect, id bindings)
+                                                                                   {
+                                                                                       OSPCoordinateRect r = [rect rectValue];
+                                                                                       return r.size.x > 0.000005 && r.size.y > 0.000005;
+                                                                                   }]];
+        
+        for (OSPValue *rectValue in bigEnoughRects)
+        {
+            OSPCoordinateRect rect = [rectValue rectValue];
+            
+            CLLocationCoordinate2D from = OSPCoordinate2DUnproject(OSPCoordinateRectGetMinCoord(rect));
+            CLLocationCoordinate2D to = OSPCoordinate2DUnproject(OSPCoordinateRectGetMaxCoord(rect));
+            
+            NSURL *mapURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/api/0.6/map?bbox=%f,%f,%f,%f", [self serverURL], from.longitude, to.latitude, to.longitude, from.latitude]];
+            
+            [self makeRequestForURL:mapURL ofType:OSPRequestTypeMapArea withArea:rect];
+        }
+    }
 }
 
-- (void)makeRequestForURL:(NSURL *)url ofType:(OSPRequestType)type
+- (void)makeRequestForURL:(NSURL *)url ofType:(OSPRequestType)type withArea:(OSPCoordinateRect)area
 {
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
     [req setValue:OSPUserAgentName @"/" OSPUserAgentVersion forHTTPHeaderField:@"User-Agent"];
-    
+        
     OSPConnection *rec = [[OSPConnection alloc] init];
+    [rec setMapArea:area];
     [rec setRequest:req];
     [rec setRequestType:type];
     [rec setDelegate:self];
     [self queueConnection:rec];
+    [[self requestedArea] addRect:area];
 }
 
 - (void)queueConnection:(OSPConnection *)newConnection
@@ -321,7 +384,24 @@ typedef enum
 
 - (void)connectionDidFinishLoading:(OSPConnection *)connection
 {
-    [[self delegate] mapServerDidLoadObjects:self];
+    for (OSPAPIObject *o in [connection receivedObjects])
+    {
+        OSPAPIObjectReference *ref = [[OSPAPIObjectReference alloc] initWithType:[o memberType] identity:[o identity]];
+        for (OSPAPIObject *child in [o childObjects])
+        {
+            [child addParent:ref];
+        }
+    }
+    
+    [[self delegate] mapServer:self didLoadObjectsInArea:[connection mapArea]];
+    [[self currentConnections] removeObject:connection];
+    [self popConnectionQueue];
+}
+
+- (void)connection:(OSPConnection *)connection didFailWithError:(NSError *)err
+{
+    [[self currentConnections] removeObject:connection];
+    [self popConnectionQueue];
 }
 
 @end

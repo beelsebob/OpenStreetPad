@@ -94,4 +94,9 @@
     return childNodes;
 }
 
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"Way with highway tag: %@", [[self tags] objectForKey:@"highway"]];
+}
+
 @end

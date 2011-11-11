@@ -29,7 +29,7 @@ typedef enum
 @property (readwrite, strong) CFMutableSetRef __attribute__((NSObject)) completeContents;
 @property (readwrite, strong) CFMutableSetRef __attribute__((NSObject)) contents;
 
-@property (readwrite, strong) NSLock *readLock;
+@property (readwrite, strong) NSRecursiveLock *readLock;
 
 - (id)initWithBounds:(OSPCoordinateRect)initBounds;
 
@@ -96,6 +96,8 @@ Boolean APIObjectEqual (const void *value1, const void *value2)
         [self setContents:s];
         CFRelease(s);
         
+        [self setReadLock:[[NSRecursiveLock alloc] init]];
+        
         children[0] = nil;
         children[1] = nil;
         children[2] = nil;
@@ -112,7 +114,9 @@ Boolean APIObjectEqual (const void *value1, const void *value2)
 {
     if ([self isSuperMap])
     {
+        [[self readLock] lock];
         CFSetAddValue([self completeContents], (__bridge const void *)apiObject);
+        [[self readLock] unlock];
     }
     
     if (![self hasChildMaps] && [(__bridge NSSet *)[self contents] count] == OSPMapExpandLimit)
