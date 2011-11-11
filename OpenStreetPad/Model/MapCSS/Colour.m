@@ -30,6 +30,7 @@
     }
     else
     {
+        NSLog(@"%@", NSStringFromClass([firstToken class]));
 #warning Missing case for dealing with hash colour.
     }
     

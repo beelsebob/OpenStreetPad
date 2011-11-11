@@ -771,7 +771,6 @@
 				INFOPLIST_FILE = "OpenStreetPad/OpenStreetPad-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/CoreParse\"",
 					"\"$(SRCROOT)/OpenStreetPad/CoreParse\"",
 				);
 				OTHER_LDFLAGS = (
@@ -791,7 +790,6 @@
 				INFOPLIST_FILE = "OpenStreetPad/OpenStreetPad-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/CoreParse\"",
 					"\"$(SRCROOT)/OpenStreetPad/CoreParse\"",
 				);
 				OTHER_LDFLAGS = (

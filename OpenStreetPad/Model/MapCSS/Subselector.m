@@ -116,10 +116,10 @@
         case OSPMapCSSObjectTypeRelation:
             return t == OSPMemberTypeRelation;
         case OSPMapCSSObjectTypeLine:
-            return t == OSPMemberTypeWay && (![[[(OSPWay *)object nodes] objectAtIndex:0] isEqual:[[(OSPWay *)object nodes] objectAtIndex:1]] ||
-                                             [[[object tags] objectForKey:@"area"] ospTruthValue]);
+            return t == OSPMemberTypeWay && (![[[(OSPWay *)object nodes] objectAtIndex:0] isEqual:[[(OSPWay *)object nodes] lastObject]] &&
+                                             ![[[object tags] objectForKey:@"area"] ospTruthValue]);
         case OSPMapCSSObjectTypeArea:
-            return t == OSPMemberTypeWay && ([[[(OSPWay *)object nodes] objectAtIndex:0] isEqual:[[(OSPWay *)object nodes] objectAtIndex:1]] ||
+            return t == OSPMemberTypeWay && ([[[(OSPWay *)object nodes] objectAtIndex:0] isEqual:[[(OSPWay *)object nodes] lastObject]] ||
                                              [[[object tags] objectForKey:@"area"] ospTruthValue]);
         case OSPMapCSSObjectTypeAll:
             return YES;

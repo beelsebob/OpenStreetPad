@@ -73,14 +73,14 @@ way[landuse]
   z-index: -5;
 }
 
-way[landuse="military"]
+area[landuse="military"]
 {
   fill-image: url("fills/military.png");
   width: 3pt;
   color: rgb(1.0, 0.46, 0.47);
 }
 
-way[building]
+area[building]
 {
   width: 1 pt;
   color: rgb(0.74, 0.68, 0.68);
