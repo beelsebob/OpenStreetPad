@@ -1,5 +1,5 @@
 //
-//  Style.h
+//  Key.h
 //  OpenStreetPad
 //
 //  Created by Thomas Davie on 31/10/2011.
@@ -9,11 +9,9 @@
 #import <Foundation/Foundation.h>
 
 #import "CoreParse.h"
-#import "OSPMapCSSSpecifier.h"
 
-@interface OSPMapCSSStyle : NSObject <CPParseResult>
+@interface OSPMapCSSKey : NSObject <CPParseResult>
 
 @property (readwrite, copy) NSString *key;
-@property (readwrite, retain) OSPMapCSSSpecifier *specifier;
 
 @end

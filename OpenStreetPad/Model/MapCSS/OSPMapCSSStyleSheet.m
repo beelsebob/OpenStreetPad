@@ -17,7 +17,7 @@ char styleKey;
 
 @synthesize ruleset;
 
-- (id)initWithRules:(Ruleset *)initRuleset
+- (id)initWithRules:(OSPMapCSSRuleset *)initRuleset
 {
     self = [super init];
     

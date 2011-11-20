@@ -15,12 +15,12 @@
 #import "OSPNode.h"
 #import "OSPMap.h"
 
-#import "Specifier.h"
-#import "SizeListSpecifier.h"
-#import "ColourSpecifier.h"
-#import "NamedSpecifier.h"
-#import "MapCSSSize.h"
-#import "URLSpecifier.h"
+#import "OSPMapCSSSpecifier.h"
+#import "OSPMapCSSSizeListSpecifier.h"
+#import "OSPMapCSSColourSpecifier.h"
+#import "OSPMapCSSNamedSpecifier.h"
+#import "OSPMapCSSSize.h"
+#import "OSPMapCSSURLSpecifier.h"
 
 #import <objc/runtime.h>
 
@@ -30,13 +30,15 @@ void patternCallback(void *info, CGContextRef ctx);
 
 - (NSDictionary *)sortedObjects:(NSSet *)objects;
 
-- (UIColor *)colourWithColourSpecifier:(Specifier *)colour opacitySpecifier:(Specifier *)opacity;
+- (UIColor *)colourWithColourSpecifier:(OSPMapCSSSpecifier *)colour opacitySpecifier:(OSPMapCSSSpecifier *)opacity;
 - (UIColor *)colourFromName:(NSString *)colourName;
-- (UIImage *)imageWithSpecifier:(Specifier *)spec;
+- (UIImage *)imageWithSpecifier:(OSPMapCSSSpecifier *)spec;
 
 - (void)renderLayers:(NSDictionary *)layers inContext:(CGContextRef)ctx withScaleMultiplier:(CGFloat)scale;
 - (void)renderWay:(OSPWay *)way inContext:(CGContextRef)ctx withScaleMultiplier:(CGFloat)scale;
 - (void)renderCasing:(OSPWay *)way inContext:(CGContextRef)ctx withScaleMultiplier:(CGFloat)scale;
+- (void)renderNode:(OSPNode *)node inContext:(CGContextRef)ctx withScaleMultiplier:(CGFloat)scale;
+- (void)renderObject:(OSPAPIObject *)obj atPoint:(OSPCoordinate2D)loc inContext:(CGContextRef)ctx withScaleMultiplier:(CGFloat)scale;
 
 @end
 
@@ -140,27 +142,27 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     [self renderLayers:[self sortedObjects:objects] inContext:ctx withScaleMultiplier:oneOverScale];
 }
 
-- (UIColor *)colourWithColourSpecifier:(Specifier *)colour opacitySpecifier:(Specifier *)opacity
+- (UIColor *)colourWithColourSpecifier:(OSPMapCSSSpecifier *)colour opacitySpecifier:(OSPMapCSSSpecifier *)opacity
 {
     UIColor *c = nil;
-    if ([colour isKindOfClass:[ColourSpecifier class]])
+    if ([colour isKindOfClass:[OSPMapCSSColourSpecifier class]])
     {
-        c = [(ColourSpecifier *)colour colour];
+        c = [(OSPMapCSSColourSpecifier *)colour colour];
     }
-    else if ([colour isKindOfClass:[NamedSpecifier class]])
+    else if ([colour isKindOfClass:[OSPMapCSSNamedSpecifier class]])
     {
-        NSString *colourName = [(NamedSpecifier *)colour name];
+        NSString *colourName = [(OSPMapCSSNamedSpecifier *)colour name];
         c = [self colourFromName:colourName];
     }
     
-    if (nil != c && [opacity isKindOfClass:[SizeListSpecifier class]])
+    if (nil != c && [opacity isKindOfClass:[OSPMapCSSSizeListSpecifier class]])
     {
         CGFloat red;
         CGFloat green;
         CGFloat blue;
         CGFloat alpha;
         [c getRed:&red green:&green blue:&blue alpha:&alpha];
-        alpha = [(MapCSSSize *)[[(SizeListSpecifier *)opacity sizes] objectAtIndex:0] value];
+        alpha = [(OSPMapCSSSize *)[[(OSPMapCSSSizeListSpecifier *)opacity sizes] objectAtIndex:0] value];
         c = [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
     }
     
@@ -350,10 +352,10 @@ extern char styleKey;
                            {
                                NSDictionary *o1s = objc_getAssociatedObject(o1, &styleKey);
                                NSDictionary *o2s = objc_getAssociatedObject(o2, &styleKey);
-                               Specifier *z1s = [o1s objectForKey:@"z-index"];
-                               Specifier *z2s = [o2s objectForKey:@"z-index"];
-                               float z1 = [z1s isKindOfClass:[SizeListSpecifier class]] ? [(MapCSSSize *)[[(SizeListSpecifier *)z1s sizes] objectAtIndex:0] value] : 0.0f;
-                               float z2 = [z2s isKindOfClass:[SizeListSpecifier class]] ? [(MapCSSSize *)[[(SizeListSpecifier *)z2s sizes] objectAtIndex:0] value] : 0.0f;
+                               OSPMapCSSSpecifier *z1s = [o1s objectForKey:@"z-index"];
+                               OSPMapCSSSpecifier *z2s = [o2s objectForKey:@"z-index"];
+                               float z1 = [z1s isKindOfClass:[OSPMapCSSSizeListSpecifier class]] ? [(OSPMapCSSSize *)[[(OSPMapCSSSizeListSpecifier *)z1s sizes] objectAtIndex:0] value] : 0.0f;
+                               float z2 = [z2s isKindOfClass:[OSPMapCSSSizeListSpecifier class]] ? [(OSPMapCSSSize *)[[(OSPMapCSSSizeListSpecifier *)z2s sizes] objectAtIndex:0] value] : 0.0f;
                                
                                return z1 > z2 ? NSOrderedDescending : z1 < z2 ? NSOrderedAscending : NSOrderedSame;
                            }]
@@ -381,6 +383,10 @@ extern char styleKey;
             {
                 [self renderWay:(OSPWay *)object inContext:ctx withScaleMultiplier:scale];
             }
+            else if ([object isKindOfClass:[OSPNode class]])
+            {
+                [self renderNode:(OSPNode *)object inContext:ctx withScaleMultiplier:scale];
+            }
         }
     }
 }
@@ -392,10 +398,10 @@ extern char styleKey;
     NSDictionary *style = objc_getAssociatedObject(way, &styleKey);
     
     NSArray *nodes = [way nodes];
-    Specifier *widthSpec = [style objectForKey:@"width"];
-    Specifier *casingWidthSpec = [style objectForKey:@"casing-width"];
+    OSPMapCSSSpecifier *widthSpec = [style objectForKey:@"width"];
+    OSPMapCSSSpecifier *casingWidthSpec = [style objectForKey:@"casing-width"];
     
-    if ([nodes count] > 1 && [widthSpec isKindOfClass:[SizeListSpecifier class]] && [casingWidthSpec isKindOfClass:[SizeListSpecifier class]])
+    if ([nodes count] > 1 && [widthSpec isKindOfClass:[OSPMapCSSSizeListSpecifier class]] && [casingWidthSpec isKindOfClass:[OSPMapCSSSizeListSpecifier class]])
     {
         OSPMap *m = [way map];
         NSNumber *firstNodeId = [nodes objectAtIndex:0];
@@ -411,21 +417,21 @@ extern char styleKey;
             CGContextAddLineToPoint(ctx, nl.x, nl.y);
         }
         
-        CGContextSetLineWidth(ctx, ([(MapCSSSize *)[[(SizeListSpecifier *)widthSpec sizes] objectAtIndex:0] value] + [(MapCSSSize *)[[(SizeListSpecifier *)casingWidthSpec sizes] objectAtIndex:0] value]) * scale);
+        CGContextSetLineWidth(ctx, ([(OSPMapCSSSize *)[[(OSPMapCSSSizeListSpecifier *)widthSpec sizes] objectAtIndex:0] value] + [(OSPMapCSSSize *)[[(OSPMapCSSSizeListSpecifier *)casingWidthSpec sizes] objectAtIndex:0] value]) * scale);
         UIColor *colour = [self colourWithColourSpecifier:[style objectForKey:@"casing-color"] opacitySpecifier:[style objectForKey:@"casing-opacity"]];
         CGContextSetStrokeColorWithColor(ctx, colour == nil ? [[UIColor blackColor] CGColor] : [colour CGColor]);
-        Specifier *lineCapSpec = [style objectForKey:@"casing-linecap"];
-        CGContextSetLineCap(ctx, [lineCapSpec isKindOfClass:[NamedSpecifier class]] ? CGLineCapFromNSString([(NamedSpecifier *)lineCapSpec name]) : kCGLineCapRound);
-        Specifier *lineJoinSpec = [style objectForKey:@"casing-linejoin"];
-        CGContextSetLineJoin(ctx, [lineJoinSpec isKindOfClass:[NamedSpecifier class]] ? CGLineJoinFromNSString([(NamedSpecifier *)lineJoinSpec name]) : kCGLineJoinRound);
+        OSPMapCSSSpecifier *lineCapSpec = [style objectForKey:@"casing-linecap"];
+        CGContextSetLineCap(ctx, [lineCapSpec isKindOfClass:[OSPMapCSSNamedSpecifier class]] ? CGLineCapFromNSString([(OSPMapCSSNamedSpecifier *)lineCapSpec name]) : kCGLineCapRound);
+        OSPMapCSSSpecifier *lineJoinSpec = [style objectForKey:@"casing-linejoin"];
+        CGContextSetLineJoin(ctx, [lineJoinSpec isKindOfClass:[OSPMapCSSNamedSpecifier class]] ? CGLineJoinFromNSString([(OSPMapCSSNamedSpecifier *)lineJoinSpec name]) : kCGLineJoinRound);
         
-        Specifier *dashSpec = [style objectForKey:@"casing-dashes"];
-        if ([dashSpec isKindOfClass:[SizeListSpecifier class]])
+        OSPMapCSSSpecifier *dashSpec = [style objectForKey:@"casing-dashes"];
+        if ([dashSpec isKindOfClass:[OSPMapCSSSizeListSpecifier class]])
         {
-            SizeListSpecifier *dashSizeSpec = (SizeListSpecifier *)dashSpec;
+            OSPMapCSSSizeListSpecifier *dashSizeSpec = (OSPMapCSSSizeListSpecifier *)dashSpec;
             CGFloat *dashes = malloc([[dashSizeSpec sizes] count]);
             int i = 0;
-            for (MapCSSSize *size in [dashSizeSpec sizes])
+            for (OSPMapCSSSize *size in [dashSizeSpec sizes])
             {
                 dashes[i] = [size value] * scale;
                 i++;
@@ -447,115 +453,174 @@ extern char styleKey;
     NSDictionary *style = objc_getAssociatedObject(way, &styleKey);
     
     NSArray *nodes = [way nodes];
-    Specifier *widthSpec = [style objectForKey:@"width"];
+    OSPMapCSSSpecifier *widthSpec = [style objectForKey:@"width"];
     UIColor *fillColour = [self colourWithColourSpecifier:[style objectForKey:@"fill-color"] opacitySpecifier:[style objectForKey:@"fill-opacity"]];
     
     UIImage *fillImage = [self imageWithSpecifier:[style objectForKey:@"fill-image"]];
     UIImage *strokeImage = [self imageWithSpecifier:[style objectForKey:@"image"]];
     
-    BOOL strokeValid = [widthSpec isKindOfClass:[SizeListSpecifier class]];
+    BOOL strokeValid = [widthSpec isKindOfClass:[OSPMapCSSSizeListSpecifier class]];
     BOOL fillValid = fillColour != nil || fillImage != nil;
+    OSPMap *m = [way map];
     
-    if ([nodes count] > 1 && (strokeValid || fillValid))
+    if ([nodes count] > 1)
     {
-        OSPMap *m = [way map];
-        NSNumber *firstNodeId = [nodes objectAtIndex:0];
-        OSPNode *firstNode = [m nodeWithId:[firstNodeId integerValue]];
-        OSPCoordinate2D l = [firstNode projectedLocation];
-        
-        CGMutablePathRef path = CGPathCreateMutable();
-        CGPathMoveToPoint(path, NULL, l.x, l.y);
-        for (NSNumber *nodeId in [nodes subarrayWithRange:NSMakeRange(1, [nodes count] - 1)])
+        if (strokeValid || fillValid)
         {
-            OSPNode *node = [m nodeWithId:[nodeId integerValue]];
-            OSPCoordinate2D nl = [node projectedLocation];
-            CGPathAddLineToPoint(path, NULL, nl.x, nl.y);
-        }
-        
-        if (fillValid)
-        {
-            CGContextAddPath(ctx, path);
-            if (fillColour != nil)
+            NSNumber *firstNodeId = [nodes objectAtIndex:0];
+            OSPNode *firstNode = [m nodeWithId:[firstNodeId integerValue]];
+            OSPCoordinate2D l = [firstNode projectedLocation];
+            
+            CGMutablePathRef path = CGPathCreateMutable();
+            CGPathMoveToPoint(path, NULL, l.x, l.y);
+            for (NSNumber *nodeId in [nodes subarrayWithRange:NSMakeRange(1, [nodes count] - 1)])
             {
-                CGColorSpaceRef rgbSpace = CGColorSpaceCreateDeviceRGB();
-                CGContextSetFillColorSpace(ctx, rgbSpace);
-                CGColorSpaceRelease(rgbSpace);
-                CGContextSetFillColorWithColor(ctx, [fillColour CGColor]);
+                OSPNode *node = [m nodeWithId:[nodeId integerValue]];
+                OSPCoordinate2D nl = [node projectedLocation];
+                CGPathAddLineToPoint(path, NULL, nl.x, nl.y);
             }
-            else
+            
+            if (fillValid)
             {
-                CGSize s = [fillImage size];
-                CGColorSpaceRef patternSpace = CGColorSpaceCreatePattern(NULL);
-                CGContextSetFillColorSpace(ctx, patternSpace);
-                CGColorSpaceRelease(patternSpace);
-                static const CGPatternCallbacks callbacks = { 0, &patternCallback, NULL };
-                CGPatternRef pat = CGPatternCreate((__bridge void *)[NSDictionary dictionaryWithObjectsAndKeys:fillImage, @"I", [NSValue valueWithCGSize:s], @"s", nil], CGRectMake(0.0f, 0.0f, s.width, s.height), CGAffineTransformMakeScale(1.0, -1.0), s.width, s.height, kCGPatternTilingNoDistortion, true, &callbacks);
-                CGFloat alpha = 1;
-                CGContextSetFillPattern(ctx, pat, &alpha);
-                CGPatternRelease(pat);
-            }
-            CGContextFillPath(ctx);
-        }
-        
-        if (strokeValid)
-        {
-            CGContextAddPath(ctx, path);
-            CGContextSetLineWidth(ctx, [(MapCSSSize *)[[(SizeListSpecifier *)widthSpec sizes] objectAtIndex:0] value] * scale);
-            if (nil == strokeImage)
-            {
-                CGColorSpaceRef rgbSpace = CGColorSpaceCreateDeviceRGB();
-                CGContextSetFillColorSpace(ctx, rgbSpace);
-                CGColorSpaceRelease(rgbSpace);
-                UIColor *colour = [self colourWithColourSpecifier:[style objectForKey:@"color"] opacitySpecifier:[style objectForKey:@"opacity"]];
-                CGContextSetStrokeColorWithColor(ctx, colour == nil ? [[UIColor blackColor] CGColor] : [colour CGColor]);
-                Specifier *lineCapSpec = [style objectForKey:@"linecap"];
-                CGContextSetLineCap(ctx, [lineCapSpec isKindOfClass:[NamedSpecifier class]] ? CGLineCapFromNSString([(NamedSpecifier *)lineCapSpec name]) : kCGLineCapRound);
-                Specifier *lineJoinSpec = [style objectForKey:@"linejoin"];
-                CGContextSetLineJoin(ctx, [lineJoinSpec isKindOfClass:[NamedSpecifier class]] ? CGLineJoinFromNSString([(NamedSpecifier *)lineJoinSpec name]) : kCGLineJoinRound);
-                
-                Specifier *dashSpec = [style objectForKey:@"dashes"];
-                if ([dashSpec isKindOfClass:[SizeListSpecifier class]])
+                CGContextAddPath(ctx, path);
+                if (fillColour != nil)
                 {
-                    SizeListSpecifier *dashSizeSpec = (SizeListSpecifier *)dashSpec;
-                    CGFloat *dashes = malloc([[dashSizeSpec sizes] count]);
-                    int i = 0;
-                    for (MapCSSSize *size in [dashSizeSpec sizes])
-                    {
-                        dashes[i] = [size value] * scale;
-                        i++;
-                    }
-                    CGContextSetLineDash(ctx, 0.0f, dashes, [[dashSizeSpec sizes] count]);
-                    free(dashes);
+                    CGColorSpaceRef rgbSpace = CGColorSpaceCreateDeviceRGB();
+                    CGContextSetFillColorSpace(ctx, rgbSpace);
+                    CGColorSpaceRelease(rgbSpace);
+                    CGContextSetFillColorWithColor(ctx, [fillColour CGColor]);
                 }
                 else
                 {
-                    CGContextSetLineDash(ctx, 0.0f, NULL, 0);
+                    CGSize s = [fillImage size];
+                    CGColorSpaceRef patternSpace = CGColorSpaceCreatePattern(NULL);
+                    CGContextSetFillColorSpace(ctx, patternSpace);
+                    CGColorSpaceRelease(patternSpace);
+                    static const CGPatternCallbacks callbacks = { 0, &patternCallback, NULL };
+                    CGPatternRef pat = CGPatternCreate((__bridge void *)[NSDictionary dictionaryWithObjectsAndKeys:fillImage, @"I", [NSValue valueWithCGSize:s], @"s", nil], CGRectMake(0.0f, 0.0f, s.width, s.height), CGAffineTransformMakeScale(1.0, -1.0), s.width, s.height, kCGPatternTilingNoDistortion, true, &callbacks);
+                    CGFloat alpha = 1;
+                    CGContextSetFillPattern(ctx, pat, &alpha);
+                    CGPatternRelease(pat);
                 }
-            }
-            else
-            {
-                CGSize s = [strokeImage size];
-                CGColorSpaceRef patternSpace = CGColorSpaceCreatePattern(NULL);
-                CGContextSetStrokeColorSpace(ctx, patternSpace);
-                CGColorSpaceRelease(patternSpace);
-                static const CGPatternCallbacks callbacks = { 0, &patternCallback, NULL };
-                CGPatternRef pat = CGPatternCreate((__bridge void *)[NSDictionary dictionaryWithObjectsAndKeys:strokeImage, @"I", [NSValue valueWithCGSize:s], @"s", nil], CGRectMake(0.0f, 0.0f, s.width, s.height), CGAffineTransformMakeScale(1.0, -1.0), s.width, s.height, kCGPatternTilingNoDistortion, true, &callbacks);
-                CGFloat alpha = 1;
-                CGContextSetStrokePattern(ctx, pat, &alpha);
-                CGPatternRelease(pat);
+                CGContextFillPath(ctx);
             }
             
-            CGContextStrokePath(ctx);
+            if (strokeValid)
+            {
+                CGContextAddPath(ctx, path);
+                CGContextSetLineWidth(ctx, [(OSPMapCSSSize *)[[(OSPMapCSSSizeListSpecifier *)widthSpec sizes] objectAtIndex:0] value] * scale);
+                if (nil == strokeImage)
+                {
+                    CGColorSpaceRef rgbSpace = CGColorSpaceCreateDeviceRGB();
+                    CGContextSetFillColorSpace(ctx, rgbSpace);
+                    CGColorSpaceRelease(rgbSpace);
+                    UIColor *colour = [self colourWithColourSpecifier:[style objectForKey:@"color"] opacitySpecifier:[style objectForKey:@"opacity"]];
+                    CGContextSetStrokeColorWithColor(ctx, colour == nil ? [[UIColor blackColor] CGColor] : [colour CGColor]);
+                    OSPMapCSSSpecifier *lineCapSpec = [style objectForKey:@"linecap"];
+                    CGContextSetLineCap(ctx, [lineCapSpec isKindOfClass:[OSPMapCSSNamedSpecifier class]] ? CGLineCapFromNSString([(OSPMapCSSNamedSpecifier *)lineCapSpec name]) : kCGLineCapRound);
+                    OSPMapCSSSpecifier *lineJoinSpec = [style objectForKey:@"linejoin"];
+                    CGContextSetLineJoin(ctx, [lineJoinSpec isKindOfClass:[OSPMapCSSNamedSpecifier class]] ? CGLineJoinFromNSString([(OSPMapCSSNamedSpecifier *)lineJoinSpec name]) : kCGLineJoinRound);
+                    
+                    OSPMapCSSSpecifier *dashSpec = [style objectForKey:@"dashes"];
+                    if ([dashSpec isKindOfClass:[OSPMapCSSSizeListSpecifier class]])
+                    {
+                        OSPMapCSSSizeListSpecifier *dashSizeSpec = (OSPMapCSSSizeListSpecifier *)dashSpec;
+                        CGFloat *dashes = malloc([[dashSizeSpec sizes] count]);
+                        int i = 0;
+                        for (OSPMapCSSSize *size in [dashSizeSpec sizes])
+                        {
+                            dashes[i] = [size value] * scale;
+                            i++;
+                        }
+                        CGContextSetLineDash(ctx, 0.0f, dashes, [[dashSizeSpec sizes] count]);
+                        free(dashes);
+                    }
+                    else
+                    {
+                        CGContextSetLineDash(ctx, 0.0f, NULL, 0);
+                    }
+                }
+                else
+                {
+                    CGSize s = [strokeImage size];
+                    CGColorSpaceRef patternSpace = CGColorSpaceCreatePattern(NULL);
+                    CGContextSetStrokeColorSpace(ctx, patternSpace);
+                    CGColorSpaceRelease(patternSpace);
+                    static const CGPatternCallbacks callbacks = { 0, &patternCallback, NULL };
+                    CGPatternRef pat = CGPatternCreate((__bridge void *)[NSDictionary dictionaryWithObjectsAndKeys:strokeImage, @"I", [NSValue valueWithCGSize:s], @"s", nil], CGRectMake(0.0f, 0.0f, s.width, s.height), CGAffineTransformMakeScale(1.0, -1.0), s.width, s.height, kCGPatternTilingNoDistortion, true, &callbacks);
+                    CGFloat alpha = 1;
+                    CGContextSetStrokePattern(ctx, pat, &alpha);
+                    CGPatternRelease(pat);
+                }
+                
+                CGContextStrokePath(ctx);
+            }
+            CGPathRelease(path);
         }
-        CGPathRelease(path);
+        
+        OSPCoordinate2D c = [[m nodeWithId:[[nodes objectAtIndex:0] integerValue]] projectedLocation];
+        NSUInteger idx = 0;
+        for (NSNumber *nodeId in nodes)
+        {
+            if (idx != 0)
+            {
+                OSPCoordinate2D np = [[m nodeWithId:[nodeId integerValue]] projectedLocation];
+                c.x += np.x;
+                c.y += np.y;
+            }
+            idx++;
+        }
+        c.x /= (double)[nodes count];
+        c.y /= (double)[nodes count];
+        
+        [self renderObject:way atPoint:c inContext:ctx withScaleMultiplier:scale];
     }
 }
 
-- (UIImage *)imageWithSpecifier:(Specifier *)spec
+- (void)renderNode:(OSPNode *)node inContext:(CGContextRef)ctx withScaleMultiplier:(CGFloat)scale
 {
-    if ([spec isKindOfClass:[URLSpecifier class]])
+    [self renderObject:node atPoint:[node projectedLocation] inContext:ctx withScaleMultiplier:scale];
+}
+
+- (void)renderObject:(OSPAPIObject *)obj atPoint:(OSPCoordinate2D)loc inContext:(CGContextRef)ctx withScaleMultiplier:(CGFloat)scale
+{
+    NSDictionary *style = objc_getAssociatedObject(obj, &styleKey);
+    UIImage *image = [self imageWithSpecifier:[style objectForKey:@"icon-image"]];
+    
+    if (nil != image)
     {
-        Url *u = [(URLSpecifier *)spec url];
+        OSPMapCSSSpecifier *opacitySpec = [style objectForKey:@"icon-opacity"];
+        CGContextSaveGState(ctx);
+        CGContextSetAlpha(ctx, [opacitySpec isKindOfClass:[OSPMapCSSSizeListSpecifier class]] ? [(OSPMapCSSSize *)[[(OSPMapCSSSizeListSpecifier *)opacitySpec sizes] objectAtIndex:0] value] : 1.0f);
+        OSPMapCSSSpecifier *widthSpec = [style objectForKey:@"icon-width"];
+        OSPMapCSSSpecifier *heightSpec = [style objectForKey:@"icon-height"];
+        
+        CGFloat width = [image size].width;
+        CGFloat height = [image size].height;
+        
+        if ([widthSpec isKindOfClass:[OSPMapCSSSizeListSpecifier class]])
+        {
+            OSPMapCSSSize *ws = [[(OSPMapCSSSizeListSpecifier *)widthSpec sizes] objectAtIndex:0];
+            width = [ws unit] == OSPMapCSSUnitPercent ? width * [ws value] * 0.01f : [ws value];
+        }
+        if ([heightSpec isKindOfClass:[OSPMapCSSSizeListSpecifier class]])
+        {
+            OSPMapCSSSize *hs = [[(OSPMapCSSSizeListSpecifier *)heightSpec sizes] objectAtIndex:0];
+            height = [hs unit] == OSPMapCSSUnitPercent ? height * [hs value] * 0.01f : [hs value];
+        }
+        width *= scale;
+        height *= scale;
+        
+        CGContextDrawImage(ctx, CGRectMake(loc.x - width * 0.5f, loc.y - height * 0.5f, width, height), [image CGImage]);
+        CGContextRestoreGState(ctx);
+    }
+}
+
+- (UIImage *)imageWithSpecifier:(OSPMapCSSSpecifier *)spec
+{
+    if ([spec isKindOfClass:[OSPMapCSSURLSpecifier class]])
+    {
+        OSPMapCSSUrl *u = [(OSPMapCSSURLSpecifier *)spec url];
         if (![u isEval])
         {
             NSString *url = [u content];

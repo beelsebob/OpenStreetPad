@@ -22,29 +22,32 @@ way[highway]
 way[highway="trunk"],
 way[highway="trunk_link"]
 {
-  width: 5pt;
+  width: 8pt;
   z-index: 0.5;
   color: rgb(0.66, 0.86, 0.66);
+  text: name;
+  font-family: Helvetica;
+  font-size: 14pt;
 }
 
 way[highway="primary"]
 {
-  width: 5 pt;
+  width: 8 pt;
   z-index: 0.4;
   color: rgb(0.92, 0.6, 0.6);
 }
 
 way[highway="secondary"]
 {
-  width: 4 pt;
+  width: 6 pt;
   z-index: 0.3;
-  color: rgb(0.99, 0.84, 0.64);
+  color: rgb(1.0, 0.84, 0.64);
 }
 
 way[highway="tertiary"]
 {
   z-index: 0.2;
-  width: 3 pt;
+  width: 4 pt;
   color: rgb(0.99, 1.0, 0.7);
 }
 

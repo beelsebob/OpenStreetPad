@@ -8,15 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-#import "Ruleset.h"
+#import "OSPMapCSSRuleset.h"
 
 #import "OSPAPIObject.h"
 
 @interface OSPMapCSSStyleSheet : NSObject
 
-@property (readwrite, strong) Ruleset *ruleset;
+@property (readwrite, strong) OSPMapCSSRuleset *ruleset;
 
-- (id)initWithRules:(Ruleset *)ruleset;
+- (id)initWithRules:(OSPMapCSSRuleset *)ruleset;
 
 - (void)styleObjects:(NSSet *)apiObject;
 - (NSDictionary *)styleForCanvas;
