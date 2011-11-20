@@ -8,6 +8,8 @@
 
 #import "OSPMapCSSColour.h"
 
+#import "OSPMapCSSHashColourToken.h"
+
 @implementation OSPMapCSSColour
 
 - (id)initWithSyntaxTree:(CPSyntaxTree *)syntaxTree
@@ -28,10 +30,9 @@
         }
 #endif
     }
-    else
+    else if ([firstToken isKindOfClass:[OSPMapCSSHashColourToken class]])
     {
-        NSLog(@"%@", NSStringFromClass([firstToken class]));
-#warning Missing case for dealing with hash colour.
+        return (OSPMapCSSColour *)[(OSPMapCSSHashColourToken *)firstToken colour];
     }
     
     return nil;
