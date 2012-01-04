@@ -32,6 +32,8 @@
 		1F2C267213F6E41D00D3AE25 /* OSPMapArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C267113F6E41D00D3AE25 /* OSPMapArea.m */; };
 		1F2C267613F6FC2500D3AE25 /* OSPMaths.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C267513F6FC2500D3AE25 /* OSPMaths.m */; };
 		1F30B4F9146DC9C100EB7F80 /* icons in Resources */ = {isa = PBXBuildFile; fileRef = 1F30B4F8146DC9C100EB7F80 /* icons */; };
+		1F3D678F14ADD331002575EC /* UIColor+CSS.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3D678E14ADD331002575EC /* UIColor+CSS.m */; };
+		1F3D67BC14B1E0C4002575EC /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F3D67BB14B1E0C4002575EC /* CoreText.framework */; };
 		1F4D13B7146C4E97007EF1B4 /* fills in Resources */ = {isa = PBXBuildFile; fileRef = 1F4D13B6146C4E97007EF1B4 /* fills */; };
 		1F5CF1B514139FEA0032C761 /* OSPMetaTileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CF1B414139FEA0032C761 /* OSPMetaTileView.m */; };
 		1F5CF1B81413BA850032C761 /* OSPNonRectangularArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CF1B71413BA850032C761 /* OSPNonRectangularArea.m */; };
@@ -67,6 +69,8 @@
 		1FDD6998147906780095E634 /* OSPMapCSSHashColourToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD6997147906780095E634 /* OSPMapCSSHashColourToken.m */; };
 		1FDD6999147907D50095E634 /* OSPMapCSSHashColourRecogniser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD6990147900110095E634 /* OSPMapCSSHashColourRecogniser.m */; };
 		1FDD699B147908930095E634 /* OSPMapCSSHashColourToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD6997147906780095E634 /* OSPMapCSSHashColourToken.m */; };
+		1FDD699E14790C520095E634 /* OSPMapCSSStyledObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD699D14790C510095E634 /* OSPMapCSSStyledObject.m */; };
+		1FDD69A1147974470095E634 /* OSPQuadTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD69A0147974470095E634 /* OSPQuadTree.m */; };
 		1FFE3A51145C2C0B00B47ED0 /* OSPMapCSSParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFE3A50145C2C0B00B47ED0 /* OSPMapCSSParser.m */; };
 		1FFE3A73145C3B9600B47ED0 /* libCoreParse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FFE3A72145C3B9600B47ED0 /* libCoreParse.a */; };
 		1FFFC23814653FD10052D1B6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD8C52513ED378600ADD20A /* Foundation.framework */; };
@@ -170,6 +174,9 @@
 		1F2C267413F6FC2500D3AE25 /* OSPMaths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMaths.h; sourceTree = "<group>"; };
 		1F2C267513F6FC2500D3AE25 /* OSPMaths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMaths.m; sourceTree = "<group>"; };
 		1F30B4F8146DC9C100EB7F80 /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = icons; sourceTree = "<group>"; };
+		1F3D678D14ADD331002575EC /* UIColor+CSS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+CSS.h"; sourceTree = "<group>"; };
+		1F3D678E14ADD331002575EC /* UIColor+CSS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+CSS.m"; sourceTree = "<group>"; };
+		1F3D67BB14B1E0C4002575EC /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		1F4D13B6146C4E97007EF1B4 /* fills */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fills; sourceTree = "<group>"; };
 		1F5CF1B314139FEA0032C761 /* OSPMetaTileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMetaTileView.h; sourceTree = "<group>"; };
 		1F5CF1B414139FEA0032C761 /* OSPMetaTileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMetaTileView.m; sourceTree = "<group>"; };
@@ -231,6 +238,10 @@
 		1FDD6990147900110095E634 /* OSPMapCSSHashColourRecogniser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapCSSHashColourRecogniser.m; sourceTree = "<group>"; };
 		1FDD6996147906780095E634 /* OSPMapCSSHashColourToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapCSSHashColourToken.h; sourceTree = "<group>"; };
 		1FDD6997147906780095E634 /* OSPMapCSSHashColourToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapCSSHashColourToken.m; sourceTree = "<group>"; };
+		1FDD699C14790C510095E634 /* OSPMapCSSStyledObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapCSSStyledObject.h; sourceTree = "<group>"; };
+		1FDD699D14790C510095E634 /* OSPMapCSSStyledObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapCSSStyledObject.m; sourceTree = "<group>"; };
+		1FDD699F147974460095E634 /* OSPQuadTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPQuadTree.h; sourceTree = "<group>"; };
+		1FDD69A0147974470095E634 /* OSPQuadTree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPQuadTree.m; sourceTree = "<group>"; };
 		1FFE3A4F145C2C0B00B47ED0 /* OSPMapCSSParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapCSSParser.h; sourceTree = "<group>"; };
 		1FFE3A50145C2C0B00B47ED0 /* OSPMapCSSParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapCSSParser.m; sourceTree = "<group>"; };
 		1FFE3A55145C2D1D00B47ED0 /* CoreParse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CoreParse.h; path = ../CoreParse/CoreParse.h; sourceTree = "<group>"; };
@@ -278,6 +289,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F3D67BC14B1E0C4002575EC /* CoreText.framework in Frameworks */,
 				1FFE3A73145C3B9600B47ED0 /* libCoreParse.a in Frameworks */,
 				1F0007D11412662900220FAA /* QuartzCore.framework in Frameworks */,
 				1FD8C55913ED3B3500ADD20A /* CoreLocation.framework in Frameworks */,
@@ -364,6 +376,8 @@
 				1FFFC27414655B460052D1B6 /* OSPMapCSSStyleSheet.m */,
 				1FFFC27614657CDB0052D1B6 /* NSString+OpenStreetPad.h */,
 				1FFFC27714657CDB0052D1B6 /* NSString+OpenStreetPad.m */,
+				1FDD699C14790C510095E634 /* OSPMapCSSStyledObject.h */,
+				1FDD699D14790C510095E634 /* OSPMapCSSStyledObject.m */,
 			);
 			path = MapCSS;
 			sourceTree = "<group>";
@@ -397,6 +411,7 @@
 				1FD8C52313ED378600ADD20A /* UIKit.framework */,
 				1FD8C52513ED378600ADD20A /* Foundation.framework */,
 				1FD8C52713ED378600ADD20A /* CoreGraphics.framework */,
+				1F3D67BB14B1E0C4002575EC /* CoreText.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -421,6 +436,8 @@
 				1FDD6990147900110095E634 /* OSPMapCSSHashColourRecogniser.m */,
 				1FDD6996147906780095E634 /* OSPMapCSSHashColourToken.h */,
 				1FDD6997147906780095E634 /* OSPMapCSSHashColourToken.m */,
+				1F3D678D14ADD331002575EC /* UIColor+CSS.h */,
+				1F3D678E14ADD331002575EC /* UIColor+CSS.m */,
 				1FD8C53813ED378600ADD20A /* OSPMainViewController.xib */,
 				1FD8C52A13ED378600ADD20A /* Supporting Files */,
 			);
@@ -449,6 +466,8 @@
 				1FD8C55113ED399400ADD20A /* API */,
 				1F70747913ED9DA00031BA84 /* OSPMap.h */,
 				1F70747A13ED9DA00031BA84 /* OSPMap.m */,
+				1FDD699F147974460095E634 /* OSPQuadTree.h */,
+				1FDD69A0147974470095E634 /* OSPQuadTree.m */,
 				1F2C266B13F6DB8F00D3AE25 /* OSPCoordinateRect.h */,
 				1F2C266913F6DB7B00D3AE25 /* OSPCoordinateRect.m */,
 				1F2C267013F6E41D00D3AE25 /* OSPMapArea.h */,
@@ -672,6 +691,9 @@
 				1FFFC27814657CDC0052D1B6 /* NSString+OpenStreetPad.m in Sources */,
 				1FDD6991147900110095E634 /* OSPMapCSSHashColourRecogniser.m in Sources */,
 				1FDD6998147906780095E634 /* OSPMapCSSHashColourToken.m in Sources */,
+				1FDD699E14790C520095E634 /* OSPMapCSSStyledObject.m in Sources */,
+				1FDD69A1147974470095E634 /* OSPQuadTree.m in Sources */,
+				1F3D678F14ADD331002575EC /* UIColor+CSS.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

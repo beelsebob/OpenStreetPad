@@ -12,11 +12,50 @@
 #import "OSPMap.h"
 
 @implementation OSPMember
+{
+    OSPMemberType referencedObjectType;
+    NSInteger referencedObjectId;
+    __strong OSPAPIObject *referencedObject;
+}
 
-@synthesize referencedObjectType;
-@synthesize referencedObjectId;
 @synthesize role;
 @synthesize relation;
+
+
+- (OSPMemberType)referencedObjectType
+{
+    @synchronized(self)
+    {
+        return referencedObjectType;
+    }
+}
+
+- (void)setReferencedObjectType:(OSPMemberType)newReferencedObjectType
+{
+    @synchronized(self)
+    {
+        referencedObjectType = newReferencedObjectType;
+//        referencedObject = [[[self relation] map] apiObjectOfType:referencedObjectType withId:[self referencedObjectId]];
+    }
+}
+
+- (NSInteger)referencedObjectId
+{
+    @synchronized(self)
+    {
+        return referencedObjectId;
+    }
+}
+
+- (void)setReferencedObjectId:(NSInteger)newReferencedObjectId
+{
+    @synchronized(self)
+    {
+        referencedObjectId = newReferencedObjectId;
+        
+        referencedObject = [[[self relation] map] apiObjectOfType:referencedObjectType withId:[self referencedObjectId]];
+    }
+}
 
 - (id)init
 {
@@ -51,12 +90,16 @@
 
 - (OSPAPIObject *)referencedObject
 {
-    return [[[self relation] map] apiObjectOfType:[self referencedObjectType] withId:[self referencedObjectId]];
+    if (nil == referencedObject)
+    {
+        referencedObject = [[[self relation] map] apiObjectOfType:referencedObjectType withId:referencedObjectId];
+    }
+    return referencedObject;
 }
 
 - (OSPCoordinateRect)bounds
 {
-    return [[self referencedObject] bounds];
+    return [referencedObject bounds];
 }
 
 @end

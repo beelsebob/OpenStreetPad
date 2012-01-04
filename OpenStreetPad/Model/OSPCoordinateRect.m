@@ -33,7 +33,7 @@ inline CLLocationCoordinate2D OSPCoordinate2DUnproject(OSPCoordinate2D l)
 
 NSString *NSStringFromOSPCoordinate2D(OSPCoordinate2D l)
 {
-    return [NSString stringWithFormat:@"(%f, %f)", l.x, l.y];
+    return [NSString stringWithFormat:@"(%1.12f, %1.12f)", l.x, l.y];
 }
 
 const OSPCoordinateRect OSPCoordinateRectZero = (OSPCoordinateRect){.origin = {0.0, 0.0}, .size = {0.0,0.0}};

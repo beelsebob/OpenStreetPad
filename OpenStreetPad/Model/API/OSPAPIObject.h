@@ -22,7 +22,7 @@ typedef enum
 
 @class OSPAPIObjectReference;
 
-@interface OSPAPIObject : NSObject
+@interface OSPAPIObject : NSObject <OSPBounded>
 
 @property (readwrite, assign) NSInteger identity;
 @property (readwrite, assign) NSUInteger version;
@@ -37,7 +37,6 @@ typedef enum
 @property (readwrite, copy  ) NSSet *parents;
 
 @property (readwrite, weak) OSPMap *map;
-@property (readonly) OSPCoordinateRect bounds;
 
 @property (readonly) OSPMemberType memberType;
 

@@ -10,8 +10,11 @@
 
 @interface OSPWay : OSPAPIObject
 
-@property (readwrite,copy) NSArray *nodes;
+@property (readwrite,strong) NSArray *nodes;
+@property (readonly) NSArray *nodeObjects;
 
 - (void)addNodeWithId:(NSInteger)nodeId;
+
+- (OSPCoordinate2D)projectedCentroid;
 
 @end

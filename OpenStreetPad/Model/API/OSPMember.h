@@ -8,6 +8,8 @@
 
 #import "OSPAPIObject.h"
 
+#import "OSPMap.h"
+
 @class OSPRelation;
 
 @interface OSPMember : NSObject

@@ -18,7 +18,7 @@
 
 - (id)initWithRules:(OSPMapCSSRuleset *)ruleset;
 
-- (void)styleObjects:(NSSet *)apiObject;
+- (NSArray *)styledObjects:(NSSet *)objects;
 - (NSDictionary *)styleForCanvas;
 
 @end

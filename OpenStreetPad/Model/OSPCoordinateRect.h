@@ -51,3 +51,9 @@ OSPCoordinateRect OSPCoordinateRectOutset(OSPCoordinateRect r, double xOutset, d
 NSArray *OSPCoordinateRectSubtract(OSPCoordinateRect a, OSPCoordinateRect b);
 
 NSString *NSStringFromOSPCoordinateRect(OSPCoordinateRect r);
+
+@protocol OSPBounded <NSObject>
+
+- (OSPCoordinateRect)bounds;
+
+@end
