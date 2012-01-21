@@ -3,7 +3,7 @@
 //  OSPParserGenerator
 //
 //  Created by Thomas Davie on 05/11/2011.
-//  Copyright (c) 2011 Hunted Cow Studios. All rights reserved.
+//  Copyright (c) 2011 Thomas Davie. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
