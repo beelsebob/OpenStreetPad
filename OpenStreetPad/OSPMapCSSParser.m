@@ -11,6 +11,9 @@
 #import "CoreParse.h"
 
 @interface OSPMapCSSParser () <CPTokeniserDelegate>
+{
+    dispatch_queue_t parserQueue;
+}
 
 @property (readwrite, strong) CPTokeniser *tokeniser;
 @property (readwrite, strong) CPParser *parser;
@@ -34,6 +37,7 @@
     
     if (nil != self)
     {
+        parserQueue = dispatch_queue_create("tokeniser", DISPATCH_QUEUE_CONCURRENT);
         symbolsSet = [NSCharacterSet characterSetWithCharactersInString:@"*[]{}().,;@|-!=<>:!#%"];
         
         NSDictionary *pt = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"parser" ofType:@"osp"]];
@@ -45,27 +49,22 @@
     return self;
 }
 
-#define TokenStreamArg @"t"
-#define InputArg       @"i"
+- (void)dealloc
+{
+    dispatch_release(parserQueue);
+}
 
 - (OSPMapCSSStyleSheet *)parse:(NSString *)mapCSS
 {
     CPTokenStream *stream = [[CPTokenStream alloc] init];
-    [NSThread detachNewThreadSelector:@selector(runTokeniser:) toTarget:self withObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                                         stream, TokenStreamArg,
-                                                                                         mapCSS, InputArg,
-                                                                                         nil]];
+    dispatch_async(parserQueue, ^()
+                   {
+                       @autoreleasepool
+                       {
+                           [[self tokeniser] tokenise:mapCSS into:stream];
+                       }
+                   });
     return [[OSPMapCSSStyleSheet alloc] initWithRules:[[self parser] parse:stream]];
-}
-
-- (void)runTokeniser:(NSDictionary *)args
-{
-    @autoreleasepool
-    {
-        CPTokenStream *stream = [args objectForKey:TokenStreamArg];
-        NSString *input = [args objectForKey:InputArg];
-        [[self tokeniser] tokenise:input into:stream];
-    }
 }
 
 - (BOOL)tokeniser:(CPTokeniser *)tokeniser shouldConsumeToken:(CPToken *)token
