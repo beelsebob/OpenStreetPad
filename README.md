@@ -5,7 +5,7 @@ OpenStreetPad is an OpenStreetMap renderer based on MapCSS styles.  In it's curr
 
 ScreenShot
 ==========
-![Screenshot](blob/master/Screenshot.png)
+![Screenshot](raw/master/Screenshot.png)
 
 CoreParse
 =========
