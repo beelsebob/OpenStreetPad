@@ -17,4 +17,8 @@
 
 - (OSPCoordinate2D)projectedCentroid;
 
+- (double)length;
+- (CGPoint)positionOnWayWithOffset:(double)xOffset heightAboveWay:(double)yOffset backwards:(BOOL)backwards;
+- (CGFloat)angleOnWayWithOffset:(CGFloat)xOffset backwards:(BOOL)backwards;
+
 @end

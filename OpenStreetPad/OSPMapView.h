@@ -16,8 +16,8 @@
 
 @interface OSPMapView : UIView
 
-@property (readwrite, assign) OSPMapArea mapArea;
-@property (readwrite, strong) OSPMapCSSStyleSheet *stylesheet;
+@property (readwrite, nonatomic, assign) OSPMapArea mapArea;
+@property (readwrite, nonatomic, strong) OSPMapCSSStyleSheet *stylesheet;
 
 - (id)initWithFrame:(CGRect)frame serverURL:(NSURL *)serverURL mapBounds:(OSPMapArea)mapArea;
 

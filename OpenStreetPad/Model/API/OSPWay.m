@@ -11,10 +11,18 @@
 #import "OSPNode.h"
 #import "OSPMap.h"
 
+@interface OSPWay ()
+
+- (void)createEdgeLengthsIfNeeded;
+- (void)createEdgeLengths;
+
+@end
+
 @implementation OSPWay
 {
     __strong NSMutableArray *nodes;
     __strong NSMutableArray *nodeObjects;
+    double *edgeLengths;
     BOOL nodeObjectsValid;
     BOOL boundsValid;
     OSPCoordinateRect cachedBounds;
@@ -37,6 +45,11 @@
         nodes = [newNodes mutableCopy];
         boundsValid = NO;
         centroidValid = NO;
+        if (NULL != edgeLengths)
+        {
+            free(edgeLengths);
+            edgeLengths = NULL;
+        }
     }
 }
 
@@ -101,6 +114,11 @@
         }
         boundsValid = NO;
         centroidValid = NO;
+        if (NULL != edgeLengths)
+        {
+            free(edgeLengths);
+            edgeLengths = NULL;
+        }
     }
 }
 
@@ -179,6 +197,156 @@
 - (NSSet *)childObjects
 {
     return [NSSet setWithArray:[self nodeObjects]];
+}
+
+- (void)createEdgeLengthsIfNeeded
+{
+    if (NULL == edgeLengths)
+    {
+        [self createEdgeLengths];
+    }
+}
+
+- (void)createEdgeLengths
+{
+    NSArray *ns = [self nodeObjects];
+    edgeLengths = malloc(([ns count] - 1) * sizeof(double));
+    OSPNode *lastNode = [ns objectAtIndex:0];
+    OSPCoordinate2D lastLoc = [lastNode projectedLocation];
+    NSUInteger i = 0;
+    for (OSPNode *currentNode in [ns subarrayWithRange:NSMakeRange(1, [ns count] - 1)])
+    {
+        OSPCoordinate2D currentLoc = [currentNode projectedLocation];
+        double dx = currentLoc.x - lastLoc.x;
+        double dy = currentLoc.y - lastLoc.y;
+        edgeLengths[i] = sqrt(dx * dx + dy * dy);
+        
+        i++;
+        lastLoc = currentLoc;
+    }
+}
+
+- (double)length
+{
+    [self createEdgeLengthsIfNeeded];
+    
+    double l = 0.0;
+    for (int i = 0; i < [[self nodes] count] - 1; i++)
+    {
+        l += edgeLengths[i];
+    }
+    
+    return l;
+}
+
+- (CGPoint)positionOnWayWithOffset:(double)xOffset heightAboveWay:(double)yOffset backwards:(BOOL)backwards
+{
+    [self createEdgeLengthsIfNeeded];
+    
+    NSArray *ns = [self nodeObjects];
+    double lengthSoFar = 0.0;
+    int numPoints = [ns count];
+    double distanceAlongEdge = 0.0;
+    OSPCoordinate2D nextPointLocation = OSPCoordinate2DMake(0.0, 0.0);
+    OSPCoordinate2D prevPointLocation = OSPCoordinate2DMake(0.0, 0.0);
+    int pointNumber;
+    if (backwards)
+    {
+        pointNumber = numPoints - 2;
+        while (lengthSoFar + edgeLengths[pointNumber] < xOffset && pointNumber >= 0)
+        {
+            lengthSoFar += edgeLengths[pointNumber];
+            pointNumber--;
+        }
+        
+        if (pointNumber >= 0)
+        {
+            distanceAlongEdge = xOffset - lengthSoFar;
+            nextPointLocation = [[ns objectAtIndex:pointNumber    ] projectedLocation];
+            prevPointLocation = [[ns objectAtIndex:pointNumber + 1] projectedLocation];
+        }
+    }
+    else
+    {
+        pointNumber = 0;
+        while (lengthSoFar + edgeLengths[pointNumber] < xOffset && pointNumber < numPoints)
+        {
+            lengthSoFar += edgeLengths[pointNumber];
+            pointNumber++;
+        }
+        
+        if (pointNumber < numPoints)
+        {
+            distanceAlongEdge = xOffset - lengthSoFar;
+            nextPointLocation = [[ns objectAtIndex:pointNumber + 1] projectedLocation];
+            prevPointLocation = [[ns objectAtIndex:pointNumber    ] projectedLocation];
+        }
+    }
+    
+    double dx = nextPointLocation.x - prevPointLocation.x;
+    double dy = nextPointLocation.y - prevPointLocation.y;
+    double prop = distanceAlongEdge / edgeLengths[pointNumber];
+    double xCrawl = prop * dx;
+    double yCrawl = prop * dy;
+    
+    return CGPointMake(prevPointLocation.x + xCrawl, prevPointLocation.y + yCrawl);
+}
+
+- (CGFloat)angleOnWayWithOffset:(CGFloat)xOffset backwards:(BOOL)backwards
+{
+    [self createEdgeLengthsIfNeeded];
+    
+    NSArray *ns = [self nodeObjects];
+    CGFloat lengthSoFar = 0.0;
+    int numPoints = [ns count];
+    OSPCoordinate2D nextPointLocation = OSPCoordinate2DMake(0.0, 0.0);
+    OSPCoordinate2D prevPointLocation = OSPCoordinate2DMake(0.0, 0.0);
+    if (backwards)
+    {
+        int pointNumber = numPoints - 2;
+        while (lengthSoFar + edgeLengths[pointNumber] < xOffset && pointNumber >= 0)
+        {
+            lengthSoFar += edgeLengths[pointNumber];
+            pointNumber--;
+        }
+        
+        if (pointNumber >= 0)
+        {
+            nextPointLocation = [[ns objectAtIndex:pointNumber    ] projectedLocation];
+            prevPointLocation = [[ns objectAtIndex:pointNumber + 1] projectedLocation];
+        }
+    }
+    else
+    {
+        int pointNumber = 0;
+        while (lengthSoFar + edgeLengths[pointNumber] < xOffset && pointNumber < numPoints)
+        {
+            lengthSoFar += edgeLengths[pointNumber];
+            pointNumber++;
+        }
+        
+        if (pointNumber < numPoints)
+        {
+            nextPointLocation = [[ns objectAtIndex:pointNumber + 1] projectedLocation];
+            prevPointLocation = [[ns objectAtIndex:pointNumber    ] projectedLocation];
+        }
+    }
+    
+    CGFloat dx = nextPointLocation.x - prevPointLocation.x;
+    CGFloat dy = nextPointLocation.y - prevPointLocation.y;
+    
+    if (dx > 0.0)
+    {
+        return dy > 0.0 ? atanf(dy / dx) : -atanf(-dy / dx);
+    }
+    else if (dx < 0.0)
+    {
+        return dy > 0.0 ? M_PI - atanf(dy / -dx) : M_PI + atanf(-dy / -dx);
+    }
+    else
+    {
+        return dy < 0.0 ? 3 * M_PI_2 : M_PI_2;
+    }
 }
 
 - (NSString *)description

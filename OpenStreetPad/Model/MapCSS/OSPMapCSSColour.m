@@ -14,11 +14,11 @@
 
 - (id)initWithSyntaxTree:(CPSyntaxTree *)syntaxTree
 {
+#if TARGET_OS_IPHONE
     CPToken *firstToken = [[syntaxTree children] objectAtIndex:0];
     
     if ([firstToken isKindOfClass:[CPKeywordToken class]])
     {
-#if TARGET_OS_IPHONE
         NSString *keyword = [(CPKeywordToken *)firstToken keyword];
         if ([keyword isEqualToString:@"rgb"])
         {
@@ -28,12 +28,12 @@
         {
             return (OSPMapCSSColour *)[UIColor colorWithRed:[[[[syntaxTree children] objectAtIndex:2] number] floatValue] green:[[[[syntaxTree children] objectAtIndex:4] number] floatValue] blue:[[[[syntaxTree children] objectAtIndex:6] number] floatValue] alpha:[[[[syntaxTree children] objectAtIndex:8] number] floatValue]];
         }
-#endif
     }
     else if ([firstToken isKindOfClass:[OSPMapCSSHashColourToken class]])
     {
         return (OSPMapCSSColour *)[(OSPMapCSSHashColourToken *)firstToken colour];
     }
+#endif
     
     return nil;
 }

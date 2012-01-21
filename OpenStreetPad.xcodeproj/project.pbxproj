@@ -50,6 +50,8 @@
 		1F73F2B4145F409A00037860 /* OSPMapCSSNamed.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F2B3145F409900037860 /* OSPMapCSSNamed.m */; };
 		1F73F2B7145F416600037860 /* OSPMapCSSSizeListSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F2B6145F416600037860 /* OSPMapCSSSizeListSpecifier.m */; };
 		1FA7B5B9140BAE1B0015D400 /* OSPAPIObjectReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA7B5B8140BAE1B0015D400 /* OSPAPIObjectReference.m */; };
+		1FCA08F914CAE5D5008889C3 /* libCoreParse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCA08F614CAE5C2008889C3 /* libCoreParse.a */; };
+		1FCA08FA14CAE7F5008889C3 /* CoreParse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCA08F014CAE5C2008889C3 /* CoreParse.framework */; };
 		1FD8C52413ED378600ADD20A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD8C52313ED378600ADD20A /* UIKit.framework */; };
 		1FD8C52613ED378600ADD20A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD8C52513ED378600ADD20A /* Foundation.framework */; };
 		1FD8C52813ED378600ADD20A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD8C52713ED378600ADD20A /* CoreGraphics.framework */; };
@@ -72,11 +74,9 @@
 		1FDD699E14790C520095E634 /* OSPMapCSSStyledObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD699D14790C510095E634 /* OSPMapCSSStyledObject.m */; };
 		1FDD69A1147974470095E634 /* OSPQuadTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD69A0147974470095E634 /* OSPQuadTree.m */; };
 		1FFE3A51145C2C0B00B47ED0 /* OSPMapCSSParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFE3A50145C2C0B00B47ED0 /* OSPMapCSSParser.m */; };
-		1FFE3A73145C3B9600B47ED0 /* libCoreParse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FFE3A72145C3B9600B47ED0 /* libCoreParse.a */; };
 		1FFFC23814653FD10052D1B6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD8C52513ED378600ADD20A /* Foundation.framework */; };
 		1FFFC23B14653FD10052D1B6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFFC23A14653FD10052D1B6 /* main.m */; };
 		1FFFC23F14653FD10052D1B6 /* OSPParserGenerator.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1FFFC23E14653FD10052D1B6 /* OSPParserGenerator.1 */; };
-		1FFFC2491465405B0052D1B6 /* CoreParse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FFFC2481465405B0052D1B6 /* CoreParse.framework */; };
 		1FFFC24B146541F70052D1B6 /* parser.osp in Resources */ = {isa = PBXBuildFile; fileRef = 1FFFC24A146541F70052D1B6 /* parser.osp */; };
 		1FFFC254146546C70052D1B6 /* OSPMapCSSEval.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F295145F295100037860 /* OSPMapCSSEval.m */; };
 		1FFFC255146546C90052D1B6 /* OSPMapCSSUrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F29B145F2B5700037860 /* OSPMapCSSUrl.m */; };
@@ -111,6 +111,44 @@
 		1FFFC27514655B460052D1B6 /* OSPMapCSSStyleSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFFC27414655B460052D1B6 /* OSPMapCSSStyleSheet.m */; };
 		1FFFC27814657CDC0052D1B6 /* NSString+OpenStreetPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFFC27714657CDB0052D1B6 /* NSString+OpenStreetPad.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1FCA08EF14CAE5C2008889C3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FCA08E314CAE5C2008889C3 /* CoreParse.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1F0E88F6130462F300537D04;
+			remoteInfo = CoreParse;
+		};
+		1FCA08F114CAE5C2008889C3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FCA08E314CAE5C2008889C3 /* CoreParse.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1F0E890B130462F300537D04;
+			remoteInfo = CoreParseTests;
+		};
+		1FCA08F314CAE5C2008889C3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FCA08E314CAE5C2008889C3 /* CoreParse.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1FE77D821375EA8F00879A41;
+			remoteInfo = "CoreParse Documentation";
+		};
+		1FCA08F514CAE5C2008889C3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FCA08E314CAE5C2008889C3 /* CoreParse.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1F92817F145C11050033BC34;
+			remoteInfo = iOSCoreParse;
+		};
+		1FCA08F714CAE5C2008889C3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FCA08E314CAE5C2008889C3 /* CoreParse.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1F92818C145C11050033BC34;
+			remoteInfo = iOSCoreParseTests;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		1FFFC23414653FD10052D1B6 /* CopyFiles */ = {
@@ -174,8 +212,8 @@
 		1F2C267413F6FC2500D3AE25 /* OSPMaths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMaths.h; sourceTree = "<group>"; };
 		1F2C267513F6FC2500D3AE25 /* OSPMaths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMaths.m; sourceTree = "<group>"; };
 		1F30B4F8146DC9C100EB7F80 /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = icons; sourceTree = "<group>"; };
-		1F3D678D14ADD331002575EC /* UIColor+CSS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+CSS.h"; sourceTree = "<group>"; };
-		1F3D678E14ADD331002575EC /* UIColor+CSS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+CSS.m"; sourceTree = "<group>"; };
+		1F3D678D14ADD331002575EC /* UIColor+CSS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+CSS.h"; path = "../../UIColor+CSS.h"; sourceTree = "<group>"; };
+		1F3D678E14ADD331002575EC /* UIColor+CSS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+CSS.m"; path = "../../UIColor+CSS.m"; sourceTree = "<group>"; };
 		1F3D67BB14B1E0C4002575EC /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		1F4D13B6146C4E97007EF1B4 /* fills */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fills; sourceTree = "<group>"; };
 		1F5CF1B314139FEA0032C761 /* OSPMetaTileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMetaTileView.h; sourceTree = "<group>"; };
@@ -208,6 +246,7 @@
 		1F73F2B6145F416600037860 /* OSPMapCSSSizeListSpecifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapCSSSizeListSpecifier.m; sourceTree = "<group>"; };
 		1FA7B5B7140BAE1B0015D400 /* OSPAPIObjectReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPAPIObjectReference.h; sourceTree = "<group>"; };
 		1FA7B5B8140BAE1B0015D400 /* OSPAPIObjectReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPAPIObjectReference.m; sourceTree = "<group>"; };
+		1FCA08E314CAE5C2008889C3 /* CoreParse.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CoreParse.xcodeproj; path = ../CoreParse/CoreParse.xcodeproj; sourceTree = "<group>"; };
 		1FD8C51F13ED378500ADD20A /* OpenStreetPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenStreetPad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FD8C52313ED378600ADD20A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1FD8C52513ED378600ADD20A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -244,38 +283,11 @@
 		1FDD69A0147974470095E634 /* OSPQuadTree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPQuadTree.m; sourceTree = "<group>"; };
 		1FFE3A4F145C2C0B00B47ED0 /* OSPMapCSSParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapCSSParser.h; sourceTree = "<group>"; };
 		1FFE3A50145C2C0B00B47ED0 /* OSPMapCSSParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapCSSParser.m; sourceTree = "<group>"; };
-		1FFE3A55145C2D1D00B47ED0 /* CoreParse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CoreParse.h; path = ../CoreParse/CoreParse.h; sourceTree = "<group>"; };
-		1FFE3A56145C2D1D00B47ED0 /* CPEOFToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPEOFToken.h; path = ../CoreParse/CPEOFToken.h; sourceTree = "<group>"; };
-		1FFE3A57145C2D1D00B47ED0 /* CPGrammar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPGrammar.h; path = ../CoreParse/CPGrammar.h; sourceTree = "<group>"; };
-		1FFE3A58145C2D1D00B47ED0 /* CPGrammarSymbol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPGrammarSymbol.h; path = ../CoreParse/CPGrammarSymbol.h; sourceTree = "<group>"; };
-		1FFE3A59145C2D1D00B47ED0 /* CPIdentifierRecogniser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPIdentifierRecogniser.h; path = ../CoreParse/CPIdentifierRecogniser.h; sourceTree = "<group>"; };
-		1FFE3A5A145C2D1D00B47ED0 /* CPIdentifierToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPIdentifierToken.h; path = ../CoreParse/CPIdentifierToken.h; sourceTree = "<group>"; };
-		1FFE3A5B145C2D1D00B47ED0 /* CPJSONParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPJSONParser.h; path = ../CoreParse/CPJSONParser.h; sourceTree = "<group>"; };
-		1FFE3A5C145C2D1D00B47ED0 /* CPKeywordRecogniser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPKeywordRecogniser.h; path = ../CoreParse/CPKeywordRecogniser.h; sourceTree = "<group>"; };
-		1FFE3A5D145C2D1D00B47ED0 /* CPKeywordToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPKeywordToken.h; path = ../CoreParse/CPKeywordToken.h; sourceTree = "<group>"; };
-		1FFE3A5E145C2D1D00B47ED0 /* CPLALR1Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPLALR1Parser.h; path = ../CoreParse/CPLALR1Parser.h; sourceTree = "<group>"; };
-		1FFE3A5F145C2D1D00B47ED0 /* CPLR1Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPLR1Parser.h; path = ../CoreParse/CPLR1Parser.h; sourceTree = "<group>"; };
-		1FFE3A60145C2D1D00B47ED0 /* CPNumberRecogniser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPNumberRecogniser.h; path = ../CoreParse/CPNumberRecogniser.h; sourceTree = "<group>"; };
-		1FFE3A61145C2D1D00B47ED0 /* CPNumberToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPNumberToken.h; path = ../CoreParse/CPNumberToken.h; sourceTree = "<group>"; };
-		1FFE3A62145C2D1D00B47ED0 /* CPParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPParser.h; path = ../CoreParse/CPParser.h; sourceTree = "<group>"; };
-		1FFE3A63145C2D1D00B47ED0 /* CPQuotedRecogniser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPQuotedRecogniser.h; path = ../CoreParse/CPQuotedRecogniser.h; sourceTree = "<group>"; };
-		1FFE3A64145C2D1D00B47ED0 /* CPQuotedToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPQuotedToken.h; path = ../CoreParse/CPQuotedToken.h; sourceTree = "<group>"; };
-		1FFE3A65145C2D1D00B47ED0 /* CPRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPRule.h; path = ../CoreParse/CPRule.h; sourceTree = "<group>"; };
-		1FFE3A66145C2D1D00B47ED0 /* CPSLRParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPSLRParser.h; path = ../CoreParse/CPSLRParser.h; sourceTree = "<group>"; };
-		1FFE3A67145C2D1D00B47ED0 /* CPSyntaxTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPSyntaxTree.h; path = ../CoreParse/CPSyntaxTree.h; sourceTree = "<group>"; };
-		1FFE3A68145C2D1D00B47ED0 /* CPToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPToken.h; path = ../CoreParse/CPToken.h; sourceTree = "<group>"; };
-		1FFE3A69145C2D1D00B47ED0 /* CPTokeniser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPTokeniser.h; path = ../CoreParse/CPTokeniser.h; sourceTree = "<group>"; };
-		1FFE3A6A145C2D1D00B47ED0 /* CPTokenRecogniser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPTokenRecogniser.h; path = ../CoreParse/CPTokenRecogniser.h; sourceTree = "<group>"; };
-		1FFE3A6B145C2D1D00B47ED0 /* CPTokenStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPTokenStream.h; path = ../CoreParse/CPTokenStream.h; sourceTree = "<group>"; };
-		1FFE3A6C145C2D1D00B47ED0 /* CPWhiteSpaceRecogniser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPWhiteSpaceRecogniser.h; path = ../CoreParse/CPWhiteSpaceRecogniser.h; sourceTree = "<group>"; };
-		1FFE3A6D145C2D1D00B47ED0 /* CPWhiteSpaceToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPWhiteSpaceToken.h; path = ../CoreParse/CPWhiteSpaceToken.h; sourceTree = "<group>"; };
-		1FFE3A71145C3AB200B47ED0 /* CPShiftReduceParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPShiftReduceParser.h; sourceTree = "<group>"; };
 		1FFE3A72145C3B9600B47ED0 /* libCoreParse.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCoreParse.a; path = OpenStreetPad/CoreParse/libCoreParse.a; sourceTree = "<group>"; };
 		1FFFC23614653FD10052D1B6 /* OSPParserGenerator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OSPParserGenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FFFC23A14653FD10052D1B6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1FFFC23D14653FD10052D1B6 /* OSPParserGenerator-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OSPParserGenerator-Prefix.pch"; sourceTree = "<group>"; };
 		1FFFC23E14653FD10052D1B6 /* OSPParserGenerator.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = OSPParserGenerator.1; sourceTree = "<group>"; };
-		1FFFC2481465405B0052D1B6 /* CoreParse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CoreParse.framework; sourceTree = "<group>"; };
 		1FFFC24A146541F70052D1B6 /* parser.osp */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = parser.osp; sourceTree = "<group>"; };
 		1FFFC271146558B00052D1B6 /* osm.mcs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = osm.mcs; sourceTree = "<group>"; };
 		1FFFC27314655B460052D1B6 /* OSPMapCSSStyleSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapCSSStyleSheet.h; sourceTree = "<group>"; };
@@ -289,8 +301,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FCA08F914CAE5D5008889C3 /* libCoreParse.a in Frameworks */,
 				1F3D67BC14B1E0C4002575EC /* CoreText.framework in Frameworks */,
-				1FFE3A73145C3B9600B47ED0 /* libCoreParse.a in Frameworks */,
 				1F0007D11412662900220FAA /* QuartzCore.framework in Frameworks */,
 				1FD8C55913ED3B3500ADD20A /* CoreLocation.framework in Frameworks */,
 				1FD8C52413ED378600ADD20A /* UIKit.framework in Frameworks */,
@@ -303,8 +315,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FFFC2491465405B0052D1B6 /* CoreParse.framework in Frameworks */,
 				1FFFC23814653FD10052D1B6 /* Foundation.framework in Frameworks */,
+				1FCA08FA14CAE7F5008889C3 /* CoreParse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,18 +386,32 @@
 				1F09C63E14613062003BBE17 /* OSPMapCSSRuleset.m */,
 				1FFFC27314655B460052D1B6 /* OSPMapCSSStyleSheet.h */,
 				1FFFC27414655B460052D1B6 /* OSPMapCSSStyleSheet.m */,
-				1FFFC27614657CDB0052D1B6 /* NSString+OpenStreetPad.h */,
-				1FFFC27714657CDB0052D1B6 /* NSString+OpenStreetPad.m */,
 				1FDD699C14790C510095E634 /* OSPMapCSSStyledObject.h */,
 				1FDD699D14790C510095E634 /* OSPMapCSSStyledObject.m */,
+				1FFFC27614657CDB0052D1B6 /* NSString+OpenStreetPad.h */,
+				1FFFC27714657CDB0052D1B6 /* NSString+OpenStreetPad.m */,
+				1F3D678D14ADD331002575EC /* UIColor+CSS.h */,
+				1F3D678E14ADD331002575EC /* UIColor+CSS.m */,
 			);
 			path = MapCSS;
+			sourceTree = "<group>";
+		};
+		1FCA08E414CAE5C2008889C3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1FCA08F014CAE5C2008889C3 /* CoreParse.framework */,
+				1FCA08F214CAE5C2008889C3 /* CoreParseTests.octest */,
+				1FCA08F414CAE5C2008889C3 /* CoreParse Documentation */,
+				1FCA08F614CAE5C2008889C3 /* libCoreParse.a */,
+				1FCA08F814CAE5C2008889C3 /* CoreParseTests.octest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		1FD8C51413ED378500ADD20A = {
 			isa = PBXGroup;
 			children = (
-				1FFE3A53145C2C3200B47ED0 /* CoreParse */,
+				1FCA08E314CAE5C2008889C3 /* CoreParse.xcodeproj */,
 				1FD8C52913ED378600ADD20A /* OpenStreetPad */,
 				1FFFC23914653FD10052D1B6 /* OSPParserGenerator */,
 				1FD8C52213ED378600ADD20A /* Frameworks */,
@@ -436,8 +462,6 @@
 				1FDD6990147900110095E634 /* OSPMapCSSHashColourRecogniser.m */,
 				1FDD6996147906780095E634 /* OSPMapCSSHashColourToken.h */,
 				1FDD6997147906780095E634 /* OSPMapCSSHashColourToken.m */,
-				1F3D678D14ADD331002575EC /* UIColor+CSS.h */,
-				1F3D678E14ADD331002575EC /* UIColor+CSS.m */,
 				1FD8C53813ED378600ADD20A /* OSPMainViewController.xib */,
 				1FD8C52A13ED378600ADD20A /* Supporting Files */,
 			);
@@ -499,41 +523,6 @@
 				1FD8C56513ED3D6700ADD20A /* OSPMember.m */,
 			);
 			path = API;
-			sourceTree = "<group>";
-		};
-		1FFE3A53145C2C3200B47ED0 /* CoreParse */ = {
-			isa = PBXGroup;
-			children = (
-				1FFFC2481465405B0052D1B6 /* CoreParse.framework */,
-				1FFE3A71145C3AB200B47ED0 /* CPShiftReduceParser.h */,
-				1FFE3A55145C2D1D00B47ED0 /* CoreParse.h */,
-				1FFE3A56145C2D1D00B47ED0 /* CPEOFToken.h */,
-				1FFE3A57145C2D1D00B47ED0 /* CPGrammar.h */,
-				1FFE3A58145C2D1D00B47ED0 /* CPGrammarSymbol.h */,
-				1FFE3A59145C2D1D00B47ED0 /* CPIdentifierRecogniser.h */,
-				1FFE3A5A145C2D1D00B47ED0 /* CPIdentifierToken.h */,
-				1FFE3A5B145C2D1D00B47ED0 /* CPJSONParser.h */,
-				1FFE3A5C145C2D1D00B47ED0 /* CPKeywordRecogniser.h */,
-				1FFE3A5D145C2D1D00B47ED0 /* CPKeywordToken.h */,
-				1FFE3A5E145C2D1D00B47ED0 /* CPLALR1Parser.h */,
-				1FFE3A5F145C2D1D00B47ED0 /* CPLR1Parser.h */,
-				1FFE3A60145C2D1D00B47ED0 /* CPNumberRecogniser.h */,
-				1FFE3A61145C2D1D00B47ED0 /* CPNumberToken.h */,
-				1FFE3A62145C2D1D00B47ED0 /* CPParser.h */,
-				1FFE3A63145C2D1D00B47ED0 /* CPQuotedRecogniser.h */,
-				1FFE3A64145C2D1D00B47ED0 /* CPQuotedToken.h */,
-				1FFE3A65145C2D1D00B47ED0 /* CPRule.h */,
-				1FFE3A66145C2D1D00B47ED0 /* CPSLRParser.h */,
-				1FFE3A67145C2D1D00B47ED0 /* CPSyntaxTree.h */,
-				1FFE3A68145C2D1D00B47ED0 /* CPToken.h */,
-				1FFE3A69145C2D1D00B47ED0 /* CPTokeniser.h */,
-				1FFE3A6A145C2D1D00B47ED0 /* CPTokenRecogniser.h */,
-				1FFE3A6B145C2D1D00B47ED0 /* CPTokenStream.h */,
-				1FFE3A6C145C2D1D00B47ED0 /* CPWhiteSpaceRecogniser.h */,
-				1FFE3A6D145C2D1D00B47ED0 /* CPWhiteSpaceToken.h */,
-			);
-			name = CoreParse;
-			path = OpenStreetPad/CoreParse;
 			sourceTree = "<group>";
 		};
 		1FFFC23914653FD10052D1B6 /* OSPParserGenerator */ = {
@@ -610,6 +599,12 @@
 			mainGroup = 1FD8C51413ED378500ADD20A;
 			productRefGroup = 1FD8C52013ED378500ADD20A /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 1FCA08E414CAE5C2008889C3 /* Products */;
+					ProjectRef = 1FCA08E314CAE5C2008889C3 /* CoreParse.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				1FD8C51E13ED378500ADD20A /* OpenStreetPad */,
@@ -617,6 +612,44 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		1FCA08F014CAE5C2008889C3 /* CoreParse.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CoreParse.framework;
+			remoteRef = 1FCA08EF14CAE5C2008889C3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FCA08F214CAE5C2008889C3 /* CoreParseTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = CoreParseTests.octest;
+			remoteRef = 1FCA08F114CAE5C2008889C3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FCA08F414CAE5C2008889C3 /* CoreParse Documentation */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "CoreParse Documentation";
+			remoteRef = 1FCA08F314CAE5C2008889C3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FCA08F614CAE5C2008889C3 /* libCoreParse.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCoreParse.a;
+			remoteRef = 1FCA08F514CAE5C2008889C3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FCA08F814CAE5C2008889C3 /* CoreParseTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = CoreParseTests.octest;
+			remoteRef = 1FCA08F714CAE5C2008889C3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1FD8C51D13ED378500ADD20A /* Resources */ = {
@@ -778,6 +811,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "../CoreParse/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -797,6 +831,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "../CoreParse/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
@@ -810,11 +845,9 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenStreetPad/OpenStreetPad-Prefix.pch";
+				HEADER_SEARCH_PATHS = "../CoreParse/**";
 				INFOPLIST_FILE = "OpenStreetPad/OpenStreetPad-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/OpenStreetPad/CoreParse\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -829,11 +862,9 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenStreetPad/OpenStreetPad-Prefix.pch";
+				HEADER_SEARCH_PATHS = "../CoreParse/**";
 				INFOPLIST_FILE = "OpenStreetPad/OpenStreetPad-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/OpenStreetPad/CoreParse\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -847,10 +878,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/OpenStreetPad/CoreParse\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OSPParserGenerator/OSPParserGenerator-Prefix.pch";
@@ -867,10 +895,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/OpenStreetPad/CoreParse\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OSPParserGenerator/OSPParserGenerator-Prefix.pch";

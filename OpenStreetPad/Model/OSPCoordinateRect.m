@@ -21,7 +21,7 @@ inline OSPCoordinate2D OSPCoordinate2DProjectLocation(CLLocationCoordinate2D l)
 {
     double lonDegrees = l.longitude;
     double latRadians = normalisedRadians(degreesToRadians(l.latitude));
-    return OSPCoordinate2DMake((lonDegrees + 180.0) / 360.0, (1.0 - log(tan(latRadians) + 1.0 / cos(latRadians)) / M_PI) / 2.0);
+    return OSPCoordinate2DMake((lonDegrees + 180.0) / 360.0, 0.5 - (log(tan(latRadians) + 1.0 / cos(latRadians)) / M_PI) * 0.5);
 }
 
 inline CLLocationCoordinate2D OSPCoordinate2DUnproject(OSPCoordinate2D l)
