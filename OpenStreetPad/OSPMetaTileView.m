@@ -41,6 +41,12 @@ void patternCallback(void *info, CGContextRef ctx);
 - (NSString *)applyTextTransform:(NSDictionary *)style toString:(NSString *)str;
 
 - (void)renderLayers:(NSDictionary *)layers inContext:(CGContextRef)ctx withScaleMultiplier:(CGFloat)scale;
+
+- (void)renderWayFills:(NSArray *)ways inContext:(CGContextRef)ctx withScaleMultiplier:(CGFloat)scale;
+- (void)renderWayCasings:(NSArray *)ways inContext:(CGContextRef)ctx withScaleMultiplier:(CGFloat)scale;
+- (void)renderLayerObjects:(NSArray *)layer inContext:(CGContextRef)ctx withScaleMultiplier:(CGFloat)scale;
+- (void)renderLayerLabels:(NSArray *)layer inContext:(CGContextRef)ctx withScaleMultiplier:(CGFloat)scale;
+
 - (void)renderWayFill:(OSPMapCSSStyledObject *)way inContext:(CGContextRef)ctx withScaleMultiplier:(CGFloat)scale;
 - (void)renderWay:(OSPMapCSSStyledObject *)way inContext:(CGContextRef)ctx withScaleMultiplier:(CGFloat)scale;
 - (void)renderCasing:(OSPMapCSSStyledObject *)way inContext:(CGContextRef)ctx withScaleMultiplier:(CGFloat)scale;
@@ -221,46 +227,81 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     for (NSNumber *layerNumber in [[layers allKeys] sortedArrayUsingSelector:@selector(compare:)])
     {
         NSArray *layer = [layers objectForKey:layerNumber];
-        for (OSPMapCSSStyledObject *object in layer)
+        
+        NSMutableArray *ways         = [NSMutableArray arrayWithCapacity:[layer count]];
+        NSMutableArray *nodesAndWays = [NSMutableArray arrayWithCapacity:[layer count]];
+        for (OSPMapCSSStyledObject *styledObject in layer)
         {
-            if ([[object object] isKindOfClass:[OSPWay class]])
+            switch ([[styledObject object] memberType])
             {
-                [self renderWayFill:object inContext:ctx withScaleMultiplier:scale];
+                case OSPMemberTypeWay:
+                    [ways addObject:styledObject];
+                case OSPMemberTypeNode:
+                    [nodesAndWays addObject:styledObject];
+                    break;
+                default:
+                    break;
             }
         }
-        for (OSPMapCSSStyledObject *object in layer)
+        
+        [self renderWayFills:  ways inContext:ctx withScaleMultiplier:scale];
+        [self renderWayCasings:ways inContext:ctx withScaleMultiplier:scale];
+        [self renderLayerObjects:nodesAndWays inContext:ctx withScaleMultiplier:scale];
+        [self renderLayerLabels: nodesAndWays inContext:ctx withScaleMultiplier:scale];
+    }
+}
+
+- (void)renderWayFills:(NSArray *)ways inContext:(CGContextRef)ctx withScaleMultiplier:(CGFloat)scale
+{
+    for (OSPMapCSSStyledObject *styledObject in ways)
+    {
+        [self renderWayFill:styledObject inContext:ctx withScaleMultiplier:scale];
+    }
+}
+
+- (void)renderWayCasings:(NSArray *)ways inContext:(CGContextRef)ctx withScaleMultiplier:(CGFloat)scale
+{
+    for (OSPMapCSSStyledObject *styledObject in ways)
+    {
+        [self renderCasing:styledObject inContext:ctx withScaleMultiplier:scale];
+    }
+}
+
+- (void)renderLayerObjects:(NSArray *)layer inContext:(CGContextRef)ctx withScaleMultiplier:(CGFloat)scale
+{
+    for (OSPMapCSSStyledObject *styledObject in layer)
+    {
+        switch ([[styledObject object] memberType])
         {
-            if ([[object object] isKindOfClass:[OSPWay class]])
-            {
-                [self renderCasing:object inContext:ctx withScaleMultiplier:scale];
-            }
-        }
-        for (OSPMapCSSStyledObject *object in layer)
-        {
-            if ([[object object] isKindOfClass:[OSPWay class]])
-            {
-                [self renderWay:object inContext:ctx withScaleMultiplier:scale];
-            }
-            else if ([[object object] isKindOfClass:[OSPNode class]])
-            {
-                [self renderNode:object inContext:ctx withScaleMultiplier:scale];
-            }
-        }
-        for (OSPMapCSSStyledObject *object in layer)
-        {
-            if ([[object object] isKindOfClass:[OSPWay class]])
-            {
-                [self renderWayLabel:object inContext:ctx withScaleMultiplier:scale];
-            }
-            else if ([[object object] isKindOfClass:[OSPNode class]])
-            {
-                [self renderNodeLabel:object inContext:ctx withScaleMultiplier:scale];
-            }
+            case OSPMemberTypeWay:
+                [self renderWay:styledObject inContext:ctx withScaleMultiplier:scale];
+                break;
+            case OSPMemberTypeNode:
+                [self renderNode:styledObject inContext:ctx withScaleMultiplier:scale];
+                break;
+            default:
+                break;
         }
     }
 }
 
-//extern char styleKey;
+- (void)renderLayerLabels:(NSArray *)layer inContext:(CGContextRef)ctx withScaleMultiplier:(CGFloat)scale
+{
+    for (OSPMapCSSStyledObject *styledObject in layer)
+    {
+        switch ([[styledObject object] memberType])
+        {
+            case OSPMemberTypeWay:
+                [self renderWayLabel:styledObject inContext:ctx withScaleMultiplier:scale];
+                break;
+            case OSPMemberTypeNode:
+                [self renderNodeLabel:styledObject inContext:ctx withScaleMultiplier:scale];
+                break;
+            default:
+                break;
+        }
+    }
+}
 
 - (void)renderWayFill:(OSPMapCSSStyledObject *)object inContext:(CGContextRef)ctx withScaleMultiplier:(CGFloat)scale
 {
