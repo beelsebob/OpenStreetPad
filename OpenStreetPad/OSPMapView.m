@@ -52,7 +52,7 @@
     if (nil != self)
     {
         [self setServer:[OSPMapServer serverWithURL:[NSURL URLWithString:@"http://api.openstreetmap.org"]]];
-        [self setMapArea:OSPMapAreaMake(OSPCoordinate2DMake(0.49084, 0.30305), 17.0)];
+        [self setMapArea:OSPMapAreaMake(OSPCoordinate2DProjectLocation(CLLocationCoordinate2DMake(57.647491, -3.313065)), 17.0)];
         
         [self commonInit];
     }
