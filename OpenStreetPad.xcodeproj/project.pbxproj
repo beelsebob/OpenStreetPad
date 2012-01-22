@@ -52,6 +52,7 @@
 		1FA7B5B9140BAE1B0015D400 /* OSPAPIObjectReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA7B5B8140BAE1B0015D400 /* OSPAPIObjectReference.m */; };
 		1FCA08F914CAE5D5008889C3 /* libCoreParse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCA08F614CAE5C2008889C3 /* libCoreParse.a */; };
 		1FCA08FA14CAE7F5008889C3 /* CoreParse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCA08F014CAE5C2008889C3 /* CoreParse.framework */; };
+		1FCA090014CB3FCF008889C3 /* OSPTileArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA08FF14CB3FCE008889C3 /* OSPTileArray.m */; };
 		1FD8C52413ED378600ADD20A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD8C52313ED378600ADD20A /* UIKit.framework */; };
 		1FD8C52613ED378600ADD20A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD8C52513ED378600ADD20A /* Foundation.framework */; };
 		1FD8C52813ED378600ADD20A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD8C52713ED378600ADD20A /* CoreGraphics.framework */; };
@@ -247,6 +248,8 @@
 		1FA7B5B7140BAE1B0015D400 /* OSPAPIObjectReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPAPIObjectReference.h; sourceTree = "<group>"; };
 		1FA7B5B8140BAE1B0015D400 /* OSPAPIObjectReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPAPIObjectReference.m; sourceTree = "<group>"; };
 		1FCA08E314CAE5C2008889C3 /* CoreParse.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CoreParse.xcodeproj; path = ../CoreParse/CoreParse.xcodeproj; sourceTree = "<group>"; };
+		1FCA08FE14CB3FCE008889C3 /* OSPTileArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPTileArray.h; sourceTree = "<group>"; };
+		1FCA08FF14CB3FCE008889C3 /* OSPTileArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPTileArray.m; sourceTree = "<group>"; };
 		1FD8C51F13ED378500ADD20A /* OpenStreetPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenStreetPad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FD8C52313ED378600ADD20A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1FD8C52513ED378600ADD20A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -492,6 +495,8 @@
 				1F70747A13ED9DA00031BA84 /* OSPMap.m */,
 				1FDD699F147974460095E634 /* OSPQuadTree.h */,
 				1FDD69A0147974470095E634 /* OSPQuadTree.m */,
+				1FCA08FE14CB3FCE008889C3 /* OSPTileArray.h */,
+				1FCA08FF14CB3FCE008889C3 /* OSPTileArray.m */,
 				1F2C266B13F6DB8F00D3AE25 /* OSPCoordinateRect.h */,
 				1F2C266913F6DB7B00D3AE25 /* OSPCoordinateRect.m */,
 				1F2C267013F6E41D00D3AE25 /* OSPMapArea.h */,
@@ -727,6 +732,7 @@
 				1FDD699E14790C520095E634 /* OSPMapCSSStyledObject.m in Sources */,
 				1FDD69A1147974470095E634 /* OSPQuadTree.m in Sources */,
 				1F3D678F14ADD331002575EC /* UIColor+CSS.m in Sources */,
+				1FCA090014CB3FCF008889C3 /* OSPTileArray.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

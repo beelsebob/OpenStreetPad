@@ -12,6 +12,8 @@
 
 #import "OSPValue.h"
 
+NSArray *NSArrayOfTilesFromCoordinateRectWithinTile(OSPCoordinateRect r, double maxOverspill, OSPTile t);
+
 inline OSPCoordinate2D OSPCoordinate2DMake(double x, double y)
 {
     return (OSPCoordinate2D){.x = x, .y = y};
@@ -161,7 +163,52 @@ NSArray *OSPCoordinateRectSubtract(OSPCoordinateRect a, OSPCoordinateRect b)
     }
 }
 
+NSArray *NSArrayOfTilesFromCoordinateRect(OSPCoordinateRect r, double maxOverspill)
+{
+    return NSArrayOfTilesFromCoordinateRectWithinTile(r, maxOverspill, (OSPTile){.x = 0, .y = 0, .zoom = 0});
+}
+
+NSArray *NSArrayOfTilesFromCoordinateRectWithinTile(OSPCoordinateRect r, double maxOverspill, OSPTile t)
+{
+    OSPCoordinateRect tileRect = OSPCoordinateRectFromTile(t);
+    
+    if (OSPCoordinateRectIntersectsRect(r, tileRect))
+    {
+        BOOL splitVertically = OSPCoordinateRectGetMinLongitude(r) - maxOverspill > OSPCoordinateRectGetMinLongitude(tileRect) || OSPCoordinateRectGetMaxLongitude(r) + maxOverspill < OSPCoordinateRectGetMaxLongitude(tileRect);
+        BOOL splitHorizontally = OSPCoordinateRectGetMinLatitude(r) - maxOverspill > OSPCoordinateRectGetMinLatitude(tileRect) || OSPCoordinateRectGetMaxLatitude(r) + maxOverspill < OSPCoordinateRectGetMaxLatitude(tileRect);
+        
+        if (splitVertically || splitHorizontally)
+        {
+            NSArray *bottomLeft  = NSArrayOfTilesFromCoordinateRectWithinTile(r, maxOverspill, (OSPTile){.x = t.x * 2    , .y = t.y * 2    , .zoom = t.zoom + 1});
+            NSArray *bottomRight = NSArrayOfTilesFromCoordinateRectWithinTile(r, maxOverspill, (OSPTile){.x = t.x * 2 + 1, .y = t.y * 2    , .zoom = t.zoom + 1});
+            NSArray *topLeft     = NSArrayOfTilesFromCoordinateRectWithinTile(r, maxOverspill, (OSPTile){.x = t.x * 2    , .y = t.y * 2 + 1, .zoom = t.zoom + 1});
+            NSArray *topRight    = NSArrayOfTilesFromCoordinateRectWithinTile(r, maxOverspill, (OSPTile){.x = t.x * 2 + 1, .y = t.y * 2 + 1, .zoom = t.zoom + 1});
+            return [[bottomLeft arrayByAddingObjectsFromArray:bottomRight] arrayByAddingObjectsFromArray:[topLeft arrayByAddingObjectsFromArray:topRight]];
+        }
+        else
+        {
+            return [NSArray arrayWithObject:[OSPValue valueWithTile:t]];
+        }
+    }
+    
+    return [NSArray array];
+}
+
+OSPCoordinateRect OSPCoordinateRectFromTile(OSPTile t)
+{
+    long numberOfTiles = 1 << t.zoom;
+    double tileWidth = 1.0 / (double)numberOfTiles;
+    
+    return OSPCoordinateRectMake(t.x * tileWidth, t.y * tileWidth, tileWidth, tileWidth);
+}
+
 NSString *NSStringFromOSPCoordinateRect(OSPCoordinateRect r)
 {
     return [NSString stringWithFormat:@"(%@, %@)", NSStringFromOSPCoordinate2D(r.origin), NSStringFromOSPCoordinate2D(r.size)];
 }
+
+BOOL OSPTileEqual(OSPTile a, OSPTile b)
+{
+    return a.x == b.x && a.y == b.y && a.zoom == b.zoom;
+}
+

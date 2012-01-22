@@ -21,6 +21,13 @@ typedef struct
 }
 OSPCoordinateRect;
 
+typedef struct
+{
+    NSUInteger x;
+    NSUInteger y;
+    uint8_t zoom;
+} OSPTile;
+
 OSPCoordinate2D OSPCoordinate2DMake(double x, double y);
 OSPCoordinate2D OSPCoordinate2DProjectLocation(CLLocationCoordinate2D l);
 CLLocationCoordinate2D OSPCoordinate2DUnproject(OSPCoordinate2D l);
@@ -50,7 +57,12 @@ OSPCoordinateRect OSPCoordinateRectOutset(OSPCoordinateRect r, double xOutset, d
 
 NSArray *OSPCoordinateRectSubtract(OSPCoordinateRect a, OSPCoordinateRect b);
 
+NSArray *NSArrayOfTilesFromCoordinateRect(OSPCoordinateRect r, double maxOverspill);
+OSPCoordinateRect OSPCoordinateRectFromTile(OSPTile t);
+
 NSString *NSStringFromOSPCoordinateRect(OSPCoordinateRect r);
+
+BOOL OSPTileEqual(OSPTile a, OSPTile b);
 
 @protocol OSPBounded <NSObject>
 

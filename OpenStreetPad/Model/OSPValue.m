@@ -14,6 +14,12 @@
 
 @end
 
+@interface OSPTileValue : OSPValue
+
+- (id)initWithTile:(OSPTile)tile;
+
+@end
+
 @implementation OSPValue
 
 + (id)valueWithRect:(OSPCoordinateRect)rect
@@ -21,9 +27,19 @@
     return [[OSPRectValue alloc] initWithRect:rect];
 }
 
++ (id)valueWithTile:(OSPTile)tile
+{
+    return [[OSPTileValue alloc] initWithTile:tile];
+}
+
 - (OSPCoordinateRect)rectValue
 {
     return OSPCoordinateRectZero;
+}
+
+- (OSPTile)tileValue
+{
+    return (OSPTile){.x = NSNotFound, .y = NSNotFound, .zoom = 0};
 }
 
 @end
@@ -53,6 +69,35 @@
 - (OSPCoordinateRect)rectValue
 {
     return [self rect];
+}
+
+@end
+
+@interface OSPTileValue ()
+
+@property (readwrite, assign) OSPTile tile;
+
+@end
+
+@implementation OSPTileValue
+
+@synthesize tile;
+
+- (id)initWithTile:(OSPTile)t
+{
+    self = [super init];
+    
+    if (nil != self)
+    {
+        [self setTile:t];
+    }
+    
+    return self;
+}
+
+- (OSPTile)tileValue
+{
+    return [self tile];
 }
 
 @end

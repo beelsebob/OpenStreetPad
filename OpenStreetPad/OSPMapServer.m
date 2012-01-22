@@ -19,6 +19,8 @@
 #import "OSPNonRectangularArea.h"
 #import "OSPValue.h"
 
+#import "OSPTileArray.h"
+
 typedef enum
 {
     OSPRequestTypeCapabilities = 0,
@@ -46,7 +48,8 @@ typedef enum
 @property (readwrite, strong) NSMutableData *data;
 @property (readwrite, weak  ) id<OSPConnectionDelegate> delegate;
 
-@property (readwrite, assign) OSPCoordinateRect mapArea;
+@property (readonly , assign) OSPCoordinateRect mapArea;
+@property (readwrite, assign) OSPTile tile;
 
 @property (readwrite, strong) NSMutableDictionary *currentObjectTags;
 @property (readwrite, strong) OSPAPIObject *currentObject;
@@ -78,7 +81,12 @@ typedef enum
 @synthesize currentObject;
 @synthesize currentObjectTags;
 
-@synthesize mapArea;
+@synthesize tile;
+
+- (OSPCoordinateRect)mapArea
+{
+    return OSPCoordinateRectFromTile([self tile]);
+}
 
 - (NSArray *)receivedObjects
 {
@@ -250,9 +258,10 @@ typedef enum
 @property (readwrite, strong) NSMutableArray *currentConnections;
 @property (readwrite, strong) NSMutableArray *connectionQueue;
 
-@property (readwrite, strong) OSPNonRectangularArea *requestedArea;
+@property (readwrite, strong) OSPTileArray *requestedTiles;
 
-- (void)makeRequestForURL:(NSURL *)url ofType:(OSPRequestType)type withArea:(OSPCoordinateRect)area;
+- (void)makeRequestForURL:(NSURL *)url ofType:(OSPRequestType)type tile:(OSPTile)tile;
+- (void)requestDataInTile:(OSPTile)tile;
 - (void)queueConnection:(OSPConnection *)rec;
 - (void)popConnectionQueue;
 
@@ -265,7 +274,7 @@ typedef enum
 @synthesize delegate;
 @synthesize currentConnections;
 @synthesize connectionQueue;
-@synthesize requestedArea;
+@synthesize requestedTiles;
 
 + (id)serverWithURL:(NSURL *)serverURL
 {
@@ -281,7 +290,7 @@ typedef enum
         parserQueue = dispatch_queue_create("XML parser", DISPATCH_QUEUE_CONCURRENT);
         [self setServerURL:initServerURL];
         [self setMapCache:[[OSPMap alloc] init]];
-        [self setRequestedArea:[OSPNonRectangularArea emptyArea]];
+        [self setRequestedTiles:[[OSPTileArray alloc] init]];
         [self setCurrentConnections:[[NSMutableArray alloc] initWithCapacity:OSPMapServerMaxSimultaneousConnections]];
         [self setConnectionQueue:[NSMutableArray array]];
     }
@@ -306,7 +315,16 @@ typedef enum
 
 - (void)loadObjectsInBounds:(OSPCoordinateRect)bounds withOutset:(double)outsetSize
 {
-    OSPNonRectangularArea *rectanglesToLoad = [[OSPNonRectangularArea areaWithRects:[NSArray arrayWithObject:[OSPValue valueWithRect:bounds]]] areaBySubtractingArea:[self requestedArea]];
+    for (OSPValue *tileValue in NSArrayOfTilesFromCoordinateRect(bounds, outsetSize))
+    {
+        OSPTile tile = [tileValue tileValue];
+        for (OSPValue *subTileValue in [[self requestedTiles] notIncludedSubtilesOfTile:tile])
+        {
+            OSPTile subTile = [subTileValue tileValue];
+            [self requestDataInTile:subTile];
+        }
+    }
+/*    OSPNonRectangularArea *rectanglesToLoad = [[OSPNonRectangularArea areaWithRects:[NSArray arrayWithObject:[OSPValue valueWithRect:bounds]]] areaBySubtractingArea:[self requestedArea]];
     
     NSArray *bigEnoughRects = [[rectanglesToLoad allRects] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^ BOOL (OSPValue *rect, id bindings)
                                                                                         {
@@ -334,21 +352,32 @@ typedef enum
             
             [self makeRequestForURL:mapURL ofType:OSPRequestTypeMapArea withArea:rect];
         }
-    }
+    }*/
 }
 
-- (void)makeRequestForURL:(NSURL *)url ofType:(OSPRequestType)type withArea:(OSPCoordinateRect)area
+- (void)requestDataInTile:(OSPTile)tile
+{
+    OSPCoordinateRect rect = OSPCoordinateRectFromTile(tile);
+    CLLocationCoordinate2D from = OSPCoordinate2DUnproject(OSPCoordinateRectGetMinCoord(rect));
+    CLLocationCoordinate2D to = OSPCoordinate2DUnproject(OSPCoordinateRectGetMaxCoord(rect));
+    
+    NSURL *mapURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/api/0.6/map?bbox=%f,%f,%f,%f", [self serverURL], from.longitude, to.latitude, to.longitude, from.latitude]];
+    
+    [self makeRequestForURL:mapURL ofType:OSPRequestTypeMapArea tile:tile];
+}
+
+- (void)makeRequestForURL:(NSURL *)url ofType:(OSPRequestType)type tile:(OSPTile)tile
 {
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
     [req setValue:OSPUserAgentName @"/" OSPUserAgentVersion forHTTPHeaderField:@"User-Agent"];
         
     OSPConnection *rec = [[OSPConnection alloc] init];
-    [rec setMapArea:area];
+    [rec setTile:tile];
     [rec setRequest:req];
     [rec setRequestType:type];
     [rec setDelegate:self];
     [self queueConnection:rec];
-    [[self requestedArea] addRect:area];
+    [[self requestedTiles] addTile:tile];
 }
 
 - (void)queueConnection:(OSPConnection *)newConnection

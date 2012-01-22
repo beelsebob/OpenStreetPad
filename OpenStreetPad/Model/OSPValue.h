@@ -13,8 +13,10 @@
 @interface OSPValue : NSObject
 
 + (id)valueWithRect:(OSPCoordinateRect)rect;
++ (id)valueWithTile:(OSPTile)tile;
 
 - (OSPCoordinateRect)rectValue;
+- (OSPTile)tileValue;
 
 @end
 
