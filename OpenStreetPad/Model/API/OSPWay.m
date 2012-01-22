@@ -239,7 +239,7 @@
     return l;
 }
 
-- (CGPoint)positionOnWayWithOffset:(double)xOffset heightAboveWay:(double)yOffset backwards:(BOOL)backwards
+- (OSPCoordinate2D)positionOnWayWithOffset:(double)xOffset heightAboveWay:(double)yOffset backwards:(BOOL)backwards
 {
     [self createEdgeLengthsIfNeeded];
     
@@ -289,7 +289,7 @@
     double xCrawl = prop * dx;
     double yCrawl = prop * dy;
     
-    return CGPointMake(prevPointLocation.x + xCrawl, prevPointLocation.y + yCrawl);
+    return OSPCoordinate2DMake(prevPointLocation.x + xCrawl, prevPointLocation.y + yCrawl);
 }
 
 - (CGFloat)angleOnWayWithOffset:(CGFloat)xOffset backwards:(BOOL)backwards

@@ -736,7 +736,31 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
             CTRunRef run = CFArrayGetValueAtIndex(runs, runNumber);
             CFIndex numGlyphs = CTRunGetGlyphCount(run);
             const CGGlyph *glyphs = CTRunGetGlyphsPtr(run);
-            const CGPoint *glyphPositions = CTRunGetPositionsPtr(run);
+            const CGPoint *glyphOffsets = CTRunGetPositionsPtr(run);
+            OSPCoordinate2D *glyphPositions = malloc((numGlyphs + 1) * sizeof(OSPCoordinate2D));
+            CGFloat *glyphAngles = malloc(numGlyphs * sizeof(CGFloat));
+            
+            CGPoint currentGlyphOffset;
+            for (CFIndex glyphNumber = 0; glyphNumber < numGlyphs; glyphNumber++)
+            {
+                currentGlyphOffset = glyphOffsets[glyphNumber];
+                glyphPositions[glyphNumber] = [textWay positionOnWayWithOffset:wayOffset + currentGlyphOffset.x heightAboveWay:currentGlyphOffset.y - scaledOffset backwards:backwards];
+            }
+            glyphPositions[numGlyphs] = [textWay positionOnWayWithOffset:wayOffset + lineWidth heightAboveWay:-scaledOffset backwards:backwards];
+            OSPCoordinate2D currentGlyphPosition = glyphPositions[0];
+            for (CFIndex glyphNumber = 0; glyphNumber < numGlyphs; glyphNumber++)
+            {
+                OSPCoordinate2D nextGlyphPosition = glyphPositions[glyphNumber+1];
+                
+                double dx = nextGlyphPosition.x - currentGlyphPosition.x;
+                double dy = nextGlyphPosition.y - currentGlyphPosition.y;
+                glyphAngles[glyphNumber] = dx > 0.0 ? (dy > 0.0 ? atan(dy / dx) : -atan(-dy / dx))
+                                         : dx < 0.0 ? (dy > 0.0 ? M_PI - atan(dy / -dx) : M_PI + atan(-dy / -dx))
+                                         :            (dy < 0.0 ? 3 * M_PI_2 : M_PI_2);
+
+                
+                currentGlyphPosition = nextGlyphPosition;
+            }
             
             if (hasHalo)
             {
@@ -744,10 +768,9 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
                 for (CFIndex glyphNumber = 0; glyphNumber < numGlyphs; glyphNumber++)
                 {
                     CGGlyph glyph = glyphs[glyphNumber];
-                    CGPoint glyphPosition = glyphPositions[glyphNumber];
+                    OSPCoordinate2D p = glyphPositions[glyphNumber];
                     
-                    CGPoint p = [textWay positionOnWayWithOffset:wayOffset + glyphPosition.x heightAboveWay:glyphPosition.y - scaledOffset backwards:backwards];
-                    CGContextSetTextMatrix(ctx, CGAffineTransformConcat(CGAffineTransformMakeRotation(-[textWay angleOnWayWithOffset:wayOffset + glyphPosition.x backwards:backwards]), CGAffineTransformMakeScale(1.0, -1.0)));
+                    CGContextSetTextMatrix(ctx, CGAffineTransformConcat(CGAffineTransformMakeRotation(-glyphAngles[glyphNumber]), CGAffineTransformMakeScale(1.0, -1.0)));
                     CGContextSetTextPosition(ctx, p.x, p.y);
                     CGContextShowGlyphs(ctx, &glyph, 1);
                 }
@@ -756,13 +779,15 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
             for (CFIndex glyphNumber = 0; glyphNumber < numGlyphs; glyphNumber++)
             {
                 CGGlyph glyph = glyphs[glyphNumber];
-                CGPoint glyphPosition = glyphPositions[glyphNumber];
+                OSPCoordinate2D p = glyphPositions[glyphNumber];
                 
-                CGPoint p = [textWay positionOnWayWithOffset:wayOffset + glyphPosition.x heightAboveWay:glyphPosition.y - scaledOffset backwards:backwards];
-                CGContextSetTextMatrix(ctx, CGAffineTransformConcat(CGAffineTransformMakeRotation(-[textWay angleOnWayWithOffset:wayOffset + glyphPosition.x backwards:backwards]), CGAffineTransformMakeScale(1.0, -1.0)));
+                CGContextSetTextMatrix(ctx, CGAffineTransformConcat(CGAffineTransformMakeRotation(-glyphAngles[glyphNumber]), CGAffineTransformMakeScale(1.0, -1.0)));
                 CGContextSetTextPosition(ctx, p.x, p.y);
                 CGContextShowGlyphs(ctx, &glyph, 1);
             }
+            
+            free(glyphPositions);
+            free(glyphAngles);
         }
     }
     
