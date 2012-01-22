@@ -174,7 +174,7 @@ typedef enum
             }
         }
         
-        NSSet *os = (__bridge_transfer NSSet *)objects;
+        NSSet *os = CFBridgingRelease(objects);
         
         return os;
     }

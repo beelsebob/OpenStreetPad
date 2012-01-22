@@ -10,7 +10,7 @@
 
 @interface OSPNode ()
 
-@property (nonatomic,readwrite,assign) OSPCoordinate2D projectedLocation;
+@property (/*nonatomic,*/readwrite,assign) OSPCoordinate2D projectedLocation;
 
 @end
 
@@ -19,10 +19,21 @@
 @synthesize location;
 @synthesize projectedLocation;
 
+- (CLLocationCoordinate2D)location
+{
+    @synchronized(self)
+    {
+        return location;
+    }
+}
+
 - (void)setLocation:(CLLocationCoordinate2D)newLocation
 {
-    location = newLocation;
-    [self setProjectedLocation:OSPCoordinate2DProjectLocation(newLocation)];
+    @synchronized(self)
+    {
+        location = newLocation;
+        [self setProjectedLocation:OSPCoordinate2DProjectLocation(newLocation)];
+    }
 }
 
 - (OSPCoordinateRect)bounds

@@ -324,35 +324,6 @@ typedef enum
             [self requestDataInTile:subTile];
         }
     }
-/*    OSPNonRectangularArea *rectanglesToLoad = [[OSPNonRectangularArea areaWithRects:[NSArray arrayWithObject:[OSPValue valueWithRect:bounds]]] areaBySubtractingArea:[self requestedArea]];
-    
-    NSArray *bigEnoughRects = [[rectanglesToLoad allRects] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^ BOOL (OSPValue *rect, id bindings)
-                                                                                        {
-                                                                                            OSPCoordinateRect r = [rect rectValue];
-                                                                                            return r.size.x > 0.000005 && r.size.y > 0.000005;
-                                                                                        }]];
-    
-    if ([bigEnoughRects count] > 0)
-    {
-        rectanglesToLoad = [[OSPNonRectangularArea areaWithRects:[NSArray arrayWithObject:[OSPValue valueWithRect:OSPCoordinateRectOutset(bounds, outsetSize, outsetSize)]]] areaBySubtractingArea:[self requestedArea]];
-        bigEnoughRects = [[rectanglesToLoad allRects] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^ BOOL (OSPValue *rect, id bindings)
-                                                                                   {
-                                                                                       OSPCoordinateRect r = [rect rectValue];
-                                                                                       return r.size.x > 0.000005 && r.size.y > 0.000005;
-                                                                                   }]];
-        
-        for (OSPValue *rectValue in bigEnoughRects)
-        {
-            OSPCoordinateRect rect = [rectValue rectValue];
-            
-            CLLocationCoordinate2D from = OSPCoordinate2DUnproject(OSPCoordinateRectGetMinCoord(rect));
-            CLLocationCoordinate2D to = OSPCoordinate2DUnproject(OSPCoordinateRectGetMaxCoord(rect));
-            
-            NSURL *mapURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/api/0.6/map?bbox=%f,%f,%f,%f", [self serverURL], from.longitude, to.latitude, to.longitude, from.latitude]];
-            
-            [self makeRequestForURL:mapURL ofType:OSPRequestTypeMapArea withArea:rect];
-        }
-    }*/
 }
 
 - (void)requestDataInTile:(OSPTile)tile
@@ -388,32 +359,35 @@ typedef enum
 
 - (void)popConnectionQueue
 {
-    while ([[self currentConnections] count] < OSPMapServerMaxSimultaneousConnections && [[self connectionQueue] count] > 0)
+    @synchronized(self)
     {
-        OSPConnection *rec = [[self connectionQueue] objectAtIndex:0];
-        [[self connectionQueue] removeObjectAtIndex:0];
-        [[self currentConnections] addObject:rec];
-        [rec setConnection:[NSURLConnection connectionWithRequest:[rec request] delegate:rec]];
-        [[rec connection] start];
-        CFReadStreamRef readStream;
-        CFWriteStreamRef writeStream;
-        CFStreamCreateBoundPair(NULL, &readStream, &writeStream, 4096);
-        NSInputStream *iStream = (__bridge_transfer NSInputStream *)readStream;
-        NSOutputStream *oStream = (__bridge_transfer NSOutputStream *)writeStream;
-        [oStream setDelegate:rec];
-        NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
-        [iStream scheduleInRunLoop:runLoop forMode:NSDefaultRunLoopMode];
-        [oStream scheduleInRunLoop:runLoop forMode:NSDefaultRunLoopMode];
-        [iStream open];
-        [oStream open];
-        [rec setParserStream:oStream];
-        NSXMLParser *parser = [[NSXMLParser alloc] initWithStream:iStream];
-        [parser setDelegate:rec];
-        [rec setParser:parser];
-        dispatch_async(parserQueue, ^()
-                       {
-                           [parser parse];
-                       });
+        while ([[self currentConnections] count] < OSPMapServerMaxSimultaneousConnections && [[self connectionQueue] count] > 0)
+        {
+            OSPConnection *rec = [[self connectionQueue] objectAtIndex:0];
+            [[self connectionQueue] removeObjectAtIndex:0];
+            [[self currentConnections] addObject:rec];
+            [rec setConnection:[NSURLConnection connectionWithRequest:[rec request] delegate:rec]];
+            [[rec connection] start];
+            CFReadStreamRef readStream;
+            CFWriteStreamRef writeStream;
+            CFStreamCreateBoundPair(NULL, &readStream, &writeStream, 4096);
+            NSInputStream *iStream = CFBridgingRelease(readStream);
+            NSOutputStream *oStream = CFBridgingRelease(writeStream);
+            [oStream setDelegate:rec];
+            NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
+            [iStream scheduleInRunLoop:runLoop forMode:NSDefaultRunLoopMode];
+            [oStream scheduleInRunLoop:runLoop forMode:NSDefaultRunLoopMode];
+            [iStream open];
+            [oStream open];
+            [rec setParserStream:oStream];
+            NSXMLParser *parser = [[NSXMLParser alloc] initWithStream:iStream];
+            [parser setDelegate:rec];
+            [rec setParser:parser];
+            dispatch_async(parserQueue, ^()
+                           {
+                               [parser parse];
+                           });
+        }
     }
 }
 

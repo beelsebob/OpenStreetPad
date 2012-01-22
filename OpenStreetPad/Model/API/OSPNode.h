@@ -12,7 +12,7 @@
 
 @interface OSPNode : OSPAPIObject
 
-@property (nonatomic, readwrite, assign) CLLocationCoordinate2D location;
-@property (nonatomic, readonly , assign) OSPCoordinate2D projectedLocation;
+@property (/*nonatomic,*/ readwrite, assign) CLLocationCoordinate2D location;
+@property (/*nonatomic,*/ readonly , assign) OSPCoordinate2D projectedLocation;
 
 @end
