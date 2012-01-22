@@ -409,6 +409,8 @@ typedef enum
     }
     
     [[self delegate] mapServer:self didLoadObjectsInArea:[connection mapArea]];
+    [[connection parserStream] setDelegate:nil];
+    [[connection parser] setDelegate:nil];
     [[self currentConnections] removeObject:connection];
     [self popConnectionQueue];
 }
