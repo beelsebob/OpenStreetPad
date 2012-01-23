@@ -42,6 +42,16 @@ way[highway="service"][service="parking_aisle"]
   width:4pt;
 }
 
+way[highway="motorway"],
+way[highway="motorway_link"]
+{
+  width: 16pt;
+  z-index: 100.5;
+  color: rgb(0.745 , 0.784, 1.0);
+  font-family: Helvetica;
+  font-size: 14pt;
+}
+
 way[highway="trunk"],
 way[highway="trunk_link"]
 {
@@ -53,7 +63,8 @@ way[highway="trunk_link"]
   font-size: 14pt;
 }
 
-way[highway="primary"]
+way[highway="primary"],
+way[highway="primary_link"]
 {
   width: 16pt;
   z-index: 100.4;
@@ -83,6 +94,16 @@ way[highway="footway"]
   color: rgb(1.0, 0.56, 0.56);
   dashes: 1, 4;
 }
+
+way[highway="motorway_link"],
+way[highway="trunk_link"],
+way[highway="primary_link"]
+{
+    // Where a *_link terminates on a roundabout or other road, it is less important
+    // and should be drawn "behind"
+    z-index: 99.9;
+}
+
 
 way[highway="cycleway"]
 {
@@ -167,6 +188,23 @@ area[landuse="industrial"]
 area[landuse="landfill"]
 {
   fill-color: rgb(0.72, 0.71, 0.58);
+}
+
+way[waterway]
+{
+    color: rgb(0.72, 0.82, 0.82);
+}
+
+way[waterway]
+{
+    width: 1pt;
+}
+
+
+way[waterway="river"],
+way[waterway="canal"]
+{
+    width: 3pt;
 }
 
 area[waterway="riverbank"]
