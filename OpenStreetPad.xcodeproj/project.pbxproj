@@ -50,6 +50,10 @@
 		1F73F2B4145F409A00037860 /* OSPMapCSSNamed.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F2B3145F409900037860 /* OSPMapCSSNamed.m */; };
 		1F73F2B7145F416600037860 /* OSPMapCSSSizeListSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F73F2B6145F416600037860 /* OSPMapCSSSizeListSpecifier.m */; };
 		1FA7B5B9140BAE1B0015D400 /* OSPAPIObjectReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA7B5B8140BAE1B0015D400 /* OSPAPIObjectReference.m */; };
+		1FB7199E14E0062800BD033C /* OSPMapCSSTagSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB7199D14E0062800BD033C /* OSPMapCSSTagSpec.m */; };
+		1FB719A114E0082300BD033C /* OSPMapCSSTagSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB719A014E0082300BD033C /* OSPMapCSSTagSpecifier.m */; };
+		1FB719A214E0097D00BD033C /* OSPMapCSSTagSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB719A014E0082300BD033C /* OSPMapCSSTagSpecifier.m */; };
+		1FB719A314E0098100BD033C /* OSPMapCSSTagSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB7199D14E0062800BD033C /* OSPMapCSSTagSpec.m */; };
 		1FCA08F914CAE5D5008889C3 /* libCoreParse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCA08F614CAE5C2008889C3 /* libCoreParse.a */; };
 		1FCA08FA14CAE7F5008889C3 /* CoreParse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCA08F014CAE5C2008889C3 /* CoreParse.framework */; };
 		1FCA090014CB3FCF008889C3 /* OSPTileArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA08FF14CB3FCE008889C3 /* OSPTileArray.m */; };
@@ -247,6 +251,10 @@
 		1F73F2B6145F416600037860 /* OSPMapCSSSizeListSpecifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapCSSSizeListSpecifier.m; sourceTree = "<group>"; };
 		1FA7B5B7140BAE1B0015D400 /* OSPAPIObjectReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPAPIObjectReference.h; sourceTree = "<group>"; };
 		1FA7B5B8140BAE1B0015D400 /* OSPAPIObjectReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPAPIObjectReference.m; sourceTree = "<group>"; };
+		1FB7199C14E0062800BD033C /* OSPMapCSSTagSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapCSSTagSpec.h; sourceTree = "<group>"; };
+		1FB7199D14E0062800BD033C /* OSPMapCSSTagSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapCSSTagSpec.m; sourceTree = "<group>"; };
+		1FB7199F14E0082300BD033C /* OSPMapCSSTagSpecifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapCSSTagSpecifier.h; sourceTree = "<group>"; };
+		1FB719A014E0082300BD033C /* OSPMapCSSTagSpecifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapCSSTagSpecifier.m; sourceTree = "<group>"; };
 		1FCA08E314CAE5C2008889C3 /* CoreParse.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CoreParse.xcodeproj; path = ../CoreParse/CoreParse.xcodeproj; sourceTree = "<group>"; };
 		1FCA08FE14CB3FCE008889C3 /* OSPTileArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPTileArray.h; sourceTree = "<group>"; };
 		1FCA08FF14CB3FCE008889C3 /* OSPTileArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPTileArray.m; sourceTree = "<group>"; };
@@ -355,6 +363,8 @@
 				1F08A1E9145F4560007F6C19 /* OSPMapCSSURLSpecifier.m */,
 				1F08A1EB145F45A1007F6C19 /* OSPMapCSSEvalSpecifier.h */,
 				1F08A1EC145F45A1007F6C19 /* OSPMapCSSEvalSpecifier.m */,
+				1FB7199F14E0082300BD033C /* OSPMapCSSTagSpecifier.h */,
+				1FB719A014E0082300BD033C /* OSPMapCSSTagSpecifier.m */,
 				1F08A1EE145F467A007F6C19 /* OSPMapCSSKey.h */,
 				1F08A1EF145F467A007F6C19 /* OSPMapCSSKey.m */,
 				1F08A1F1145F46FB007F6C19 /* OSPMapCSSStyle.h */,
@@ -367,6 +377,8 @@
 				1F08A1FB145F4F79007F6C19 /* OSPMapCSSClass.m */,
 				1F08A1FD145F584A007F6C19 /* OSPMapCSSTag.h */,
 				1F08A1FE145F584A007F6C19 /* OSPMapCSSTag.m */,
+				1FB7199C14E0062800BD033C /* OSPMapCSSTagSpec.h */,
+				1FB7199D14E0062800BD033C /* OSPMapCSSTagSpec.m */,
 				1F08A200145F5B6F007F6C19 /* OSPMapCSSTest.h */,
 				1F08A201145F5B6F007F6C19 /* OSPMapCSSTest.m */,
 				1F08A22014606DBE007F6C19 /* OSPMapCSSPlaceholderTest.h */,
@@ -733,6 +745,8 @@
 				1FDD69A1147974470095E634 /* OSPQuadTree.m in Sources */,
 				1F3D678F14ADD331002575EC /* UIColor+CSS.m in Sources */,
 				1FCA090014CB3FCF008889C3 /* OSPTileArray.m in Sources */,
+				1FB7199E14E0062800BD033C /* OSPMapCSSTagSpec.m in Sources */,
+				1FB719A114E0082300BD033C /* OSPMapCSSTagSpecifier.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -761,7 +775,9 @@
 				1FFFC269146546E80052D1B6 /* OSPMapCSSUnaryTest.m in Sources */,
 				1FFFC26A146546E80052D1B6 /* OSPMapCSSBinaryTest.m in Sources */,
 				1FFFC26B146546E80052D1B6 /* OSPMapCSSZoom.m in Sources */,
+				1FB719A214E0097D00BD033C /* OSPMapCSSTagSpecifier.m in Sources */,
 				1FFFC26C146546E80052D1B6 /* OSPMapCSSSubselector.m in Sources */,
+				1FB719A314E0098100BD033C /* OSPMapCSSTagSpec.m in Sources */,
 				1FFFC26D146546E80052D1B6 /* OSPMapCSSCommaSelector.m in Sources */,
 				1FFFC26E146546E80052D1B6 /* OSPMapCSSRule.m in Sources */,
 				1FFFC26F146546E80052D1B6 /* OSPMapCSSImport.m in Sources */,

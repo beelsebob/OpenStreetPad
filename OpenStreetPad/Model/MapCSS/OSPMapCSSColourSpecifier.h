@@ -12,6 +12,8 @@
 
 #if TARGET_OS_IPHONE
 @property (readwrite, retain) UIColor *colour;
+
+- (id)initWithColour:(UIColor *)colour;
 #endif
 
 @end

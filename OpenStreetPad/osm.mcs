@@ -20,7 +20,7 @@ way[highway]
   
   z-index: 100;
   
-  text: name;
+  text: tag("name");
   text-position: line;
   font-family: Helvetica;
   font-size: 12pt;
@@ -58,7 +58,6 @@ way[highway="trunk_link"]
   width: 16pt;
   z-index: 100.5;
   color: rgb(0.66, 0.86, 0.66);
-//  text: name;
   font-family: Helvetica;
   font-size: 14pt;
 }
@@ -230,7 +229,7 @@ area[amenity="college"]
   color: rgb(0.82, 0.67, 0.64);
   fill-color: rgb(0.94, 0.94, 0.85);
   
-  text: name;
+  text: tag('name');
   font-family: Helvetica;
   font-size: 14pt;
   text-color: black;
@@ -259,7 +258,7 @@ area[building]
   width: 1 pt;
   color: rgb(0.74, 0.68, 0.68);
   fill-color: rgba(0.84, 0.68, 0.68, 0.68);
-  text: name;
+  text: tag('name');
   font-family: Helvetica;
   font-size: 14pt;
   text-color: black;

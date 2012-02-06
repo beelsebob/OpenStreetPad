@@ -22,4 +22,10 @@
     return [super init];
 }
 
+- (NSArray *)values
+{
+    [NSException exceptionWithName:@"Abstract class exception" reason:@"-values is an abstract method, call it on a subclass" userInfo:nil];
+    return nil;
+}
+
 @end

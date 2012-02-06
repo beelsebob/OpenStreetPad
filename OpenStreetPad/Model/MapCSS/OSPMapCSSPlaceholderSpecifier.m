@@ -13,11 +13,13 @@
 #import "OSPMapCSSColourSpecifier.h"
 #import "OSPMapCSSURLSpecifier.h"
 #import "OSPMapCSSEvalSpecifier.h"
+#import "OSPMapCSSTagSpecifier.h"
 
 #import "OSPMapCSSNamed.h"
 #import "OSPMapCSSSize.h"
 #import "OSPMapCSSUrl.h"
 #import "OSPMapCSSEval.h"
+#import "OSPMapCSSTagSpec.h"
 
 @implementation OSPMapCSSPlaceholderSpecifier
 
@@ -43,9 +45,13 @@
     {
         return (id)[[OSPMapCSSURLSpecifier alloc] initWithSyntaxTree:syntaxTree];
     }
-    else
+    else if ([item isKindOfClass:[OSPMapCSSEval class]])
     {
         return (id)[[OSPMapCSSEvalSpecifier alloc] initWithSyntaxTree:syntaxTree];
+    }
+    else
+    {
+        return (id)[[OSPMapCSSTagSpecifier alloc] initWithSyntaxTree:syntaxTree];
     }
 }
 

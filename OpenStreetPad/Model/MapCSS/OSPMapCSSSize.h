@@ -26,4 +26,6 @@ NSString *NSStringFromOSPMapCSSUnit(OSPMapCSSUnit u);
 @property (readwrite, assign) float value;
 @property (readwrite, assign) OSPMapCSSUnit unit;
 
+- (id)initWithValue:(NSNumber *)value units:(OSPMapCSSUnit)unit;
+
 @end

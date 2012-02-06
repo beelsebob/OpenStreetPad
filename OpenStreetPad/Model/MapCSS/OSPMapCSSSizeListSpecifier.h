@@ -8,8 +8,12 @@
 
 #import "OSPMapCSSSpecifier.h"
 
+#import "OSPMapCSSSize.h"
+
 @interface OSPMapCSSSizeListSpecifier : OSPMapCSSSpecifier
 
 @property (readwrite, copy) NSArray *sizes;
+
+- (id)initWithSize:(OSPMapCSSSize *)size;
 
 @end

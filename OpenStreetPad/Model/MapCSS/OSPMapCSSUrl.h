@@ -12,7 +12,8 @@
 
 @interface OSPMapCSSUrl : NSObject <CPParseResult>
 
-@property (readwrite, assign, getter=isEval) BOOL eval;
-@property (readwrite, strong) id content;
+@property (readwrite, strong) NSURL *content;
+
+- (id)initWithURL:(NSURL *)url;
 
 @end

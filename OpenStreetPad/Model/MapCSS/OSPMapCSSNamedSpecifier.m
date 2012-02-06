@@ -24,9 +24,26 @@
     return self;
 }
 
+- (id)initWithName:(NSString *)initName
+{
+    self = [super init];
+    
+    if (nil != self)
+    {
+        [self setName:initName];
+    }
+    
+    return self;
+}
+
 - (NSString *)description
 {
     return [self name];
+}
+
+- (NSArray *)values
+{
+    return [NSArray arrayWithObject:[[self name] copy]];
 }
 
 @end

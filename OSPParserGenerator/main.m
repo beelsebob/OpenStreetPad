@@ -35,6 +35,7 @@ int main (int argc, const char * argv[])
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"canvas"   invalidFollowingCharacters:identifierCharacters]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"url"      invalidFollowingCharacters:identifierCharacters]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"eval"     invalidFollowingCharacters:identifierCharacters]];
+            [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"tag"      invalidFollowingCharacters:identifierCharacters]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"rgba"     invalidFollowingCharacters:identifierCharacters]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"rgb"      invalidFollowingCharacters:identifierCharacters]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"pt"       invalidFollowingCharacters:identifierCharacters]];
@@ -77,34 +78,34 @@ int main (int argc, const char * argv[])
                                               backusNaurForm:
                                   @"OSPMapCSSRuleset       ::= <OSPMapCSSRule>*;"
                                   @"OSPMapCSSRule          ::= <OSPMapCSSSelector> <OSPMapCSSCommaSelector>* <OSPMapCSSDeclaration>+ | <OSPMapCSSImport>;"
-                                  @"OSPMapCSSImport        ::= \"@import\" \"url\" \"(\" \"String\" \")\" \"Identifier\";"
-                                  @"OSPMapCSSCommaSelector ::= \",\" <OSPMapCSSSelector>;"
+                                  @"OSPMapCSSImport        ::= '@import' 'url' '(' 'String' ')' 'Identifier';"
+                                  @"OSPMapCSSCommaSelector ::= ',' <OSPMapCSSSelector>;"
                                   @"OSPMapCSSSelector      ::= <OSPMapCSSSubselector>+;"
-                                  @"OSPMapCSSSubselector   ::= <OSPMapCSSObject> \"Whitespace\" | <OSPMapCSSObject> <OSPMapCSSZoom> <OSPMapCSSTest>* | <OSPMapCSSObject> <OSPMapCSSTest>* | <OSPMapCSSObject> \"Whitespace\" <OSPMapCSSClass>;"
-                                  @"OSPMapCSSZoom          ::= \"|z\" <range>;"
-                                  @"range                  ::= \"Number\" | \"Number\" \"-\" \"Number\";"
-                                  @"OSPMapCSSTest          ::= \"[\" <condition> \"]\";"
+                                  @"OSPMapCSSSubselector   ::= <OSPMapCSSObject> 'Whitespace' | <OSPMapCSSObject> <OSPMapCSSZoom> <OSPMapCSSTest>* | <OSPMapCSSObject> <OSPMapCSSTest>* | <OSPMapCSSObject> 'Whitespace' <OSPMapCSSClass>;"
+                                  @"OSPMapCSSZoom          ::= '|z' <range>;"
+                                  @"range                  ::= 'Number' | 'Number' '-' 'Number';"
+                                  @"OSPMapCSSTest          ::= '[' <condition> ']';"
                                   @"condition              ::= <OSPMapCSSTag> <binary> <value> | <unary> <OSPMapCSSTag> | <OSPMapCSSTag>;"
-                                  @"OSPMapCSSTag           ::= <OSPMapCSSKey> (\":\" <OSPMapCSSKey>)*;"
-                                  @"OSPMapCSSKey           ::= \"Identifier\";"
-                                  @"value                  ::= \"String\" | \"Regex\";"
-                                  @"binary                 ::= \"=\" | \"!=\" | \"=~\" | \"<\" | \">\" | \"<=\" | \">=\";"
-                                  @"unary                  ::= \"-\" | \"!\";"
-                                  @"OSPMapCSSClass         ::= <class> | \"!\" <class>;"
-                                  @"class                  ::= \".\" \"Identifier\";"
-                                  @"OSPMapCSSObject        ::= \"node\" | \"way\" | \"relation\" | \"area\" | \"line\" | \"canvas\" | \"*\";"
-                                  @"OSPMapCSSDeclaration   ::= \"{\" <OSPMapCSSStyle>+ \"}\" | \"{\" \"}\";"
-                                  @"OSPMapCSSStyle         ::= <Styledef> \";\";"
-                                  @"Styledef               ::= <OSPMapCSSKey> \":\" <OSPMapCSSSpecifier>;"
-                                  @"OSPMapCSSSpecifier     ::= <OSPMapCSSNamed> | <OSPMapCSSSize> <OSPMapCSSCommaSize>* | <OSPMapCSSColour> | <OSPMapCSSUrl> | <OSPMapCSSEval>;"
-                                  @"OSPMapCSSNamed         ::= \"Identifier\";"
-                                  @"OSPMapCSSSize          ::= \"Number\" <Unit>;"
-                                  @"Unit                   ::= \"pt\" | \"px\" | \"%\" | ;"
-                                  @"OSPMapCSSCommaSize     ::= \",\" <OSPMapCSSSize>;"
-                                  @"OSPMapCSSColour        ::= \"HashColour\" | \"rgb\" \"(\" \"Number\" \",\" \"Number\" \",\" \"Number\" \")\" | \"rgba\" \"(\" \"Number\" \",\" \"Number\" \",\" \"Number\"  \",\" \"Number\" \")\";"
-                                  @"OSPMapCSSUrl           ::= \"url\" \"(\" <UrlContent> \")\";"
-                                  @"UrlContent             ::= \"String\" | <OSPMapCSSEval>;"
-                                  @"OSPMapCSSEval          ::= \"eval\" \"(\" \"String\" \")\";"];
+                                  @"OSPMapCSSTag           ::= <OSPMapCSSKey> (':' <OSPMapCSSKey>)*;"
+                                  @"OSPMapCSSKey           ::= 'Identifier';"
+                                  @"value                  ::= 'String' | 'Regex';"
+                                  @"binary                 ::= '=' | '!=' | '=~' | '<' | '>' | '<=' | '>=';"
+                                  @"unary                  ::= '-' | '!';"
+                                  @"OSPMapCSSClass         ::= <class> | '!' <class>;"
+                                  @"class                  ::= '.' 'Identifier';"
+                                  @"OSPMapCSSObject        ::= 'node' | 'way' | 'relation' | 'area' | 'line' | 'canvas' | '*';"
+                                  @"OSPMapCSSDeclaration   ::= '{' <OSPMapCSSStyle>+ '}' | '{' '}';"
+                                  @"OSPMapCSSStyle         ::= <Styledef> ';';"
+                                  @"Styledef               ::= <OSPMapCSSKey> ':' <OSPMapCSSSpecifier>;"
+                                  @"OSPMapCSSSpecifier     ::= <OSPMapCSSNamed> | <OSPMapCSSSize> <OSPMapCSSCommaSize>* | <OSPMapCSSColour> | <OSPMapCSSUrl> | <OSPMapCSSEval> | <OSPMapCSSTagSpec>;"
+                                  @"OSPMapCSSNamed         ::= 'Identifier';"
+                                  @"OSPMapCSSSize          ::= 'Number' <Unit>;"
+                                  @"Unit                   ::= 'pt' | 'px' | '%' | ;"
+                                  @"OSPMapCSSCommaSize     ::= ',' <OSPMapCSSSize>;"
+                                  @"OSPMapCSSColour        ::= 'HashColour' | 'rgb' '(' 'Number' ',' 'Number' ',' 'Number' ')' | 'rgba' '(' 'Number' ',' 'Number' ',' 'Number'  ',' 'Number' ')';"
+                                  @"OSPMapCSSUrl           ::= 'url' '(' 'String' ')';"
+                                  @"OSPMapCSSEval          ::= 'eval' '(' 'String' ')';"
+                                  @"OSPMapCSSTagSpec       ::= 'tag' '(' 'String' ')';"];
             CPParser *mapCssParser = [[CPLALR1Parser alloc] initWithGrammar:grammar];
             
             if (nil == mapCssParser)

@@ -168,11 +168,11 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     UIColor *c = nil;
     if ([colour isKindOfClass:[OSPMapCSSColourSpecifier class]])
     {
-        c = [(OSPMapCSSColourSpecifier *)colour colour];
+        c = [[colour values] objectAtIndex:0];
     }
     else if ([colour isKindOfClass:[OSPMapCSSNamedSpecifier class]])
     {
-        NSString *colourName = [(OSPMapCSSNamedSpecifier *)colour name];
+        NSString *colourName = [[colour values] objectAtIndex:0];
         c = [UIColor colourWithCSSName:colourName];
     }
     
@@ -183,7 +183,7 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
         CGFloat blue;
         CGFloat alpha;
         [c getRed:&red green:&green blue:&blue alpha:&alpha];
-        alpha = [(OSPMapCSSSize *)[[(OSPMapCSSSizeListSpecifier *)opacity sizes] objectAtIndex:0] value];
+        alpha = [(OSPMapCSSSize *)[[opacity values] objectAtIndex:0] value];
         c = [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
     }
     
@@ -211,8 +211,10 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
                            {
                                OSPMapCSSSpecifier *z1s = [[o1 style] objectForKey:@"z-index"];
                                OSPMapCSSSpecifier *z2s = [[o2 style] objectForKey:@"z-index"];
-                               float z1 = [z1s isKindOfClass:[OSPMapCSSSizeListSpecifier class]] ? [(OSPMapCSSSize *)[[(OSPMapCSSSizeListSpecifier *)z1s sizes] objectAtIndex:0] value] : 0.0f;
-                               float z2 = [z2s isKindOfClass:[OSPMapCSSSizeListSpecifier class]] ? [(OSPMapCSSSize *)[[(OSPMapCSSSizeListSpecifier *)z2s sizes] objectAtIndex:0] value] : 0.0f;
+                               id value1 = [[z1s values] objectAtIndex:0];
+                               id value2 = [[z2s values] objectAtIndex:0];
+                               float z1 = [value1 isKindOfClass:[OSPMapCSSSize class]] ? [(OSPMapCSSSize *)value1 value] : 0.0f;
+                               float z2 = [value2 isKindOfClass:[OSPMapCSSSize class]] ? [(OSPMapCSSSize *)value2 value] : 0.0f;
                                
                                return z1 > z2 ? NSOrderedDescending : z1 < z2 ? NSOrderedAscending : NSOrderedSame;
                            }]
@@ -376,7 +378,7 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
         CGPathRef path = [self createPathForWay:way];
         CGContextAddPath(ctx, path);
                 
-        CGContextSetLineWidth(ctx, ([(OSPMapCSSSize *)[[(OSPMapCSSSizeListSpecifier *)widthSpec sizes] objectAtIndex:0] value] + [(OSPMapCSSSize *)[[(OSPMapCSSSizeListSpecifier *)casingWidthSpec sizes] objectAtIndex:0] value]) * scale);
+        CGContextSetLineWidth(ctx, ([(OSPMapCSSSize *)[[widthSpec values] objectAtIndex:0] value] + [(OSPMapCSSSize *)[[casingWidthSpec values] objectAtIndex:0] value]) * scale);
         UIColor *colour = [self colourWithColourSpecifier:[style objectForKey:@"casing-color"] opacitySpecifier:[style objectForKey:@"casing-opacity"]];
         CGContextSetStrokeColorWithColor(ctx, colour == nil ? [[UIColor blackColor] CGColor] : [colour CGColor]);
         OSPMapCSSSpecifier *lineCapSpec = [style objectForKey:@"casing-linecap"];
@@ -536,7 +538,7 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     OSPWay *way = (OSPWay *)[styledWay object];
     
     OSPMapCSSNamedSpecifier *textSpecifier = [style objectForKey:@"text"];
-    NSString *title = [self applyTextTransform:style toString:[[way tags] objectForKey:[textSpecifier name]]];
+    NSString *title = [self applyTextTransform:style toString:[textSpecifier name]];
     
     if (nil != title)
     {
@@ -839,15 +841,13 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     if ([spec isKindOfClass:[OSPMapCSSURLSpecifier class]])
     {
         OSPMapCSSUrl *u = [(OSPMapCSSURLSpecifier *)spec url];
-        if (![u isEval])
-        {
-            NSString *url = [u content];
-            NSString *ext = [url pathExtension];
-            NSString *resName = [[url lastPathComponent] stringByDeletingPathExtension];
-            NSString *dir = [url stringByDeletingLastPathComponent];
-            NSString *path = [[NSBundle mainBundle] pathForResource:resName ofType:ext inDirectory:dir];
-            return [UIImage imageWithContentsOfFile:path];
-        }
+        NSURL *url = [u content];
+        NSString *urlString = [url relativeString];
+        NSString *ext = [url pathExtension];
+        NSString *resName = [[url lastPathComponent] stringByDeletingPathExtension];
+        NSString *dir = [urlString stringByDeletingLastPathComponent];
+        NSString *path = [[NSBundle mainBundle] pathForResource:resName ofType:ext inDirectory:dir];
+        return [UIImage imageWithContentsOfFile:path];
     }
     
     return nil;

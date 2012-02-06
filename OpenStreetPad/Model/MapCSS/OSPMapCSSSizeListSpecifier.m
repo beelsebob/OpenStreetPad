@@ -25,7 +25,19 @@
         [self setSizes:allButOneChild];
     }
     
-    return  self;
+    return self;
+}
+
+- (id)initWithSize:(OSPMapCSSSize *)size
+{
+    self = [super init];
+    
+    if (nil != self)
+    {
+        [self setSizes:[NSArray arrayWithObject:size]];
+    }
+    
+    return self;
 }
 
 - (NSString *)description
@@ -46,6 +58,11 @@
         sizeNum++;
     }
     return desc;
+}
+
+- (NSArray *)values
+{
+    return [[self sizes] copy];
 }
 
 @end

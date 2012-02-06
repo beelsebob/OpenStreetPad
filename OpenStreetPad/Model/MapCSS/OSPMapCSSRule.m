@@ -18,6 +18,8 @@
 
 #import "OSPMapCSSStyleSheet.h"
 
+#import "OSPMapCSSTagSpecifier.h"
+
 #import <objc/runtime.h>
 
 @interface OSPMapCSSRule ()
@@ -101,7 +103,15 @@ extern char styleKey;
         {
             for (OSPMapCSSStyle *st in [decl styles])
             {
-                [style setObject:[st specifier] forKey:[[st key] description]];
+                OSPMapCSSSpecifier *spec = [st specifier];
+                if ([spec isKindOfClass:[OSPMapCSSTagSpecifier class]])
+                {
+                    spec = [(OSPMapCSSTagSpecifier *)spec specifierWithAPIObject:object];
+                }
+                if (nil != spec)
+                {
+                    [style setObject:spec forKey:[[st key] description]];
+                }
             }
         }
         return [style copy];

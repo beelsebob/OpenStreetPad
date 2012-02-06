@@ -25,6 +25,18 @@
     return self;
 }
 
+- (id)initWithColour:(UIColor *)initColour
+{
+    self = [super init];
+    
+    if (nil != self)
+    {
+        [self setColour:initColour];
+    }
+    
+    return self;
+}
+
 - (NSString *)description
 {
     CGFloat red;
@@ -33,6 +45,11 @@
     CGFloat alpha;
     [[self colour] getRed:&red green:&green blue:&blue alpha:&alpha];
     return [NSString stringWithFormat:@"rgba(%1.2f, %1.2f, %1.2f, %1.2f)", red, green, blue, alpha];
+}
+
+- (NSArray *)values
+{
+    return [NSArray arrayWithObject:[self colour]];
 }
 #endif
 

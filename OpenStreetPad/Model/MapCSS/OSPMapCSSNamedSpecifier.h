@@ -14,4 +14,6 @@
 
 @property (readwrite, copy) NSString *name;
 
+- (id)initWithName:(NSString *)name;
+
 @end

@@ -95,6 +95,7 @@
         return (0 == nestingDepth ||
                 [symbolsSet characterIsMember:[name characterAtIndex:0]] ||
                 [name isEqualToString:@"eval"] ||
+                [name isEqualToString:@"tag"]  ||
                 [name isEqualToString:@"url"]  ||
                 [name isEqualToString:@"set"]  ||
                 [name isEqualToString:@"pt"]   ||

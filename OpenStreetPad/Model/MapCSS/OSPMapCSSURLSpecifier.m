@@ -24,9 +24,26 @@
     return self;
 }
 
+- (id)initWithURL:(OSPMapCSSUrl *)initUrl
+{
+    self = [super init];
+    
+    if (nil != self)
+    {
+        [self setUrl:initUrl];
+    }
+    
+    return self;
+}
+
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"url(%@)", [self url]];
+}
+
+- (NSArray *)values
+{
+    return [NSArray arrayWithObject:[self url]];
 }
 
 @end

@@ -64,6 +64,19 @@ NSString *NSStringFromOSPMapCSSUnit(OSPMapCSSUnit u)
     return self;
 }
 
+- (id)initWithValue:(NSNumber *)initValue units:(OSPMapCSSUnit)initUnit
+{
+    self = [super init];
+    
+    if (nil != self)
+    {
+        [self setValue:[initValue floatValue]];
+        [self setUnit:initUnit];
+    }
+    
+    return self;
+}
+
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"%f %@", [self value], NSStringFromOSPMapCSSUnit([self unit])];

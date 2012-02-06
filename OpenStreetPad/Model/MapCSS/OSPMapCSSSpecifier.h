@@ -10,6 +10,10 @@
 
 #import "CoreParse.h"
 
+#import "OSPAPIObject.h"
+
 @interface OSPMapCSSSpecifier : NSObject <CPParseResult>
+
+- (NSArray *)values;
 
 @end

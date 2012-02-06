@@ -14,4 +14,6 @@
 
 @property (readwrite, retain) OSPMapCSSUrl *url;
 
+- (id)initWithURL:(OSPMapCSSUrl *)url;
+
 @end
