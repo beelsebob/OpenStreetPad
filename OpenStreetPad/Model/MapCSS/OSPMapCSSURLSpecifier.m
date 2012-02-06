@@ -41,9 +41,26 @@
     return [NSString stringWithFormat:@"url(%@)", [self url]];
 }
 
-- (NSArray *)values
+- (NSString *)stringValue
 {
-    return [NSArray arrayWithObject:[self url]];
+    return [NSString stringWithFormat:@"%@", [self url]];
+}
+
+- (OSPMapCSSSize *)sizeValue
+{
+    return nil;
+}
+
+#if TARGET_OS_IPHONE
+- (UIColor *)colourValue
+{
+    return nil;
+}
+#endif
+
+- (OSPMapCSSUrl *)urlValue
+{
+    return [self url];
 }
 
 @end

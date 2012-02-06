@@ -8,6 +8,10 @@
 
 #import "OSPMapCSSNamedSpecifier.h"
 
+#if TARGET_OS_IPHONE
+#import "UIColor+CSS.h"
+#endif
+
 @implementation OSPMapCSSNamedSpecifier
 
 @synthesize name;
@@ -41,9 +45,26 @@
     return [self name];
 }
 
-- (NSArray *)values
+- (NSString *)stringValue
 {
-    return [NSArray arrayWithObject:[[self name] copy]];
+    return [self name];
+}
+
+- (OSPMapCSSSize *)sizeValue
+{
+    return nil;
+}
+
+#if TARGET_OS_IPHONE
+- (UIColor *)colourValue
+{
+    return [UIColor colourWithCSSName:[self name]];
+}
+#endif
+
+- (OSPMapCSSUrl *)urlValue
+{
+    return [[OSPMapCSSUrl alloc] initWithURL:[NSURL URLWithString:[self name]]];
 }
 
 @end

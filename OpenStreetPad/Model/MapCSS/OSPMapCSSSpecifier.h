@@ -11,9 +11,16 @@
 #import "CoreParse.h"
 
 #import "OSPAPIObject.h"
+#import "OSPMapCSSSize.h"
+#import "OSPMapCSSUrl.h"
 
 @interface OSPMapCSSSpecifier : NSObject <CPParseResult>
 
-- (NSArray *)values;
+- (NSString *)stringValue;
+- (OSPMapCSSSize *)sizeValue;
+#if TARGET_OS_IPHONE
+- (UIColor *)colourValue;
+#endif
+- (OSPMapCSSUrl *)urlValue;
 
 @end

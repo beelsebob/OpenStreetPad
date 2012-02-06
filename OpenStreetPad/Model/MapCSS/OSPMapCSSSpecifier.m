@@ -22,9 +22,29 @@
     return [super init];
 }
 
-- (NSArray *)values
+- (NSString *)stringValue;
 {
-    [NSException exceptionWithName:@"Abstract class exception" reason:@"-values is an abstract method, call it on a subclass" userInfo:nil];
+    [[NSException exceptionWithName:@"Abstract class exception" reason:@"OSPMapCSSSpecifier is an abstract class" userInfo:nil] raise];
+    return nil;
+}
+
+- (OSPMapCSSSize *)sizeValue;
+{
+    [[NSException exceptionWithName:@"Abstract class exception" reason:@"OSPMapCSSSpecifier is an abstract class" userInfo:nil] raise];
+    return nil;
+}
+
+#if TARGET_OS_IPHONE
+- (UIColor *)colourValue;
+{
+    [[NSException exceptionWithName:@"Abstract class exception" reason:@"OSPMapCSSSpecifier is an abstract class" userInfo:nil] raise];
+    return nil;
+}
+#endif
+
+- (OSPMapCSSUrl *)urlValue
+{
+    [[NSException exceptionWithName:@"Abstract class exception" reason:@"OSPMapCSSSpecifier is an abstract class" userInfo:nil] raise];
     return nil;
 }
 

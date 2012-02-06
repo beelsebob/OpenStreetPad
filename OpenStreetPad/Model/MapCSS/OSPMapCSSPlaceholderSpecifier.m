@@ -9,7 +9,7 @@
 #import "OSPMapCSSPlaceholderSpecifier.h"
 
 #import "OSPMapCSSNamedSpecifier.h"
-#import "OSPMapCSSSizeListSpecifier.h"
+#import "OSPMapCSSSizeSpecifier.h"
 #import "OSPMapCSSColourSpecifier.h"
 #import "OSPMapCSSURLSpecifier.h"
 #import "OSPMapCSSEvalSpecifier.h"
@@ -33,7 +33,7 @@
     }
     else if ([item isKindOfClass:[OSPMapCSSSize class]])
     {
-        return (id)[[OSPMapCSSSizeListSpecifier alloc] initWithSyntaxTree:syntaxTree];
+        return (id)[[OSPMapCSSSizeSpecifier alloc] initWithSyntaxTree:syntaxTree];
     }
 #if TARGET_OS_IPHONE
     else if ([item isKindOfClass:[UIColor class]])

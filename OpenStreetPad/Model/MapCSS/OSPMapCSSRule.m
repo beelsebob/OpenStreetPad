@@ -18,6 +18,7 @@
 
 #import "OSPMapCSSStyleSheet.h"
 
+#import "OSPMapCSSSpecifierList.h"
 #import "OSPMapCSSTagSpecifier.h"
 
 #import <objc/runtime.h>
@@ -103,14 +104,28 @@ extern char styleKey;
         {
             for (OSPMapCSSStyle *st in [decl styles])
             {
-                OSPMapCSSSpecifier *spec = [st specifier];
-                if ([spec isKindOfClass:[OSPMapCSSTagSpecifier class]])
+                OSPMapCSSSpecifierList *specList = [st specifiers];
+                NSMutableArray *processedSpecifiers = [NSMutableArray arrayWithCapacity:[[specList specifiers] count]];
+                for (OSPMapCSSSpecifier *spec in [specList specifiers])
                 {
-                    spec = [(OSPMapCSSTagSpecifier *)spec specifierWithAPIObject:object];
+                    if ([spec isKindOfClass:[OSPMapCSSTagSpecifier class]])
+                    {
+                        OSPMapCSSSpecifier *newSpec = [(OSPMapCSSTagSpecifier *)spec specifierWithAPIObject:object];
+                        if (nil != newSpec)
+                        {
+                            [processedSpecifiers addObject:newSpec];
+                        }
+                    }
+                    else
+                    {
+                        [processedSpecifiers addObject:spec];
+                    }
                 }
-                if (nil != spec)
+                if ([processedSpecifiers count] > 0)
                 {
-                    [style setObject:spec forKey:[[st key] description]];
+                    OSPMapCSSSpecifierList *newList = [[OSPMapCSSSpecifierList alloc] init];
+                    [newList setSpecifiers:processedSpecifiers];
+                    [style setObject:newList forKey:[[st key] description]];
                 }
             }
         }

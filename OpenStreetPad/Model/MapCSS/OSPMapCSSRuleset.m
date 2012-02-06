@@ -76,7 +76,7 @@
                 {
                     for (OSPMapCSSStyle *st in [decl styles])
                     {
-                        [style setObject:[st specifier] forKey:[[st key] description]];
+                        [style setObject:[st specifiers] forKey:[[st key] description]];
                     }
                 }
                 return [style copy];

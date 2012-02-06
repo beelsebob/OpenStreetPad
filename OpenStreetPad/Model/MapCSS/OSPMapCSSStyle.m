@@ -11,7 +11,7 @@
 @implementation OSPMapCSSStyle
 
 @synthesize key;
-@synthesize specifier;
+@synthesize specifiers;
 
 - (id)initWithSyntaxTree:(CPSyntaxTree *)syntaxTree
 {
@@ -22,7 +22,7 @@
         CPSyntaxTree *styledef = [[syntaxTree children] objectAtIndex:0];
         
         [self setKey:[[[styledef children] objectAtIndex:0] key]];
-        [self setSpecifier:[[styledef children] objectAtIndex:2]];
+        [self setSpecifiers:[[styledef children] objectAtIndex:2]];
     }
     
     return self;
@@ -30,7 +30,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@: %@;", [self key], [self specifier]];
+    return [NSString stringWithFormat:@"%@: %@;", [self key], [self specifiers]];
 }
 
 @end

@@ -16,8 +16,9 @@
 #import "OSPNode.h"
 #import "OSPMap.h"
 
+#import "OSPMapCSSSpecifierList.h"
 #import "OSPMapCSSSpecifier.h"
-#import "OSPMapCSSSizeListSpecifier.h"
+#import "OSPMapCSSSizeSpecifier.h"
 #import "OSPMapCSSColourSpecifier.h"
 #import "OSPMapCSSNamedSpecifier.h"
 #import "OSPMapCSSSize.h"
@@ -33,8 +34,8 @@ void patternCallback(void *info, CGContextRef ctx);
 
 - (NSDictionary *)sortedObjects:(NSArray *)objects;
 
-- (UIColor *)colourWithColourSpecifier:(OSPMapCSSSpecifier *)colour opacitySpecifier:(OSPMapCSSSpecifier *)opacity;
-- (UIImage *)imageWithSpecifier:(OSPMapCSSSpecifier *)spec;
+- (UIColor *)colourWithColourSpecifierList:(OSPMapCSSSpecifierList *)colour opacitySpecifierList:(OSPMapCSSSpecifierList *)opacity;
+- (UIImage *)imageWithSpecifierList:(OSPMapCSSSpecifierList *)spec;
 
 - (CGPathRef)createPathForWay:(OSPWay *)way;
 - (CTFontRef)createFontWithStyle:(NSDictionary *)style scaledVariant:(CTFontRef *)scaledFont atScale:(CGFloat)scale;
@@ -125,8 +126,8 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     CGFloat oneOverScale = 1.0f / scale;
     
     NSDictionary *canvasStyle = [[self stylesheet] styleForCanvas];
-    UIColor *c = [self colourWithColourSpecifier:[canvasStyle objectForKey:@"fill-color"] opacitySpecifier:[canvasStyle objectForKey:@"fill-opacity"]];
-    UIImage *fillImage = [self imageWithSpecifier:[canvasStyle objectForKey:@"fill-image"]];
+    UIColor *c = [self colourWithColourSpecifierList:[canvasStyle objectForKey:@"fill-color"] opacitySpecifierList:[canvasStyle objectForKey:@"fill-opacity"]];
+    UIImage *fillImage = [self imageWithSpecifierList:[canvasStyle objectForKey:@"fill-image"]];
     if (nil != fillImage)
     {
         CGSize s = [fillImage size];
@@ -163,27 +164,19 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     [self renderLayers:[self sortedObjects:styledObjects] inContext:ctx withScaleMultiplier:oneOverScale];
 }
 
-- (UIColor *)colourWithColourSpecifier:(OSPMapCSSSpecifier *)colour opacitySpecifier:(OSPMapCSSSpecifier *)opacity
+- (UIColor *)colourWithColourSpecifierList:(OSPMapCSSSpecifierList *)colour opacitySpecifierList:(OSPMapCSSSpecifierList *)opacity
 {
-    UIColor *c = nil;
-    if ([colour isKindOfClass:[OSPMapCSSColourSpecifier class]])
-    {
-        c = [[colour values] objectAtIndex:0];
-    }
-    else if ([colour isKindOfClass:[OSPMapCSSNamedSpecifier class]])
-    {
-        NSString *colourName = [[colour values] objectAtIndex:0];
-        c = [UIColor colourWithCSSName:colourName];
-    }
+    UIColor *c = [[[colour specifiers] objectAtIndex:0] colourValue];
+    OSPMapCSSSize *op = [[[opacity specifiers] objectAtIndex:0] sizeValue];
     
-    if (nil != c && [opacity isKindOfClass:[OSPMapCSSSizeListSpecifier class]])
+    if (nil != c && nil != opacity)
     {
         CGFloat red;
         CGFloat green;
         CGFloat blue;
         CGFloat alpha;
         [c getRed:&red green:&green blue:&blue alpha:&alpha];
-        alpha = [(OSPMapCSSSize *)[[opacity values] objectAtIndex:0] value];
+        alpha = [op value];
         c = [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
     }
     
@@ -209,12 +202,8 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
         NSArray *layerObjects = [layers objectForKey:layerNumber];
         [layers setObject:[layerObjects sortedArrayUsingComparator:^ NSComparisonResult (OSPMapCSSStyledObject *o1, OSPMapCSSStyledObject *o2)
                            {
-                               OSPMapCSSSpecifier *z1s = [[o1 style] objectForKey:@"z-index"];
-                               OSPMapCSSSpecifier *z2s = [[o2 style] objectForKey:@"z-index"];
-                               id value1 = [[z1s values] objectAtIndex:0];
-                               id value2 = [[z2s values] objectAtIndex:0];
-                               float z1 = [value1 isKindOfClass:[OSPMapCSSSize class]] ? [(OSPMapCSSSize *)value1 value] : 0.0f;
-                               float z2 = [value2 isKindOfClass:[OSPMapCSSSize class]] ? [(OSPMapCSSSize *)value2 value] : 0.0f;
+                               float z1 = [[[[[[o1 style] objectForKey:@"z-index"] specifiers] objectAtIndex:0] sizeValue] value];
+                               float z2 = [[[[[[o2 style] objectForKey:@"z-index"] specifiers] objectAtIndex:0] sizeValue] value];
                                
                                return z1 > z2 ? NSOrderedDescending : z1 < z2 ? NSOrderedAscending : NSOrderedSame;
                            }]
@@ -311,8 +300,8 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     OSPWay *way = (OSPWay *)[object object];
     NSArray *nodes = [way nodeObjects];
     
-    UIColor *fillColour = [self colourWithColourSpecifier:[style objectForKey:@"fill-color"] opacitySpecifier:[style objectForKey:@"fill-opacity"]];
-    UIImage *fillImage = [self imageWithSpecifier:[style objectForKey:@"fill-image"]];
+    UIColor *fillColour = [self colourWithColourSpecifierList:[style objectForKey:@"fill-color"] opacitySpecifierList:[style objectForKey:@"fill-opacity"]];
+    UIImage *fillImage = [self imageWithSpecifierList:[style objectForKey:@"fill-image"]];
     
     BOOL fillValid = fillColour != nil || fillImage != nil;
     
@@ -370,35 +359,38 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     OSPWay *way = (OSPWay *)[object object];
     
     NSArray *nodes = [way nodes];
-    OSPMapCSSSpecifier *widthSpec = [style objectForKey:@"width"];
-    OSPMapCSSSpecifier *casingWidthSpec = [style objectForKey:@"casing-width"];
+    OSPMapCSSSize *width = [[[[style objectForKey:@"width"] specifiers] objectAtIndex:0] sizeValue];
+    OSPMapCSSSize *casingWidth = [[[[style objectForKey:@"casing-width"] specifiers] objectAtIndex:0] sizeValue];
     
-    if ([nodes count] > 1 && [widthSpec isKindOfClass:[OSPMapCSSSizeListSpecifier class]] && [casingWidthSpec isKindOfClass:[OSPMapCSSSizeListSpecifier class]])
+    if ([nodes count] > 1 && nil != width && nil != casingWidth)
     {
         CGPathRef path = [self createPathForWay:way];
         CGContextAddPath(ctx, path);
                 
-        CGContextSetLineWidth(ctx, ([(OSPMapCSSSize *)[[widthSpec values] objectAtIndex:0] value] + [(OSPMapCSSSize *)[[casingWidthSpec values] objectAtIndex:0] value]) * scale);
-        UIColor *colour = [self colourWithColourSpecifier:[style objectForKey:@"casing-color"] opacitySpecifier:[style objectForKey:@"casing-opacity"]];
+        CGContextSetLineWidth(ctx, ([width value] + [casingWidth value]) * scale);
+        UIColor *colour = [self colourWithColourSpecifierList:[style objectForKey:@"casing-color"] opacitySpecifierList:[style objectForKey:@"casing-opacity"]];
         CGContextSetStrokeColorWithColor(ctx, colour == nil ? [[UIColor blackColor] CGColor] : [colour CGColor]);
-        OSPMapCSSSpecifier *lineCapSpec = [style objectForKey:@"casing-linecap"];
-        CGContextSetLineCap(ctx, [lineCapSpec isKindOfClass:[OSPMapCSSNamedSpecifier class]] ? CGLineCapFromNSString([(OSPMapCSSNamedSpecifier *)lineCapSpec name]) : kCGLineCapRound);
-        OSPMapCSSSpecifier *lineJoinSpec = [style objectForKey:@"casing-linejoin"];
-        CGContextSetLineJoin(ctx, [lineJoinSpec isKindOfClass:[OSPMapCSSNamedSpecifier class]] ? CGLineJoinFromNSString([(OSPMapCSSNamedSpecifier *)lineJoinSpec name]) : kCGLineJoinRound);
+        NSString *lineCapName = [[[[style objectForKey:@"casing-linecap"] specifiers] objectAtIndex:0] stringValue];
+        CGContextSetLineCap(ctx, nil != lineCapName ? CGLineCapFromNSString(lineCapName) : kCGLineCapRound);
+        NSString *lineJoinName = [[[[style objectForKey:@"casing-linejoin"] specifiers] objectAtIndex:0] stringValue];
+        CGContextSetLineJoin(ctx, nil != lineJoinName ? CGLineJoinFromNSString(lineJoinName) : kCGLineJoinRound);
         
-        OSPMapCSSSpecifier *dashSpec = [style objectForKey:@"casing-dashes"];
-        if ([dashSpec isKindOfClass:[OSPMapCSSSizeListSpecifier class]])
+        OSPMapCSSSpecifierList *dashSpec = [style objectForKey:@"casing-dashes"];
+        if (nil != dashSpec)
         {
-            OSPMapCSSSizeListSpecifier *dashSizeSpec = (OSPMapCSSSizeListSpecifier *)dashSpec;
-            CGFloat *dashes = malloc([[dashSizeSpec sizes] count]);
+            CGFloat *dashes = malloc([[dashSpec specifiers] count] * sizeof(CGFloat));
             int i = 0;
-            for (OSPMapCSSSize *size in [dashSizeSpec sizes])
+            for (OSPMapCSSSizeSpecifier *spec in [dashSpec specifiers])
             {
-                dashes[i] = [size value] * scale;
-                i++;
+                OSPMapCSSSize *size = [spec sizeValue];
+                if (nil != size)
+                {
+                    dashes[i] = [size value] * scale;
+                    i++;
+                }
+                CGContextSetLineDash(ctx, 0.0f, dashes, i);
+                free(dashes);
             }
-            CGContextSetLineDash(ctx, 0.0f, dashes, [[dashSizeSpec sizes] count]);
-            free(dashes);
         }
         else
         {
@@ -416,66 +408,67 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     OSPWay *way = (OSPWay *)[object object];
     
     NSArray *nodes = [way nodeObjects];
-    OSPMapCSSSpecifier *widthSpec = [style objectForKey:@"width"];
-    UIImage *strokeImage = [self imageWithSpecifier:[style objectForKey:@"image"]];
+    OSPMapCSSSize *width = [[[[style objectForKey:@"width"] specifiers] objectAtIndex:0] sizeValue];
+    UIImage *strokeImage = [self imageWithSpecifierList:[style objectForKey:@"image"]];
     
-    BOOL strokeValid = [widthSpec isKindOfClass:[OSPMapCSSSizeListSpecifier class]];
+    BOOL strokeValid = nil != width;
     
-    if ([nodes count] > 1)
+    if ([nodes count] > 1 && strokeValid)
     {
-        if (strokeValid)
+        CGPathRef path = [self createPathForWay:way];
+        CGContextAddPath(ctx, path);
+        
+        CGContextSetLineWidth(ctx, [width value] * scale);
+        NSString *lineCapName = [[[[style objectForKey:@"linecap"] specifiers] objectAtIndex:0] stringValue];
+        CGContextSetLineCap(ctx, nil != lineCapName ? CGLineCapFromNSString(lineCapName) : kCGLineCapRound);
+        NSString *lineJoinName = [[[[style objectForKey:@"linejoin"] specifiers] objectAtIndex:0] stringValue];
+        CGContextSetLineJoin(ctx, nil != lineJoinName ? CGLineJoinFromNSString(lineJoinName) : kCGLineJoinRound);
+        
+        OSPMapCSSSpecifierList *dashSpec = [style objectForKey:@"dashes"];
+        if (nil != dashSpec)
         {
-            CGPathRef path = [self createPathForWay:way];
-            CGContextAddPath(ctx, path);
-            
-            CGContextSetLineWidth(ctx, [(OSPMapCSSSize *)[[(OSPMapCSSSizeListSpecifier *)widthSpec sizes] objectAtIndex:0] value] * scale);
-            if (nil == strokeImage)
+            CGFloat *dashes = malloc([[dashSpec specifiers] count] * sizeof(CGFloat));
+            int i = 0;
+            for (OSPMapCSSSizeSpecifier *spec in [dashSpec specifiers])
             {
-                CGColorSpaceRef rgbSpace = CGColorSpaceCreateDeviceRGB();
-                CGContextSetFillColorSpace(ctx, rgbSpace);
-                CGColorSpaceRelease(rgbSpace);
-                UIColor *colour = [self colourWithColourSpecifier:[style objectForKey:@"color"] opacitySpecifier:[style objectForKey:@"opacity"]];
-                CGContextSetStrokeColorWithColor(ctx, colour == nil ? [[UIColor blackColor] CGColor] : [colour CGColor]);
-                OSPMapCSSSpecifier *lineCapSpec = [style objectForKey:@"linecap"];
-                CGContextSetLineCap(ctx, [lineCapSpec isKindOfClass:[OSPMapCSSNamedSpecifier class]] ? CGLineCapFromNSString([(OSPMapCSSNamedSpecifier *)lineCapSpec name]) : kCGLineCapRound);
-                OSPMapCSSSpecifier *lineJoinSpec = [style objectForKey:@"linejoin"];
-                CGContextSetLineJoin(ctx, [lineJoinSpec isKindOfClass:[OSPMapCSSNamedSpecifier class]] ? CGLineJoinFromNSString([(OSPMapCSSNamedSpecifier *)lineJoinSpec name]) : kCGLineJoinRound);
-                
-                OSPMapCSSSpecifier *dashSpec = [style objectForKey:@"dashes"];
-                if ([dashSpec isKindOfClass:[OSPMapCSSSizeListSpecifier class]])
+                OSPMapCSSSize *size = [spec sizeValue];
+                if (nil != size)
                 {
-                    OSPMapCSSSizeListSpecifier *dashSizeSpec = (OSPMapCSSSizeListSpecifier *)dashSpec;
-                    CGFloat *dashes = malloc([[dashSizeSpec sizes] count]);
-                    int i = 0;
-                    for (OSPMapCSSSize *size in [dashSizeSpec sizes])
-                    {
-                        dashes[i] = [size value] * scale;
-                        i++;
-                    }
-                    CGContextSetLineDash(ctx, 0.0f, dashes, [[dashSizeSpec sizes] count]);
-                    free(dashes);
+                    dashes[i] = [size value] * scale;
+                    i++;
                 }
-                else
-                {
-                    CGContextSetLineDash(ctx, 0.0f, NULL, 0);
-                }
+                CGContextSetLineDash(ctx, 0.0f, dashes, i);
+                free(dashes);
             }
-            else
-            {
-                CGSize s = [strokeImage size];
-                CGColorSpaceRef patternSpace = CGColorSpaceCreatePattern(NULL);
-                CGContextSetStrokeColorSpace(ctx, patternSpace);
-                CGColorSpaceRelease(patternSpace);
-                static const CGPatternCallbacks callbacks = { 0, &patternCallback, NULL };
-                CGPatternRef pat = CGPatternCreate((__bridge void *)[NSDictionary dictionaryWithObjectsAndKeys:strokeImage, @"I", [NSValue valueWithCGSize:s], @"s", nil], CGRectMake(0.0f, 0.0f, s.width, s.height), CGAffineTransformMakeScale(1.0, -1.0), s.width, s.height, kCGPatternTilingNoDistortion, true, &callbacks);
-                CGFloat alpha = 1;
-                CGContextSetStrokePattern(ctx, pat, &alpha);
-                CGPatternRelease(pat);
-            }
-            
-            CGContextStrokePath(ctx);
-            CGPathRelease(path);
         }
+        else
+        {
+            CGContextSetLineDash(ctx, 0.0f, NULL, 0);
+        }
+        
+        if (nil == strokeImage)
+        {
+            CGColorSpaceRef rgbSpace = CGColorSpaceCreateDeviceRGB();
+            CGContextSetFillColorSpace(ctx, rgbSpace);
+            CGColorSpaceRelease(rgbSpace);
+            UIColor *colour = [self colourWithColourSpecifierList:[style objectForKey:@"color"] opacitySpecifierList:[style objectForKey:@"opacity"]];
+            CGContextSetStrokeColorWithColor(ctx, colour == nil ? [[UIColor blackColor] CGColor] : [colour CGColor]);
+        }
+        else
+        {
+            CGSize s = [strokeImage size];
+            CGColorSpaceRef patternSpace = CGColorSpaceCreatePattern(NULL);
+            CGContextSetStrokeColorSpace(ctx, patternSpace);
+            CGColorSpaceRelease(patternSpace);
+            static const CGPatternCallbacks callbacks = { 0, &patternCallback, NULL };
+            CGPatternRef pat = CGPatternCreate((__bridge void *)[NSDictionary dictionaryWithObjectsAndKeys:strokeImage, @"I", [NSValue valueWithCGSize:s], @"s", nil], CGRectMake(0.0f, 0.0f, s.width, s.height), CGAffineTransformMakeScale(1.0, -1.0), s.width, s.height, kCGPatternTilingNoDistortion, true, &callbacks);
+            CGFloat alpha = 1;
+            CGContextSetStrokePattern(ctx, pat, &alpha);
+            CGPatternRelease(pat);
+        }
+        
+        CGContextStrokePath(ctx);
+        CGPathRelease(path);
     }
 }
 
@@ -487,7 +480,7 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
 - (void)renderObjectAtCentroid:(OSPMapCSSStyledObject *)object inContext:(CGContextRef)ctx withScaleMultiplier:(CGFloat)scale
 {
     NSDictionary *style = [object style];
-    if (nil != [self imageWithSpecifier:[style objectForKey:@"icon-image"]])
+    if (nil != [self imageWithSpecifierList:[style objectForKey:@"icon-image"]])
     {
         OSPWay *way = (OSPWay *)[object object];
         OSPCoordinate2D c = [way projectedCentroid];
@@ -499,27 +492,25 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
 {
     NSDictionary *style = [object style];
     
-    UIImage *image = [self imageWithSpecifier:[style objectForKey:@"icon-image"]];
+    UIImage *image = [self imageWithSpecifierList:[style objectForKey:@"icon-image"]];
     if (nil != image)
     {
-        OSPMapCSSSpecifier *opacitySpec = [style objectForKey:@"icon-opacity"];
+        OSPMapCSSSize *opacity = [[[[style objectForKey:@"icon-opacity"] specifiers] objectAtIndex:0] sizeValue];
         CGContextSaveGState(ctx);
-        CGContextSetAlpha(ctx, [opacitySpec isKindOfClass:[OSPMapCSSSizeListSpecifier class]] ? [(OSPMapCSSSize *)[[(OSPMapCSSSizeListSpecifier *)opacitySpec sizes] objectAtIndex:0] value] : 1.0f);
-        OSPMapCSSSpecifier *widthSpec = [style objectForKey:@"icon-width"];
-        OSPMapCSSSpecifier *heightSpec = [style objectForKey:@"icon-height"];
+        CGContextSetAlpha(ctx, nil == opacity ? 1.0f : [opacity value]);
+        OSPMapCSSSize *widthSize = [[[[style objectForKey:@"icon-width"] specifiers] objectAtIndex:0] sizeValue];
+        OSPMapCSSSize *heightSize = [[[[style objectForKey:@"icon-height"] specifiers] objectAtIndex:0] sizeValue];
         
         CGFloat width = [image size].width;
         CGFloat height = [image size].height;
         
-        if ([widthSpec isKindOfClass:[OSPMapCSSSizeListSpecifier class]])
+        if (nil != widthSize)
         {
-            OSPMapCSSSize *ws = [[(OSPMapCSSSizeListSpecifier *)widthSpec sizes] objectAtIndex:0];
-            width = [ws unit] == OSPMapCSSUnitPercent ? width * [ws value] * 0.01f : [ws value];
+            width = [widthSize unit] == OSPMapCSSUnitPercent ? width * [widthSize value] * 0.01f : [widthSize value];
         }
-        if ([heightSpec isKindOfClass:[OSPMapCSSSizeListSpecifier class]])
+        if (nil != heightSize)
         {
-            OSPMapCSSSize *hs = [[(OSPMapCSSSizeListSpecifier *)heightSpec sizes] objectAtIndex:0];
-            height = [hs unit] == OSPMapCSSUnitPercent ? height * [hs value] * 0.01f : [hs value];
+            height = [heightSize unit] == OSPMapCSSUnitPercent ? height * [heightSize value] * 0.01f : [heightSize value];
         }
         width *= scale;
         height *= scale;
@@ -537,13 +528,13 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     NSDictionary *style = [styledWay style];
     OSPWay *way = (OSPWay *)[styledWay object];
     
-    OSPMapCSSNamedSpecifier *textSpecifier = [style objectForKey:@"text"];
-    NSString *title = [self applyTextTransform:style toString:[textSpecifier name]];
+    NSString *untransformedTitle = [[[[style objectForKey:@"text"] specifiers] objectAtIndex:0] stringValue];
+    NSString *title = [self applyTextTransform:style toString:untransformedTitle];
     
     if (nil != title)
     {
-        OSPMapCSSNamedSpecifier *positionSpecifier = [style objectForKey:@"text-position"];
-        NSString *position = nil == positionSpecifier ? @"center" : [positionSpecifier name];
+        NSString *position = [[[[style objectForKey:@"text-position"] specifiers] objectAtIndex:0] stringValue];
+        position = position ?: @"center";
         
         if ([position isEqualToString:@"line"])
         {
@@ -564,8 +555,8 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     NSDictionary *style = [styledNode style];
     OSPNode *node = (OSPNode *)[styledNode object];
     
-    OSPMapCSSNamedSpecifier *textSpecifier = [style objectForKey:@"text"];
-    NSString *title = [self applyTextTransform:style toString:[[node tags] objectForKey:[textSpecifier name]]];
+    NSString *untransformedTitle = [[[[style objectForKey:@"text"] specifiers] objectAtIndex:0] stringValue];
+    NSString *title = [self applyTextTransform:style toString:untransformedTitle];
     
     if (nil != title)
     {
@@ -578,8 +569,7 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
 
 - (NSString *)applyTextTransform:(NSDictionary *)style toString:(NSString *)str
 {
-    OSPMapCSSNamedSpecifier *textTransformSpecifier = [style objectForKey:@"text-transform"];
-    NSString *textTransform = [textTransformSpecifier name];
+    NSString *textTransform = [[[[style objectForKey:@"text-transform"] specifiers] objectAtIndex:0] stringValue];
     if ([textTransform isEqualToString:@"uppercase"])
     {
         return [str uppercaseString];
@@ -600,21 +590,21 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     CTFontRef scaledFont = nil;
     CTFontRef font = [self createFontWithStyle:style scaledVariant:&scaledFont atScale:scale];
     
-    OSPMapCSSSizeListSpecifier *haloSizeSpecifier = [style objectForKey:@"text-halo-radius"];
-    CGFloat haloRadius = nil == haloSizeSpecifier ? 0.0f : [(OSPMapCSSSize *)[[haloSizeSpecifier sizes] objectAtIndex:0] value];
+    OSPMapCSSSize *haloSize = [[[[style objectForKey:@"text-halo-radius"] specifiers] objectAtIndex:0] sizeValue];
+    CGFloat haloRadius = nil == haloSize ? 0.0f : [haloSize value];
     BOOL hasHalo = haloRadius != 0.0f;
     
     CGFloat lineHeight = CTFontGetAscent(scaledFont) + CTFontGetDescent(scaledFont) + CTFontGetLeading(scaledFont) + haloRadius * scale;
     
-    UIColor *haloColour = [self colourWithColourSpecifier:[style objectForKey:@"text-halo-color"] opacitySpecifier:[style objectForKey:@"text-halo-opacity"]];
-    UIColor *colour = [self colourWithColourSpecifier:[style objectForKey:@"text-color"] opacitySpecifier:[style objectForKey:@"text-opacity"]];
+    UIColor *haloColour = [self colourWithColourSpecifierList:[style objectForKey:@"text-halo-color"] opacitySpecifierList:[style objectForKey:@"text-halo-opacity"]];
+    UIColor *colour = [self colourWithColourSpecifierList:[style objectForKey:@"text-color"] opacitySpecifierList:[style objectForKey:@"text-opacity"]];
     
-    OSPMapCSSSizeListSpecifier *vOffsetSpecifier = [style objectForKey:@"text-offset"];
-    CGFloat offset = nil == vOffsetSpecifier ? 0.0f : [(OSPMapCSSSize *)[[vOffsetSpecifier sizes] objectAtIndex:0] value];
+    OSPMapCSSSize *vOffsetSize = [[[[style objectForKey:@"text-offset"] specifiers] objectAtIndex:0] sizeValue];
+    CGFloat offset = nil == vOffsetSize ? 0.0f : [vOffsetSize value];
     CGFloat scaledOffset = offset * scale;
     
-    OSPMapCSSSizeListSpecifier *widthSpecifier = [style objectForKey:@"max-width"];
-    CGFloat width = nil == widthSpecifier ? 100.0f : [(OSPMapCSSSize *)[[widthSpecifier sizes] objectAtIndex:0] value];
+    OSPMapCSSSize *widthSize = [[[[style objectForKey:@"max-width"] specifiers] objectAtIndex:0] sizeValue];
+    CGFloat width = nil == widthSize ? 100.0f : [widthSize value];
     
     CGFloat scaledWidth = width * scale;
     
@@ -640,8 +630,8 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     CFRelease(attrString);
     CFRelease(scaledAttrString);
     
-    OSPMapCSSNamedSpecifier *textDecorationSpecifier = [style objectForKey:@"text-decoration"];
-    BOOL shouldUnderline = [[textDecorationSpecifier name] isEqualToString:@"underline"];
+    NSString *textDecoration = [[[[style objectForKey:@"text-decoration"] specifiers] objectAtIndex:0] stringValue];
+    BOOL shouldUnderline = [textDecoration isEqualToString:@"underline"];
     CGFloat halfDescent = CTFontGetDescent(scaledFont) * 0.5f;
     
     CFIndex start = 0;
@@ -693,16 +683,16 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
 {
     CTFontRef scaledFont = nil;
     CTFontRef font = [self createFontWithStyle:style scaledVariant:&scaledFont atScale:scale];
-    
-    OSPMapCSSSizeListSpecifier *haloSizeSpecifier = [style objectForKey:@"text-halo-radius"];
-    CGFloat haloRadius = nil == haloSizeSpecifier ? 0.0f : [(OSPMapCSSSize *)[[haloSizeSpecifier sizes] objectAtIndex:0] value];
+        
+    OSPMapCSSSize *haloSize = [[[[style objectForKey:@"text-halo-radius"] specifiers] objectAtIndex:0] sizeValue];
+    CGFloat haloRadius = nil == haloSize ? 0.0f : [haloSize value];
     BOOL hasHalo = haloRadius != 0.0f;
     
-    UIColor *haloColour = [self colourWithColourSpecifier:[style objectForKey:@"text-halo-color"] opacitySpecifier:[style objectForKey:@"text-halo-opacity"]];
-    UIColor *colour = [self colourWithColourSpecifier:[style objectForKey:@"text-color"] opacitySpecifier:[style objectForKey:@"text-opacity"]];
+    UIColor *haloColour = [self colourWithColourSpecifierList:[style objectForKey:@"text-halo-color"] opacitySpecifierList:[style objectForKey:@"text-halo-opacity"]];
+    UIColor *colour = [self colourWithColourSpecifierList:[style objectForKey:@"text-color"] opacitySpecifierList:[style objectForKey:@"text-opacity"]];
     
-    OSPMapCSSSizeListSpecifier *vOffsetSpecifier = [style objectForKey:@"text-offset"];
-    CGFloat offset = nil == vOffsetSpecifier ? 0.0f : [(OSPMapCSSSize *)[[vOffsetSpecifier sizes] objectAtIndex:0] value];
+    OSPMapCSSSize *vOffsetSize = [[[[style objectForKey:@"text-offset"] specifiers] objectAtIndex:0] sizeValue];
+    CGFloat offset = nil == vOffsetSize ? 0.0f : [vOffsetSize value];
     CGFloat scaledOffset = offset * scale;
     
     NSMutableDictionary *scaledAttributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -801,16 +791,16 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
 
 - (CTFontRef)createFontWithStyle:(NSDictionary *)style scaledVariant:(CTFontRef *)scaledFont atScale:(CGFloat)scale
 {
-    OSPMapCSSNamedSpecifier *fontFamilySpecifier = [style objectForKey:@"font-family"];
-    NSString *fontFamily = nil == fontFamilySpecifier ? @"Helvetica" : [fontFamilySpecifier name];
-    OSPMapCSSSizeListSpecifier *fontSizeSpecifier = [style objectForKey:@"font-size"];
-    CGFloat fontSize = nil == fontSizeSpecifier ? 12.0f : [(OSPMapCSSSize *)[[fontSizeSpecifier sizes] objectAtIndex:0] value];
+    NSString *fontFamily = [[[[style objectForKey:@"font-family"] specifiers] objectAtIndex:0] stringValue];
+    fontFamily = fontFamily ?: @"Helvetica";
+    OSPMapCSSSize *fontSizeSpec = [[[[style objectForKey:@"font-size"] specifiers] objectAtIndex:0] sizeValue];
+    CGFloat fontSize = nil == fontSizeSpec ? 12.0f : [fontSizeSpec value];
     
     CTFontSymbolicTraits traits = 0x0;
-    OSPMapCSSNamedSpecifier *fontWeightSpecifier = [style objectForKey:@"font-weight"];
-    OSPMapCSSNamedSpecifier *fontStyleSpecifier = [style objectForKey:@"font-style"];
-    traits |= nil != fontWeightSpecifier && [[fontWeightSpecifier name] isEqualToString:@"bold"] ? kCTFontBoldTrait : 0x0;
-    traits |= nil != fontStyleSpecifier && [[fontStyleSpecifier name] isEqualToString:@"italic"] ? kCTFontItalicTrait : 0x0;
+    NSString *fontWeight = [[[[style objectForKey:@"font-weight"] specifiers] objectAtIndex:0] stringValue];
+    NSString *fontStyle = [[[[style objectForKey:@"font-style"] specifiers] objectAtIndex:0] stringValue];
+    traits |= [fontWeight isEqualToString:@"bold"] ? kCTFontBoldTrait : 0x0;
+    traits |= [fontStyle isEqualToString:@"italic"] ? kCTFontItalicTrait : 0x0;
     CTFontSymbolicTraits newTraits = traits;
     
     CTFontRef baseFont = CTFontCreateWithName((__bridge CFStringRef)fontFamily, fontSize, NULL);
@@ -836,11 +826,11 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     return font;
 }
 
-- (UIImage *)imageWithSpecifier:(OSPMapCSSSpecifier *)spec
+- (UIImage *)imageWithSpecifierList:(OSPMapCSSSpecifierList *)spec
 {
-    if ([spec isKindOfClass:[OSPMapCSSURLSpecifier class]])
+    if (nil != spec)
     {
-        OSPMapCSSUrl *u = [(OSPMapCSSURLSpecifier *)spec url];
+        OSPMapCSSUrl *u = [[[spec specifiers] objectAtIndex:0] urlValue];
         NSURL *url = [u content];
         NSString *urlString = [url relativeString];
         NSString *ext = [url pathExtension];
@@ -849,7 +839,6 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
         NSString *path = [[NSBundle mainBundle] pathForResource:resName ofType:ext inDirectory:dir];
         return [UIImage imageWithContentsOfFile:path];
     }
-    
     return nil;
 }
 

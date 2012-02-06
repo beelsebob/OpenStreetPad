@@ -21,7 +21,7 @@ typedef enum
 OSPMapCSSUnit OSPMapCSSUnitFromNSString(NSString *s);
 NSString *NSStringFromOSPMapCSSUnit(OSPMapCSSUnit u);
 
-@interface OSPMapCSSSize : NSObject <CPParseResult>
+@interface OSPMapCSSSize : NSObject <CPParseResult, NSCopying>
 
 @property (readwrite, assign) float value;
 @property (readwrite, assign) OSPMapCSSUnit unit;

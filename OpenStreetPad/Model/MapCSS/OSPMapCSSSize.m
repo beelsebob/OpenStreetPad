@@ -77,6 +77,11 @@ NSString *NSStringFromOSPMapCSSUnit(OSPMapCSSUnit u)
     return self;
 }
 
+- (id)copyWithZone:(NSZone *)zone
+{
+    return [[OSPMapCSSSize allocWithZone:zone] initWithValue:[NSNumber numberWithFloat:[self value]] units:[self unit]];
+}
+
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"%f %@", [self value], NSStringFromOSPMapCSSUnit([self unit])];

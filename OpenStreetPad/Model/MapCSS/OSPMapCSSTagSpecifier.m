@@ -9,7 +9,7 @@
 #import "OSPMapCSSTagSpecifier.h"
 
 #import "OSPMapCSSNamedSpecifier.h"
-#import "OSPMapCSSSizeListSpecifier.h"
+#import "OSPMapCSSSizeSpecifier.h"
 #import "OSPMapCSSColourSpecifier.h"
 #import "OSPMapCSSURLSpecifier.h"
 
@@ -45,7 +45,7 @@
     }
     else if ([value isKindOfClass:[NSNumber class]])
     {
-        return [[OSPMapCSSSizeListSpecifier alloc] initWithSize:[[OSPMapCSSSize alloc] initWithValue:value units:OSPMapCSSUnitPt]];
+        return [[OSPMapCSSSizeSpecifier alloc] initWithSize:[[OSPMapCSSSize alloc] initWithValue:value units:OSPMapCSSUnitPt]];
     }
     else if ([value isKindOfClass:[NSURL class]])
     {

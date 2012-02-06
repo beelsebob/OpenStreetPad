@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 
 #import "CoreParse.h"
-#import "OSPMapCSSSpecifier.h"
+#import "OSPMapCSSSpecifierList.h"
 
 @interface OSPMapCSSStyle : NSObject <CPParseResult>
 
 @property (readwrite, copy) NSString *key;
-@property (readwrite, retain) OSPMapCSSSpecifier *specifier;
+@property (readwrite, retain) OSPMapCSSSpecifierList *specifiers;
 
 @end
