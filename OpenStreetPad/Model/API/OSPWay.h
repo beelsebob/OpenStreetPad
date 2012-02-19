@@ -18,6 +18,7 @@
 - (OSPCoordinate2D)projectedCentroid;
 
 - (double)length;
+- (double)textOffsetForTextWidth:(double)width;
 - (OSPCoordinate2D)positionOnWayWithOffset:(double)xOffset heightAboveWay:(double)yOffset backwards:(BOOL)backwards;
 
 @end

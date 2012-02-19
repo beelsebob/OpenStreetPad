@@ -615,7 +615,7 @@
 		1FD8C51613ED378500ADD20A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = "Thomas Davie";
 			};
 			buildConfigurationList = 1FD8C51913ED378500ADD20A /* Build configuration list for PBXProject "OpenStreetPad" */;

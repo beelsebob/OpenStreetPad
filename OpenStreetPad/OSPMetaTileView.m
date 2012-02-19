@@ -437,9 +437,9 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
                     dashes[i] = [size value] * scale;
                     i++;
                 }
-                CGContextSetLineDash(ctx, 0.0f, dashes, i);
-                free(dashes);
             }
+            CGContextSetLineDash(ctx, 0.0f, dashes, i);
+            free(dashes);
         }
         else
         {
@@ -706,7 +706,6 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     CFRelease(scaledAttrString);
     
     double lineWidth = CTLineGetTypographicBounds(line, NULL, NULL, NULL);
-    double wayLength = [textWay length];
     
     CGContextSetLineWidth(ctx, haloRadius * 2.0f * scale);
     CGContextSetFillColorWithColor(ctx, [colour CGColor]);
@@ -717,9 +716,9 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     CGContextSetFontSize(ctx, CTFontGetSize(scaledFont));
     CFRelease(gFont);
     
-    if (wayLength > lineWidth)
+    double wayOffset = [textWay textOffsetForTextWidth:lineWidth];
+    if (wayOffset > 0)
     {
-        double wayOffset = (wayLength - lineWidth) * 0.5;
         BOOL backwards = [textWay positionOnWayWithOffset:wayOffset heightAboveWay:0.0 backwards:NO].x > [textWay positionOnWayWithOffset:wayOffset + lineWidth heightAboveWay:0.0 backwards:NO].x;
         CFArrayRef runs = CTLineGetGlyphRuns(line);
         int numRuns = CFArrayGetCount(runs);
@@ -747,9 +746,9 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
                 double dx = nextGlyphPosition.x - currentGlyphPosition.x;
                 double dy = nextGlyphPosition.y - currentGlyphPosition.y;
                 glyphAngles[glyphNumber] = dx > 0.0 ? (dy > 0.0 ? atan(dy / dx) : -atan(-dy / dx))
-                                         : dx < 0.0 ? (dy > 0.0 ? M_PI - atan(dy / -dx) : M_PI + atan(-dy / -dx))
-                                         :            (dy < 0.0 ? 3 * M_PI_2 : M_PI_2);
-
+                : dx < 0.0 ? (dy > 0.0 ? M_PI - atan(dy / -dx) : M_PI + atan(-dy / -dx))
+                :            (dy < 0.0 ? 3 * M_PI_2 : M_PI_2);
+                
                 
                 currentGlyphPosition = nextGlyphPosition;
             }

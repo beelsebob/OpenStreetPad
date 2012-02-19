@@ -239,6 +239,68 @@
     return l;
 }
 
+- (double)textOffsetForTextWidth:(double)width
+{
+    [self createEdgeLengthsIfNeeded];
+    
+    double l = 0.0;
+    double wayLength = [self length];
+    if (wayLength > width)
+    {
+        double *sharpCornerPositions = malloc(sizeof(double) * ([[self nodes] count] + 2));
+        sharpCornerPositions[0] = 0.0;
+        NSUInteger numberOfSharpCorners = 1;
+        
+        OSPCoordinate2D oneLocBack;
+        OSPCoordinate2D twoLocsBack;
+        NSUInteger nodesConsumed = 0;
+        for (OSPNode *node in [self nodeObjects])
+        {
+            OSPCoordinate2D nodeLoc = [node projectedLocation];
+            if (nodesConsumed >= 2)
+            {
+                double dx1 = oneLocBack.x - twoLocsBack.x;
+                double dy1 = oneLocBack.y - twoLocsBack.y;
+                double dx2 = nodeLoc.x - oneLocBack.x;
+                double dy2 = nodeLoc.y - oneLocBack.y;
+                float lastAngle = dx1 == 0.0 ? (dy1 > 0.0 ? M_PI_2 : 3 * M_PI_2) : atanf(dy1 / dx1);
+                float thisAngle = dx2 == 0.0 ? (dx2 > 0.0 ? M_PI_2 : 3 * M_PI_2) : atanf(dy2 / dx2);
+                float angleDelta = thisAngle - lastAngle;
+                if (fabs(angleDelta > M_PI_2 * 0.3333))
+                {
+                    sharpCornerPositions[numberOfSharpCorners] = l;
+                    numberOfSharpCorners++;
+                }
+            }
+            if (nodesConsumed >= 1)
+            {
+                l += edgeLengths[nodesConsumed - 1];
+            }
+            twoLocsBack = oneLocBack;
+            oneLocBack = nodeLoc;
+            nodesConsumed++;
+        }
+        sharpCornerPositions[numberOfSharpCorners] = wayLength;
+        
+        double bestPosition = -1.0;
+        double currentPosition = 0.0;
+        double idealPosition = (wayLength - width) * 0.5;
+        for (NSUInteger gapNumber = 0; gapNumber < numberOfSharpCorners; gapNumber++)
+        {
+            double currentGapSize = sharpCornerPositions[gapNumber+1] - sharpCornerPositions[gapNumber];
+            if (currentGapSize > width)
+            {
+                double closestToIdealPosition = currentPosition > idealPosition ? currentPosition : (currentPosition + currentGapSize - width < idealPosition ? currentPosition + currentGapSize - width : idealPosition);
+                bestPosition = bestPosition < 0.0 ? closestToIdealPosition : (closestToIdealPosition - idealPosition < bestPosition - idealPosition ? closestToIdealPosition : bestPosition);
+            }
+            currentPosition += currentGapSize;
+        }
+        free(sharpCornerPositions);
+        return bestPosition;
+    }
+    return -1.0;
+}
+
 - (OSPCoordinate2D)positionOnWayWithOffset:(double)xOffset heightAboveWay:(double)yOffset backwards:(BOOL)backwards
 {
     [self createEdgeLengthsIfNeeded];
