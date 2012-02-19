@@ -108,6 +108,11 @@
     [[self metaView] setNeedsDisplayInMapArea:area];
 }
 
+- (BOOL)mapServer:(OSPMapServer *)mapServer shouldLoadObjectsInArea:(OSPCoordinateRect)area
+{
+    return OSPCoordinateRectIntersectsRect(OSPRectForMapAreaInRect([self mapArea], [self bounds]), area);
+}
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self setStartPoint:[self mapArea].centre];

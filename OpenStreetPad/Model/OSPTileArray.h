@@ -13,6 +13,7 @@
 @interface OSPTileArray : NSObject
 
 - (void)addTile:(OSPTile)t;
+- (BOOL)containsTile:(OSPTile)t;
 - (NSArray *)notIncludedSubtilesOfTile:(OSPTile)t;
 
 @end

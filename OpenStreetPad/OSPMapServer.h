@@ -15,6 +15,7 @@
 @protocol OSPMapServerDelegate <NSObject>
 
 - (void)mapServer:(OSPMapServer *)mapServer didLoadObjectsInArea:(OSPCoordinateRect)area;
+- (BOOL)mapServer:(OSPMapServer *)mapServer shouldLoadObjectsInArea:(OSPCoordinateRect)area;
 
 @end
 

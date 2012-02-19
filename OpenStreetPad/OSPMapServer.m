@@ -348,7 +348,6 @@ typedef enum
     [rec setRequestType:type];
     [rec setDelegate:self];
     [self queueConnection:rec];
-    [[self requestedTiles] addTile:tile];
 }
 
 - (void)queueConnection:(OSPConnection *)newConnection
@@ -365,28 +364,34 @@ typedef enum
         {
             OSPConnection *rec = [[self connectionQueue] objectAtIndex:0];
             [[self connectionQueue] removeObjectAtIndex:0];
-            [[self currentConnections] addObject:rec];
-            [rec setConnection:[NSURLConnection connectionWithRequest:[rec request] delegate:rec]];
-            [[rec connection] start];
-            CFReadStreamRef readStream;
-            CFWriteStreamRef writeStream;
-            CFStreamCreateBoundPair(NULL, &readStream, &writeStream, 4096);
-            NSInputStream *iStream = CFBridgingRelease(readStream);
-            NSOutputStream *oStream = CFBridgingRelease(writeStream);
-            [oStream setDelegate:rec];
-            NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
-            [iStream scheduleInRunLoop:runLoop forMode:NSDefaultRunLoopMode];
-            [oStream scheduleInRunLoop:runLoop forMode:NSDefaultRunLoopMode];
-            [iStream open];
-            [oStream open];
-            [rec setParserStream:oStream];
-            NSXMLParser *parser = [[NSXMLParser alloc] initWithStream:iStream];
-            [parser setDelegate:rec];
-            [rec setParser:parser];
-            dispatch_async(parserQueue, ^()
-                           {
-                               [parser parse];
-                           });
+            
+            if ([[self delegate] mapServer:self shouldLoadObjectsInArea:OSPCoordinateRectFromTile([rec tile])] &&
+                ![[self requestedTiles] containsTile:[rec tile]])
+            {
+                [[self requestedTiles] addTile:[rec tile]];
+                [[self currentConnections] addObject:rec];
+                [rec setConnection:[NSURLConnection connectionWithRequest:[rec request] delegate:rec]];
+                [[rec connection] start];
+                CFReadStreamRef readStream;
+                CFWriteStreamRef writeStream;
+                CFStreamCreateBoundPair(NULL, &readStream, &writeStream, 4096);
+                NSInputStream *iStream = CFBridgingRelease(readStream);
+                NSOutputStream *oStream = CFBridgingRelease(writeStream);
+                [oStream setDelegate:rec];
+                NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
+                [iStream scheduleInRunLoop:runLoop forMode:NSDefaultRunLoopMode];
+                [oStream scheduleInRunLoop:runLoop forMode:NSDefaultRunLoopMode];
+                [iStream open];
+                [oStream open];
+                [rec setParserStream:oStream];
+                NSXMLParser *parser = [[NSXMLParser alloc] initWithStream:iStream];
+                [parser setDelegate:rec];
+                [rec setParser:parser];
+                dispatch_async(parserQueue, ^()
+                               {
+                                   [parser parse];
+                               });
+            }
         }
     }
 }

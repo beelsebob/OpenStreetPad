@@ -20,14 +20,7 @@
     
     if (nil != self)
     {
-        if ([[syntaxTree children] count] == 3)
-        {
-            [self setStyles:[[syntaxTree children] objectAtIndex:1]];
-        }
-        else
-        {
-            [self setStyles:[NSArray array]];
-        }
+        [self setStyles:[[syntaxTree children] objectAtIndex:1]];
     }
     
     return self;

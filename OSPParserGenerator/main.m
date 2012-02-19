@@ -94,7 +94,7 @@ int main (int argc, const char * argv[])
                                   @"OSPMapCSSClass          ::= <class> | '!' <class>;"
                                   @"class                   ::= '.' 'Identifier';"
                                   @"OSPMapCSSObject         ::= 'node' | 'way' | 'relation' | 'area' | 'line' | 'canvas' | '*';"
-                                  @"OSPMapCSSDeclaration    ::= '{' <OSPMapCSSStyle>+ '}' | '{' '}';"
+                                  @"OSPMapCSSDeclaration    ::= '{' <OSPMapCSSStyle>* '}';"
                                   @"OSPMapCSSStyle          ::= <Styledef> ';';"
                                   @"Styledef                ::= <OSPMapCSSKey> ':' <OSPMapCSSSpecifierList>;"
                                   @"OSPMapCSSSpecifierList  ::= <OSPMapCSSSpecifier> <OSPMapCSSCommaSpecifier>*;"

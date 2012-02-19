@@ -28,6 +28,7 @@ typedef enum
 - (id)initWithTile:(OSPTile)initTile;
 
 - (void)addTile:(OSPTile)tile;
+- (BOOL)containsTile:(OSPTile)tile;
 - (NSArray *)notIncludedSubtilesOfTile:(OSPTile)t;
 - (NSArray *)notIncludedSubtiles;
 - (uint8_t)indexForChild:(OSPTile)tile;
@@ -110,6 +111,30 @@ typedef enum
     return yHalf * 2 + xHalf;
 }
 
+- (BOOL)containsTile:(OSPTile)tile
+{
+    @synchronized(self)
+    {
+        if ([self isIncluded])
+        {
+            return YES;
+        }
+        
+        if ([self isLeaf])
+        {
+            return NO;
+        }
+        
+        OSPTile t = [self representedTile];
+        if (OSPTileEqual(tile, t))
+        {
+            return NO;
+        }
+        
+        return [[[self subTrees] objectAtIndex:[self indexForChild:tile]] containsTile:tile];
+    }
+}
+
 - (NSArray *)notIncludedSubtilesOfTile:(OSPTile)tile
 {
     @synchronized(self)
@@ -184,6 +209,11 @@ typedef enum
 - (void)addTile:(OSPTile)t
 {
     [[self tileTree] addTile:t];
+}
+
+- (BOOL)containsTile:(OSPTile)t
+{
+    return [[self tileTree] containsTile:t];
 }
 
 - (NSArray *)notIncludedSubtilesOfTile:(OSPTile)t
