@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+#import "OSPDataSource.h"
+#import "OSPDataStore.h"
+
 #import "OSPAPIObject.h"
 
 #import "OSPNode.h"
@@ -15,10 +18,7 @@
 #import "OSPRelation.h"
 #import "OSPMember.h"
 
-@interface OSPMap : NSObject
-
-- (void)addObject:(OSPAPIObject *)apiObject;
-- (NSSet *)objectsInBounds:(OSPCoordinateRect)bounds;
+@interface OSPMap : NSObject <OSPDataProvider, OSPDataStore>
 
 - (OSPNode *)nodeWithId:(NSInteger)nodeId;
 - (OSPWay *)wayWithId:(NSInteger)wayId;

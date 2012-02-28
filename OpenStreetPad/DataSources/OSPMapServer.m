@@ -21,6 +21,8 @@
 
 #import "OSPTileArray.h"
 
+#import "OSPOSMParser.h"
+
 typedef enum
 {
     OSPRequestTypeCapabilities = 0,
@@ -37,12 +39,12 @@ typedef enum
 
 @end
 
-@interface OSPConnection : NSObject <NSStreamDelegate, NSXMLParserDelegate, NSURLConnectionDelegate>
+@interface OSPConnection : NSObject <NSStreamDelegate, NSURLConnectionDelegate, NSURLConnectionDataDelegate, OSPOSMParserDelegate>
 
 @property (readwrite, strong) NSURLConnection *connection;
 @property (readwrite, strong) NSURLRequest *request;
 @property (readwrite, assign) OSPRequestType requestType;
-@property (readwrite, strong) NSXMLParser *parser;
+@property (readwrite, strong) OSPOSMParser *parser;
 @property (readwrite, strong) NSOutputStream *parserStream;
 @property (readwrite, assign, getter=isCompleted) BOOL completed;
 @property (readwrite, strong) NSMutableData *data;
@@ -51,16 +53,9 @@ typedef enum
 @property (readonly , assign) OSPCoordinateRect mapArea;
 @property (readwrite, assign) OSPTile tile;
 
-@property (readwrite, strong) NSMutableDictionary *currentObjectTags;
-@property (readwrite, strong) OSPAPIObject *currentObject;
-
 @property (readwrite, copy  ) NSArray *receivedObjects;
 
 - (void)attemptToWriteToStream;
-
-- (void)setupAPIObject:(OSPAPIObject *)object withAttributes:(NSDictionary *)attributes;
-
-- (void)notifyDelegateParserDidEndDocument;
 
 @end
 
@@ -77,9 +72,6 @@ typedef enum
 @synthesize completed;
 @synthesize data;
 @synthesize delegate;
-
-@synthesize currentObject;
-@synthesize currentObjectTags;
 
 @synthesize tile;
 
@@ -153,92 +145,23 @@ typedef enum
     [self attemptToWriteToStream];
 }
 
-- (void)parserDidStartDocument:(NSXMLParser *)parser
+- (void)parser:(OSPOSMParser *)parser didFindAPIObject:(OSPAPIObject *)object
 {
+    [receivedObjects addObject:object];
+    [[self delegate] connection:self didReceiveAPIObject:object];
 }
 
-- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
+- (void)parser:(OSPOSMParser *)parser didFailWithError:(NSError *)error
 {
-    @autoreleasepool
-    {
-        if ([elementName isEqualToString:@"tag"])
-        {
-            [[self currentObjectTags] setObject:[attributeDict objectForKey:@"v"] forKey:[attributeDict objectForKey:@"k"]];
-        }
-        else if ([elementName isEqualToString:@"node"])
-        {
-            OSPNode *node = [[OSPNode alloc] init];
-            
-            [self setCurrentObject:node];
-            [self setCurrentObjectTags:[NSMutableDictionary dictionary]];
-            [self setupAPIObject:node withAttributes:attributeDict];
-            [node setLocation:CLLocationCoordinate2DMake([[attributeDict objectForKey:@"lat"] doubleValue], [[attributeDict objectForKey:@"lon"] doubleValue])];
-        }
-        else if ([elementName isEqualToString:@"nd"])
-        {
-            [(OSPWay *)[self currentObject] addNodeWithId:[[attributeDict objectForKey:@"ref"] integerValue]];
-        }
-        else if ([elementName isEqualToString:@"way"])
-        {
-            [self setCurrentObject:[[OSPWay alloc] init]];
-            [self setCurrentObjectTags:[NSMutableDictionary dictionary]];
-            
-            [self setupAPIObject:[self currentObject] withAttributes:attributeDict];
-        }
-        else if ([elementName isEqualToString:@"relation"])
-        {
-            OSPRelation *rel = [[OSPRelation alloc] init];
-            [self setCurrentObject:rel];
-            [self setCurrentObjectTags:[NSMutableDictionary dictionary]];
-            
-            [self setupAPIObject:rel withAttributes:attributeDict];
-        }
-        else if ([elementName isEqualToString:@"member"])
-        {
-            NSString *typeString = [attributeDict objectForKey:@"type"];
-            OSPMemberType t = [typeString isEqualToString:@"node"] ? OSPMemberTypeNode : [typeString isEqualToString:@"way"] ? OSPMemberTypeWay : OSPMemberTypeRelation;
-            [(OSPRelation *)[self currentObject] addMember:[OSPMember memberWithType:t referencedObjectId:[[attributeDict objectForKey:@"ref"] integerValue] role:[attributeDict objectForKey:@"role"]]];
-        }
-    }
+    [[self delegate] connection:self didFailWithError:error];
 }
 
-- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
+- (void)parserDidEndDocument:(OSPOSMParser *)parser
 {
-    @autoreleasepool
-    {
-        if (nil != [self currentObject] && ([elementName isEqualToString:@"node"] || [elementName isEqualToString:@"way"] || [elementName isEqualToString:@"relation"]))
-        {
-            [[self currentObject] setTags:[self currentObjectTags]];
-            [receivedObjects addObject:[self currentObject]];
-            [[self delegate] connection:self didReceiveAPIObject:[self currentObject]];
-            [self setCurrentObject:nil];
-        }
-    }
-}
-
-- (void)setupAPIObject:(OSPAPIObject *)object withAttributes:(NSDictionary *)attributes
-{
-    [object setChangesetId:[[attributes objectForKey:@"changeset"] integerValue]];
-    [object setIdentity:[[attributes objectForKey:@"id"] integerValue]];
-    [object setUserId:[[attributes objectForKey:@"uid"] integerValue]];
-    [object setUser:[attributes objectForKey:@"user"]];
-    [object setVersion:[[attributes objectForKey:@"version"] integerValue]];
-    [object setVisible:[[attributes objectForKey:@"visible"] boolValue]];
-}
-
-- (void)parserDidEndDocument:(NSXMLParser *)p
-{
-    [self performSelectorOnMainThread:@selector(notifyDelegateParserDidEndDocument) withObject:nil waitUntilDone:NO];
-}
-
-- (void)notifyDelegateParserDidEndDocument
-{
-    [[self delegate] connectionDidFinishLoading:self];
-}
-
-- (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError
-{
-    [[self delegate] connection:self didFailWithError:parseError];
+    dispatch_async(dispatch_get_main_queue(), ^()
+                   {
+                       [[self delegate] connectionDidFinishLoading:self];
+                   });
 }
 
 @end
@@ -254,7 +177,7 @@ typedef enum
 }
 
 @property (readwrite, copy  ) NSURL *serverURL;
-@property (readwrite, strong) OSPMap *mapCache;
+@property (readwrite, strong) id<OSPDataProvider,OSPDataStore> cache;
 @property (readwrite, strong) NSMutableArray *currentConnections;
 @property (readwrite, strong) NSMutableArray *connectionQueue;
 
@@ -270,7 +193,7 @@ typedef enum
 @implementation OSPMapServer
 
 @synthesize serverURL;
-@synthesize mapCache;
+@synthesize cache;
 @synthesize delegate;
 @synthesize currentConnections;
 @synthesize connectionQueue;
@@ -289,7 +212,7 @@ typedef enum
     {
         parserQueue = dispatch_queue_create("XML parser", DISPATCH_QUEUE_CONCURRENT);
         [self setServerURL:initServerURL];
-        [self setMapCache:[[OSPMap alloc] init]];
+        [self setCache:[[OSPMap alloc] init]];
         [self setRequestedTiles:[[OSPTileArray alloc] init]];
         [self setCurrentConnections:[[NSMutableArray alloc] initWithCapacity:OSPMapServerMaxSimultaneousConnections]];
         [self setConnectionQueue:[NSMutableArray array]];
@@ -310,7 +233,7 @@ typedef enum
 
 - (NSSet *)objectsInBounds:(OSPCoordinateRect)bounds
 {
-    return [[self mapCache] objectsInBounds:bounds];
+    return [[self cache] objectsInBounds:bounds];
 }
 
 - (void)loadObjectsInBounds:(OSPCoordinateRect)bounds withOutset:(double)outsetSize
@@ -365,7 +288,7 @@ typedef enum
             OSPConnection *rec = [[self connectionQueue] objectAtIndex:0];
             [[self connectionQueue] removeObjectAtIndex:0];
             
-            if ([[self delegate] mapServer:self shouldLoadObjectsInArea:OSPCoordinateRectFromTile([rec tile])] &&
+            if ([[self delegate] dataSource:self shouldLoadObjectsInArea:OSPCoordinateRectFromTile([rec tile])] &&
                 ![[self requestedTiles] containsTile:[rec tile]])
             {
                 [[self requestedTiles] addTile:[rec tile]];
@@ -384,7 +307,7 @@ typedef enum
                 [iStream open];
                 [oStream open];
                 [rec setParserStream:oStream];
-                NSXMLParser *parser = [[NSXMLParser alloc] initWithStream:iStream];
+                OSPOSMParser *parser = [[OSPOSMParser alloc] initWithStream:iStream];
                 [parser setDelegate:rec];
                 [rec setParser:parser];
                 dispatch_async(parserQueue, ^()
@@ -398,8 +321,11 @@ typedef enum
 
 - (void)connection:(OSPConnection *)connection didReceiveAPIObject:(OSPAPIObject *)object
 {
-    [object setMap:[self mapCache]];
-    [[self mapCache] addObject:object];
+    if ([[self cache] isKindOfClass:[OSPMap class]])
+    {
+        [object setMap:(OSPMap *)[self cache]];
+    }
+    [[self cache] addObject:object];
 }
 
 - (void)connectionDidFinishLoading:(OSPConnection *)connection
@@ -413,7 +339,7 @@ typedef enum
         }
     }
     
-    [[self delegate] mapServer:self didLoadObjectsInArea:[connection mapArea]];
+    [[self delegate] dataSource:self didLoadObjectsInArea:[connection mapArea]];
     [[connection parserStream] setDelegate:nil];
     [[connection parser] setDelegate:nil];
     [[self currentConnections] removeObject:connection];

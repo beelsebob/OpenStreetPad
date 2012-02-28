@@ -9,6 +9,7 @@
 #import "OSPMapView.h"
 
 #import "OSPMapServer.h"
+#import "OSPOSMFile.h"
 
 #import "OSPAPIObject.h"
 #import "OSPWay.h"
@@ -18,9 +19,9 @@
 
 #import "OSPMapCSSParser.h"
 
-@interface OSPMapView () <OSPMapServerDelegate>
+@interface OSPMapView () <OSPDataSourceDelegate>
 
-@property (readwrite, strong) OSPMapServer *server;
+@property (readwrite, strong) OSPDataSource *dataSource;
 
 @property (readwrite, strong) OSPMetaTileView *metaView;
 @property (readwrite, assign) OSPCoordinate2D startPoint;
@@ -33,7 +34,7 @@
 
 @implementation OSPMapView
 
-@synthesize server;
+@synthesize dataSource;
 @synthesize mapArea;
 @synthesize metaView;
 @synthesize startPoint;
@@ -51,7 +52,8 @@
     
     if (nil != self)
     {
-        [self setServer:[OSPMapServer serverWithURL:[NSURL URLWithString:@"http://api.openstreetmap.org"]]];
+        [self setDataSource:[OSPOSMFile osmFileWithPath:[[NSBundle mainBundle] pathForResource:@"TestData" ofType:@"xml"]]];
+        //[self setDataSource:[OSPMapServer serverWithURL:[NSURL URLWithString:@"http://api.openstreetmap.org"]]];
         [self setMapArea:OSPMapAreaMake(OSPCoordinate2DProjectLocation(CLLocationCoordinate2DMake(57.647491, -3.313065)), 17.0)];
         
         [self commonInit];
@@ -66,7 +68,7 @@
     
     if (nil != self)
     {
-        [self setServer:[OSPMapServer serverWithURL:serverURL]];
+        [self setDataSource:[OSPMapServer serverWithURL:serverURL]];
         [self setMapArea:initMapArea];
         
         [self commonInit];
@@ -85,15 +87,15 @@
         [self setStylesheet:[p parse:style]];
     }
     
-    [[self server] setDelegate:self];
+    [[self dataSource] setDelegate:self];
     double outsetSize = 1.0 / pow(2.0, [self mapArea].zoomLevel + 1.0);
-    [[self server] loadObjectsInBounds:OSPRectForMapAreaInRect([self mapArea], [self bounds]) withOutset:outsetSize];
+    [[self dataSource] loadObjectsInBounds:OSPRectForMapAreaInRect([self mapArea], [self bounds]) withOutset:outsetSize];
     
     [self setClipsToBounds:YES];
     
     [self setMetaView:[[OSPMetaTileView alloc] initWithFrame:CGRectMake(-1664.0, -1568.0, 4096.0, 4096.0)]];
     [[self metaView] setMapArea:[self mapArea]];
-    [[self metaView] setServer:[self server]];
+    [[self metaView] setDataSource:[self dataSource]];
     [[self metaView] setStylesheet:[self stylesheet]];
     [self addSubview:[self metaView]];
     
@@ -103,12 +105,12 @@
     [self addGestureRecognizer:gestureRecogniser];
 }
 
-- (void)mapServer:(OSPMapServer *)mapServer didLoadObjectsInArea:(OSPCoordinateRect)area
+- (void)dataSource:(OSPDataSource *)mapServer didLoadObjectsInArea:(OSPCoordinateRect)area
 {
     [[self metaView] setNeedsDisplayInMapArea:area];
 }
 
-- (BOOL)mapServer:(OSPMapServer *)mapServer shouldLoadObjectsInArea:(OSPCoordinateRect)area
+- (BOOL)dataSource:(OSPDataSource *)mapServer shouldLoadObjectsInArea:(OSPCoordinateRect)area
 {
     return OSPCoordinateRectIntersectsRect(OSPRectForMapAreaInRect([self mapArea], [self bounds]), area);
 }
@@ -125,7 +127,7 @@
     double pixelSize = 1.0 / invPixelSize;
     OSPCoordinate2D newC = OSPCoordinate2DMake([self startPoint].x - t.x * pixelSize, [self startPoint].y - t.y * pixelSize);
     [self setMapArea:OSPMapAreaMake(newC, [self mapArea].zoomLevel)];
-    [[self server] loadObjectsInBounds:OSPRectForMapAreaInRect([self mapArea], [self bounds]) withOutset:128.0 * pixelSize];
+    [[self dataSource] loadObjectsInBounds:OSPRectForMapAreaInRect([self mapArea], [self bounds]) withOutset:128.0 * pixelSize];
     OSPCoordinate2D c = [[self metaView] mapArea].centre;
     [[self metaView] setCenter:CGPointMake((c.x - newC.x) * invPixelSize + [self center].x, (c.y - newC.y) * invPixelSize + [self center].y)];
 }

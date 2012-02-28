@@ -16,7 +16,7 @@
 
 @interface OSPMetaTileView : UIView
 
-@property (readwrite, nonatomic, strong) OSPMapServer *server;
+@property (readwrite, nonatomic, strong) OSPDataSource *dataSource;
 @property (readwrite, nonatomic, assign) OSPMapArea mapArea;
 
 @property (readwrite, strong) OSPMapCSSStyleSheet *stylesheet;

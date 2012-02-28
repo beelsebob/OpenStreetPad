@@ -100,7 +100,7 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
 
 @implementation OSPMetaTileView
 
-@synthesize server;
+@synthesize dataSource;
 @synthesize mapArea;
 
 @synthesize stylesheet;
@@ -158,7 +158,7 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     CGContextTranslateCTM(ctx, -r.origin.x, -r.origin.y);
     CGContextSetTextMatrix(ctx, CGAffineTransformMakeScale(1.0f, -1.0f));
     
-    NSSet *objects = [[self server] objectsInBounds:dataRect];
+    NSSet *objects = [[self dataSource] objectsInBounds:dataRect];
     
     NSArray *styledObjects = [[self stylesheet] styledObjects:objects];
     [self renderLayers:[self sortedObjects:styledObjects] inContext:ctx withScaleMultiplier:oneOverScale];

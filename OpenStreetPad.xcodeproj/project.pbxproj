@@ -58,9 +58,13 @@
 		1FB719A914E01C2000BD033C /* OSPMapCSSSpecifierList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB719A714E01ABA00BD033C /* OSPMapCSSSpecifierList.m */; };
 		1FB719AC14E0279400BD033C /* OSPMapCSSCommaSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB719AB14E0279200BD033C /* OSPMapCSSCommaSpecifier.m */; };
 		1FB719AD14E027C100BD033C /* OSPMapCSSCommaSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB719AB14E0279200BD033C /* OSPMapCSSCommaSpecifier.m */; };
+		1FBF35C814FD61130078E5C9 /* OSPOSMFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBF35C714FD61130078E5C9 /* OSPOSMFile.m */; };
+		1FBF35CB14FD63230078E5C9 /* OSPOSMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBF35CA14FD63230078E5C9 /* OSPOSMParser.m */; };
+		1FC80D3914FD804000512C3E /* TestData.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1FC80D3814FD804000512C3E /* TestData.xml */; };
 		1FCA08F914CAE5D5008889C3 /* libCoreParse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCA08F614CAE5C2008889C3 /* libCoreParse.a */; };
 		1FCA08FA14CAE7F5008889C3 /* CoreParse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCA08F014CAE5C2008889C3 /* CoreParse.framework */; };
 		1FCA090014CB3FCF008889C3 /* OSPTileArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA08FF14CB3FCE008889C3 /* OSPTileArray.m */; };
+		1FD070A414F92494006B4F32 /* OSPDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD070A314F92494006B4F32 /* OSPDataSource.m */; };
 		1FD8C52413ED378600ADD20A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD8C52313ED378600ADD20A /* UIKit.framework */; };
 		1FD8C52613ED378600ADD20A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD8C52513ED378600ADD20A /* Foundation.framework */; };
 		1FD8C52813ED378600ADD20A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD8C52713ED378600ADD20A /* CoreGraphics.framework */; };
@@ -263,9 +267,17 @@
 		1FB719A714E01ABA00BD033C /* OSPMapCSSSpecifierList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapCSSSpecifierList.m; sourceTree = "<group>"; };
 		1FB719AA14E0279000BD033C /* OSPMapCSSCommaSpecifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapCSSCommaSpecifier.h; sourceTree = "<group>"; };
 		1FB719AB14E0279200BD033C /* OSPMapCSSCommaSpecifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapCSSCommaSpecifier.m; sourceTree = "<group>"; };
+		1FBF35C514FD5FAF0078E5C9 /* OSPDataStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSPDataStore.h; sourceTree = "<group>"; };
+		1FBF35C614FD61130078E5C9 /* OSPOSMFile.h */ = {isa = PBXFileReference; fileEncoding = 4; path = OSPOSMFile.h; sourceTree = "<group>"; };
+		1FBF35C714FD61130078E5C9 /* OSPOSMFile.m */ = {isa = PBXFileReference; fileEncoding = 4; path = OSPOSMFile.m; sourceTree = "<group>"; };
+		1FBF35C914FD63230078E5C9 /* OSPOSMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; path = OSPOSMParser.h; sourceTree = "<group>"; };
+		1FBF35CA14FD63230078E5C9 /* OSPOSMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; path = OSPOSMParser.m; sourceTree = "<group>"; };
+		1FC80D3814FD804000512C3E /* TestData.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TestData.xml; sourceTree = "<group>"; };
 		1FCA08E314CAE5C2008889C3 /* CoreParse.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CoreParse.xcodeproj; path = ../CoreParse/CoreParse.xcodeproj; sourceTree = "<group>"; };
 		1FCA08FE14CB3FCE008889C3 /* OSPTileArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPTileArray.h; sourceTree = "<group>"; };
 		1FCA08FF14CB3FCE008889C3 /* OSPTileArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPTileArray.m; sourceTree = "<group>"; };
+		1FD070A214F92494006B4F32 /* OSPDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; path = OSPDataSource.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
+		1FD070A314F92494006B4F32 /* OSPDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; path = OSPDataSource.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		1FD8C51F13ED378500ADD20A /* OpenStreetPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenStreetPad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FD8C52313ED378600ADD20A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1FD8C52513ED378600ADD20A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -472,6 +484,7 @@
 		1FD8C52913ED378600ADD20A /* OpenStreetPad */ = {
 			isa = PBXGroup;
 			children = (
+				1FE47A3014FD821A0014B1BA /* DataSources */,
 				1FD8C55013ED395800ADD20A /* Model */,
 				1FD8C53213ED378600ADD20A /* OSPAppDelegate.h */,
 				1FD8C53313ED378600ADD20A /* OSPAppDelegate.m */,
@@ -481,8 +494,6 @@
 				1FD8C54113ED384B00ADD20A /* OSPMapView.m */,
 				1F5CF1B314139FEA0032C761 /* OSPMetaTileView.h */,
 				1F5CF1B414139FEA0032C761 /* OSPMetaTileView.m */,
-				1F7074A513EEA4610031BA84 /* OSPMapServer.h */,
-				1F7074A613EEA4610031BA84 /* OSPMapServer.m */,
 				1FFE3A4F145C2C0B00B47ED0 /* OSPMapCSSParser.h */,
 				1FFE3A50145C2C0B00B47ED0 /* OSPMapCSSParser.m */,
 				1FDD698F147900110095E634 /* OSPMapCSSHashColourRecogniser.h */,
@@ -498,6 +509,7 @@
 		1FD8C52A13ED378600ADD20A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1FC80D3814FD804000512C3E /* TestData.xml */,
 				1F30B4F8146DC9C100EB7F80 /* icons */,
 				1F4D13B6146C4E97007EF1B4 /* fills */,
 				1FFFC271146558B00052D1B6 /* osm.mcs */,
@@ -552,6 +564,22 @@
 				1FD8C56513ED3D6700ADD20A /* OSPMember.m */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		1FE47A3014FD821A0014B1BA /* DataSources */ = {
+			isa = PBXGroup;
+			children = (
+				1FBF35C514FD5FAF0078E5C9 /* OSPDataStore.h */,
+				1FD070A214F92494006B4F32 /* OSPDataSource.h */,
+				1FD070A314F92494006B4F32 /* OSPDataSource.m */,
+				1F7074A513EEA4610031BA84 /* OSPMapServer.h */,
+				1F7074A613EEA4610031BA84 /* OSPMapServer.m */,
+				1FBF35C914FD63230078E5C9 /* OSPOSMParser.h */,
+				1FBF35CA14FD63230078E5C9 /* OSPOSMParser.m */,
+				1FBF35C614FD61130078E5C9 /* OSPOSMFile.h */,
+				1FBF35C714FD61130078E5C9 /* OSPOSMFile.m */,
+			);
+			path = DataSources;
 			sourceTree = "<group>";
 		};
 		1FFFC23914653FD10052D1B6 /* OSPParserGenerator */ = {
@@ -691,6 +719,7 @@
 				1FFFC272146558B00052D1B6 /* osm.mcs in Resources */,
 				1F4D13B7146C4E97007EF1B4 /* fills in Resources */,
 				1F30B4F9146DC9C100EB7F80 /* icons in Resources */,
+				1FC80D3914FD804000512C3E /* TestData.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -761,6 +790,9 @@
 				1FB719A114E0082300BD033C /* OSPMapCSSTagSpecifier.m in Sources */,
 				1FB719A814E01ABC00BD033C /* OSPMapCSSSpecifierList.m in Sources */,
 				1FB719AC14E0279400BD033C /* OSPMapCSSCommaSpecifier.m in Sources */,
+				1FD070A414F92494006B4F32 /* OSPDataSource.m in Sources */,
+				1FBF35C814FD61130078E5C9 /* OSPOSMFile.m in Sources */,
+				1FBF35CB14FD63230078E5C9 /* OSPOSMParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
