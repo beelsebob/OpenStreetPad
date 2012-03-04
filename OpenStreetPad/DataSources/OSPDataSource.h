@@ -3,7 +3,7 @@
 //  
 //
 //  Created by Thomas Davie on 25/02/2012.
-//  Copyright (c) 2012 Hunted Cow Studios. All rights reserved.
+//  Copyright (c) 2012 Thomas Davie. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -17,6 +17,7 @@
 @protocol OSPDataProvider <NSObject>
 
 - (NSSet *)objectsInBounds:(OSPCoordinateRect)bounds;
+- (NSSet *)allObjects;
 
 @end
 

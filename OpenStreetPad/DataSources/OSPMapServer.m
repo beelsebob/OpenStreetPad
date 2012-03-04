@@ -172,9 +172,6 @@ typedef enum
 #define OSPMapServerMaxSimultaneousConnections 2
 
 @interface OSPMapServer () <OSPConnectionDelegate>
-{
-    dispatch_queue_t parserQueue;
-}
 
 @property (readwrite, copy  ) NSURL *serverURL;
 @property (readwrite, strong) id<OSPDataProvider,OSPDataStore> cache;
@@ -194,7 +191,6 @@ typedef enum
 
 @synthesize serverURL;
 @synthesize cache;
-@synthesize delegate;
 @synthesize currentConnections;
 @synthesize connectionQueue;
 @synthesize requestedTiles;
@@ -210,7 +206,6 @@ typedef enum
     
     if (nil != self)
     {
-        parserQueue = dispatch_queue_create("XML parser", DISPATCH_QUEUE_CONCURRENT);
         [self setServerURL:initServerURL];
         [self setCache:[[OSPMap alloc] init]];
         [self setRequestedTiles:[[OSPTileArray alloc] init]];
@@ -226,14 +221,14 @@ typedef enum
     return [self initWithURL:[NSURL URLWithString:@"http://api.openstreetmap.org"]];
 }
 
-- (void)dealloc
-{
-    dispatch_release(parserQueue);
-}
-
 - (NSSet *)objectsInBounds:(OSPCoordinateRect)bounds
 {
     return [[self cache] objectsInBounds:bounds];
+}
+
+- (NSSet *)allObjects
+{
+    return [[self cache] allObjects];
 }
 
 - (void)loadObjectsInBounds:(OSPCoordinateRect)bounds withOutset:(double)outsetSize
@@ -310,7 +305,7 @@ typedef enum
                 OSPOSMParser *parser = [[OSPOSMParser alloc] initWithStream:iStream];
                 [parser setDelegate:rec];
                 [rec setParser:parser];
-                dispatch_async(parserQueue, ^()
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^()
                                {
                                    [parser parse];
                                });

@@ -19,6 +19,7 @@
 
 @property (readwrite, strong) NSMutableDictionary *currentObjectTags;
 @property (readwrite, strong) OSPAPIObject *currentObject;
+@property (readwrite, strong) NSDateFormatter *dateFormatter;
 
 - (void)setupAPIObject:(OSPAPIObject *)object withAttributes:(NSDictionary *)attributes;
 
@@ -32,6 +33,7 @@
 
 @synthesize currentObject;
 @synthesize currentObjectTags;
+@synthesize dateFormatter;
 
 - (id)initWithStream:(NSInputStream *)stream
 {
@@ -41,6 +43,10 @@
     {
         [self setXmlParser:[[NSXMLParser alloc] initWithStream:stream]];
         [[self xmlParser] setDelegate:self];
+        [self setDateFormatter:[[NSDateFormatter alloc] init]];
+        [[self dateFormatter] setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
+        [[self dateFormatter] setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
+        [[self dateFormatter] setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     }
     
     return self;
@@ -121,6 +127,7 @@
     [object setUser:[attributes objectForKey:@"user"]];
     [object setVersion:[[attributes objectForKey:@"version"] integerValue]];
     [object setVisible:[[attributes objectForKey:@"visible"] boolValue]];
+    [object setTimestamp:[[self dateFormatter] dateFromString:[attributes objectForKey:@"timestamp"]]];
 }
 
 - (void)parserDidEndDocument:(NSXMLParser *)p

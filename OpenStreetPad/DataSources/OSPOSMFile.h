@@ -1,5 +1,5 @@
 //
-//  OSPOSMFileStore.h
+//  OSPOSMFile.h
 //  OpenStreetPad
 //
 //  Created by Thomas Davie on 28/02/2012.
@@ -10,7 +10,9 @@
 
 #import "OSPDataSource.h"
 
-@interface OSPOSMFile : OSPDataSource
+#import "OSPDataStore.h"
+
+@interface OSPOSMFile : OSPDataSource <OSPDataStore, OSPPersistingStore>
 
 + (id)osmFileWithPath:(NSString *)path;
 - (id)initWithPath:(NSString *)path;

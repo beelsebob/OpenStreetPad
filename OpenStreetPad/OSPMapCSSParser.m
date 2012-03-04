@@ -11,9 +11,6 @@
 #import "CoreParse.h"
 
 @interface OSPMapCSSParser () <CPTokeniserDelegate>
-{
-    dispatch_queue_t parserQueue;
-}
 
 @property (readwrite, strong) CPTokeniser *tokeniser;
 @property (readwrite, strong) CPParser *parser;
@@ -37,7 +34,6 @@
     
     if (nil != self)
     {
-        parserQueue = dispatch_queue_create("tokeniser", DISPATCH_QUEUE_CONCURRENT);
         symbolsSet = [NSCharacterSet characterSetWithCharactersInString:@"*[]{}().,;@|-!=<>:!#%"];
         
         NSDictionary *pt = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"parser" ofType:@"osp"]];
@@ -49,15 +45,10 @@
     return self;
 }
 
-- (void)dealloc
-{
-    dispatch_release(parserQueue);
-}
-
 - (OSPMapCSSStyleSheet *)parse:(NSString *)mapCSS
 {
     CPTokenStream *stream = [[CPTokenStream alloc] init];
-    dispatch_async(parserQueue, ^()
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^()
                    {
                        @autoreleasepool
                        {

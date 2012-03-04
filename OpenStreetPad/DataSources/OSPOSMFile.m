@@ -1,5 +1,5 @@
 //
-//  OSPOSMFileStore.m
+//  OSPOSMFile.m
 //  OpenStreetPad
 //
 //  Created by Thomas Davie on 28/02/2012.
@@ -9,6 +9,7 @@
 #import "OSPOSMFile.h"
 
 #import "OSPOSMParser.h"
+#import "OSPOSMWriter.h"
 
 #import "OSPMap.h"
 
@@ -20,9 +21,6 @@
 @end
 
 @implementation OSPOSMFile
-{
-    dispatch_queue_t parserQueue;
-}
 
 @synthesize path;
 
@@ -40,7 +38,6 @@
     
     if (nil != self)
     {
-        parserQueue = dispatch_queue_create("XML parser", DISPATCH_QUEUE_CONCURRENT);
         [self setPath:initPath];
         [self setCache:[[OSPMap alloc] init]];
     }
@@ -48,14 +45,14 @@
     return self;
 }
 
-- (void)dealloc
-{
-    dispatch_release(parserQueue);
-}
-
 - (NSSet *)objectsInBounds:(OSPCoordinateRect)bounds
 {
     return [[self cache] objectsInBounds:bounds];
+}
+
+- (NSSet *)allObjects
+{
+    return [[self cache] allObjects];
 }
 
 - (void)loadObjectsInBounds:(OSPCoordinateRect)bounds withOutset:(double)outsetSize
@@ -66,7 +63,7 @@
         NSInputStream *stream = [NSInputStream inputStreamWithFileAtPath:[self path]];
         [self setParser:[[OSPOSMParser alloc] initWithStream:stream]];
         [[self parser] setDelegate:self];
-        dispatch_async(parserQueue, ^()
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^()
                        {
                            [[self parser] parse];
                        });
@@ -89,6 +86,21 @@
 - (void)parserDidEndDocument:(OSPOSMParser *)parser
 {
     [[self delegate] dataSource:self didLoadObjectsInArea:OSPCoordinateRectMake(0.0, 0.0, 1.0, 1.0)];
+}
+
+- (void)addObject:(id)apiObject
+{
+    [[self cache] addObject:apiObject];
+}
+
+- (void)save
+{
+    [[NSFileManager defaultManager] createFileAtPath:[self path] contents:[NSData data] attributes:nil];
+    NSOutputStream *oStream = [NSOutputStream outputStreamToFileAtPath:[self path] append:NO];
+    [oStream open];
+    OSPOSMWriter *writer = [[OSPOSMWriter alloc] initWithStream:oStream];
+    [writer writeDataProvider:[self cache]];
+    [oStream close];
 }
 
 @end

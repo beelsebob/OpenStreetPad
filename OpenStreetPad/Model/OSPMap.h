@@ -18,7 +18,7 @@
 #import "OSPRelation.h"
 #import "OSPMember.h"
 
-@interface OSPMap : NSObject <OSPDataProvider, OSPDataStore>
+@interface OSPMap : NSObject <OSPBounded, OSPDataProvider, OSPDataStore>
 
 - (OSPNode *)nodeWithId:(NSInteger)nodeId;
 - (OSPWay *)wayWithId:(NSInteger)wayId;

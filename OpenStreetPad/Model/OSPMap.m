@@ -97,4 +97,38 @@ Boolean APIObjectEqual (const void *value1, const void *value2)
     return o;
 }
 
+- (NSSet *)allObjects
+{
+    return [(__bridge NSSet *)[self contents] copy];
+}
+
+- (OSPCoordinateRect)bounds
+{
+    CFSetRef c = [self contents];
+    if (CFSetGetCount(c) > 0)
+    {
+        OSPCoordinateRect b;
+        for (OSPAPIObject *obj in (__bridge NSSet *)c)
+        {
+            if ([obj memberType] == OSPMemberTypeNode)
+            {
+                CLLocationCoordinate2D l = [(OSPNode *)obj location];
+                b = OSPCoordinateRectMake(l.longitude, l.latitude, 0.0, 0.0);
+                break;
+            }
+        }
+        for (OSPAPIObject *obj in (__bridge NSSet *)c)
+        {
+            if ([obj memberType] == OSPMemberTypeNode)
+            {
+                CLLocationCoordinate2D l = [(OSPNode *)obj location];
+                b = OSPCoordinateRectUnion(b, OSPCoordinateRectMake(l.longitude, l.latitude, 0.0, 0.0));
+            }
+        }
+        return b;
+    }
+    
+    return OSPCoordinateRectMake(0.0, 0.0, 0.0, 0.0);
+}
+
 @end
