@@ -716,10 +716,16 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     CGContextSetFontSize(ctx, CTFontGetSize(scaledFont));
     CFRelease(gFont);
     
+    CGAffineTransform tm = CGContextGetTextMatrix(ctx);
+    
     double wayOffset = [textWay textOffsetForTextWidth:lineWidth];
     if (wayOffset > 0)
     {
         BOOL backwards = [textWay positionOnWayWithOffset:wayOffset heightAboveWay:0.0 backwards:NO].x > [textWay positionOnWayWithOffset:wayOffset + lineWidth heightAboveWay:0.0 backwards:NO].x;
+        if (backwards)
+        {
+            wayOffset = [textWay length] - lineWidth - wayOffset;
+        }
         CFArrayRef runs = CTLineGetGlyphRuns(line);
         int numRuns = CFArrayGetCount(runs);
         for (int runNumber = 0; runNumber < numRuns; runNumber++)
@@ -781,6 +787,8 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
             free(glyphAngles);
         }
     }
+    
+    CGContextSetTextMatrix(ctx, tm);
     
     CFRelease(line);
     CFRelease(scaledTypesetter);
