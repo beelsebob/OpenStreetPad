@@ -58,8 +58,8 @@
 		1FB719A914E01C2000BD033C /* OSPMapCSSSpecifierList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB719A714E01ABA00BD033C /* OSPMapCSSSpecifierList.m */; };
 		1FB719AC14E0279400BD033C /* OSPMapCSSCommaSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB719AB14E0279200BD033C /* OSPMapCSSCommaSpecifier.m */; };
 		1FB719AD14E027C100BD033C /* OSPMapCSSCommaSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB719AB14E0279200BD033C /* OSPMapCSSCommaSpecifier.m */; };
-		1FBF35C814FD61130078E5C9 /* OSPOSMFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBF35C714FD61130078E5C9 /* OSPOSMFile.m */; };
-		1FBF35CB14FD63230078E5C9 /* OSPOSMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBF35CA14FD63230078E5C9 /* OSPOSMParser.m */; };
+		1FBF35C814FD61130078E5C9 /* OSPOpenStreetMapXMLFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBF35C714FD61130078E5C9 /* OSPOpenStreetMapXMLFile.m */; };
+		1FBF35CB14FD63230078E5C9 /* OSPOpenStreetMapXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBF35CA14FD63230078E5C9 /* OSPOpenStreetMapXMLParser.m */; };
 		1FC80D3914FD804000512C3E /* TestData.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1FC80D3814FD804000512C3E /* TestData.xml */; };
 		1FCA08F914CAE5D5008889C3 /* libCoreParse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCA08F614CAE5C2008889C3 /* libCoreParse.a */; };
 		1FCA08FA14CAE7F5008889C3 /* CoreParse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCA08F014CAE5C2008889C3 /* CoreParse.framework */; };
@@ -86,8 +86,10 @@
 		1FDD699B147908930095E634 /* OSPMapCSSHashColourToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD6997147906780095E634 /* OSPMapCSSHashColourToken.m */; };
 		1FDD699E14790C520095E634 /* OSPMapCSSStyledObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD699D14790C510095E634 /* OSPMapCSSStyledObject.m */; };
 		1FDD69A1147974470095E634 /* OSPQuadTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD69A0147974470095E634 /* OSPQuadTree.m */; };
+		1FEBBF3B1503F64000DAA87A /* OSPOpenStreetMapPBFParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEBBF3A1503F64000DAA87A /* OSPOpenStreetMapPBFParser.m */; };
+		1FEBBF4E1503F76600DAA87A /* OSPOpenStreetMapParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEBBF4D1503F76600DAA87A /* OSPOpenStreetMapParser.m */; };
 		1FF71B5D150243B800BEE663 /* OSPXMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF71B5C150243B800BEE663 /* OSPXMLWriter.m */; };
-		1FF71B7015024C7F00BEE663 /* OSPOSMWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF71B6F15024C7F00BEE663 /* OSPOSMWriter.m */; };
+		1FF71B7015024C7F00BEE663 /* OSPOpenStreetMapXMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF71B6F15024C7F00BEE663 /* OSPOpenStreetMapXMLWriter.m */; };
 		1FF71BCA1503D63B00BEE663 /* NSString+XMLEscaping.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF71BC91503D63B00BEE663 /* NSString+XMLEscaping.m */; };
 		1FFE3A51145C2C0B00B47ED0 /* OSPMapCSSParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFE3A50145C2C0B00B47ED0 /* OSPMapCSSParser.m */; };
 		1FFFC23814653FD10052D1B6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD8C52513ED378600ADD20A /* Foundation.framework */; };
@@ -271,10 +273,10 @@
 		1FB719AA14E0279000BD033C /* OSPMapCSSCommaSpecifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapCSSCommaSpecifier.h; sourceTree = "<group>"; };
 		1FB719AB14E0279200BD033C /* OSPMapCSSCommaSpecifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapCSSCommaSpecifier.m; sourceTree = "<group>"; };
 		1FBF35C514FD5FAF0078E5C9 /* OSPDataStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSPDataStore.h; sourceTree = "<group>"; };
-		1FBF35C614FD61130078E5C9 /* OSPOSMFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPOSMFile.h; sourceTree = "<group>"; };
-		1FBF35C714FD61130078E5C9 /* OSPOSMFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPOSMFile.m; sourceTree = "<group>"; };
-		1FBF35C914FD63230078E5C9 /* OSPOSMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPOSMParser.h; sourceTree = "<group>"; };
-		1FBF35CA14FD63230078E5C9 /* OSPOSMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPOSMParser.m; sourceTree = "<group>"; };
+		1FBF35C614FD61130078E5C9 /* OSPOpenStreetMapXMLFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPOpenStreetMapXMLFile.h; sourceTree = "<group>"; };
+		1FBF35C714FD61130078E5C9 /* OSPOpenStreetMapXMLFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPOpenStreetMapXMLFile.m; sourceTree = "<group>"; };
+		1FBF35C914FD63230078E5C9 /* OSPOpenStreetMapXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPOpenStreetMapXMLParser.h; sourceTree = "<group>"; };
+		1FBF35CA14FD63230078E5C9 /* OSPOpenStreetMapXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPOpenStreetMapXMLParser.m; sourceTree = "<group>"; };
 		1FC80D3814FD804000512C3E /* TestData.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TestData.xml; sourceTree = "<group>"; };
 		1FCA08E314CAE5C2008889C3 /* CoreParse.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CoreParse.xcodeproj; path = ../CoreParse/CoreParse.xcodeproj; sourceTree = "<group>"; };
 		1FCA08FE14CB3FCE008889C3 /* OSPTileArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPTileArray.h; sourceTree = "<group>"; };
@@ -315,10 +317,14 @@
 		1FDD699D14790C510095E634 /* OSPMapCSSStyledObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapCSSStyledObject.m; sourceTree = "<group>"; };
 		1FDD699F147974460095E634 /* OSPQuadTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPQuadTree.h; sourceTree = "<group>"; };
 		1FDD69A0147974470095E634 /* OSPQuadTree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPQuadTree.m; sourceTree = "<group>"; };
+		1FEBBF391503F64000DAA87A /* OSPOpenStreetMapPBFParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPOpenStreetMapPBFParser.h; sourceTree = "<group>"; };
+		1FEBBF3A1503F64000DAA87A /* OSPOpenStreetMapPBFParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPOpenStreetMapPBFParser.m; sourceTree = "<group>"; };
+		1FEBBF4C1503F76600DAA87A /* OSPOpenStreetMapParser.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = OSPOpenStreetMapParser.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
+		1FEBBF4D1503F76600DAA87A /* OSPOpenStreetMapParser.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = OSPOpenStreetMapParser.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 0; };
 		1FF71B5B150243B800BEE663 /* OSPXMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPXMLWriter.h; sourceTree = "<group>"; };
 		1FF71B5C150243B800BEE663 /* OSPXMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPXMLWriter.m; sourceTree = "<group>"; };
-		1FF71B6E15024C7F00BEE663 /* OSPOSMWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPOSMWriter.h; sourceTree = "<group>"; };
-		1FF71B6F15024C7F00BEE663 /* OSPOSMWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPOSMWriter.m; sourceTree = "<group>"; };
+		1FF71B6E15024C7F00BEE663 /* OSPOpenStreetMapXMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPOpenStreetMapXMLWriter.h; sourceTree = "<group>"; };
+		1FF71B6F15024C7F00BEE663 /* OSPOpenStreetMapXMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPOpenStreetMapXMLWriter.m; sourceTree = "<group>"; };
 		1FF71BC81503D63B00BEE663 /* NSString+XMLEscaping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+XMLEscaping.h"; sourceTree = "<group>"; };
 		1FF71BC91503D63B00BEE663 /* NSString+XMLEscaping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+XMLEscaping.m"; sourceTree = "<group>"; };
 		1FFE3A4F145C2C0B00B47ED0 /* OSPMapCSSParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapCSSParser.h; sourceTree = "<group>"; };
@@ -583,16 +589,20 @@
 				1FD070A314F92494006B4F32 /* OSPDataSource.m */,
 				1F7074A513EEA4610031BA84 /* OSPMapServer.h */,
 				1F7074A613EEA4610031BA84 /* OSPMapServer.m */,
-				1FBF35C614FD61130078E5C9 /* OSPOSMFile.h */,
-				1FBF35C714FD61130078E5C9 /* OSPOSMFile.m */,
-				1FBF35C914FD63230078E5C9 /* OSPOSMParser.h */,
-				1FBF35CA14FD63230078E5C9 /* OSPOSMParser.m */,
+				1FBF35C614FD61130078E5C9 /* OSPOpenStreetMapXMLFile.h */,
+				1FBF35C714FD61130078E5C9 /* OSPOpenStreetMapXMLFile.m */,
+				1FEBBF4C1503F76600DAA87A /* OSPOpenStreetMapParser.h */,
+				1FEBBF4D1503F76600DAA87A /* OSPOpenStreetMapParser.m */,
+				1FBF35C914FD63230078E5C9 /* OSPOpenStreetMapXMLParser.h */,
+				1FBF35CA14FD63230078E5C9 /* OSPOpenStreetMapXMLParser.m */,
 				1FF71B5B150243B800BEE663 /* OSPXMLWriter.h */,
 				1FF71B5C150243B800BEE663 /* OSPXMLWriter.m */,
-				1FF71B6E15024C7F00BEE663 /* OSPOSMWriter.h */,
-				1FF71B6F15024C7F00BEE663 /* OSPOSMWriter.m */,
+				1FF71B6E15024C7F00BEE663 /* OSPOpenStreetMapXMLWriter.h */,
+				1FF71B6F15024C7F00BEE663 /* OSPOpenStreetMapXMLWriter.m */,
 				1FF71BC81503D63B00BEE663 /* NSString+XMLEscaping.h */,
 				1FF71BC91503D63B00BEE663 /* NSString+XMLEscaping.m */,
+				1FEBBF391503F64000DAA87A /* OSPOpenStreetMapPBFParser.h */,
+				1FEBBF3A1503F64000DAA87A /* OSPOpenStreetMapPBFParser.m */,
 			);
 			path = DataSources;
 			sourceTree = "<group>";
@@ -658,6 +668,7 @@
 		1FD8C51613ED378500ADD20A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = OSP;
 				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = "Thomas Davie";
 			};
@@ -806,11 +817,13 @@
 				1FB719A814E01ABC00BD033C /* OSPMapCSSSpecifierList.m in Sources */,
 				1FB719AC14E0279400BD033C /* OSPMapCSSCommaSpecifier.m in Sources */,
 				1FD070A414F92494006B4F32 /* OSPDataSource.m in Sources */,
-				1FBF35C814FD61130078E5C9 /* OSPOSMFile.m in Sources */,
-				1FBF35CB14FD63230078E5C9 /* OSPOSMParser.m in Sources */,
+				1FBF35C814FD61130078E5C9 /* OSPOpenStreetMapXMLFile.m in Sources */,
+				1FBF35CB14FD63230078E5C9 /* OSPOpenStreetMapXMLParser.m in Sources */,
 				1FF71B5D150243B800BEE663 /* OSPXMLWriter.m in Sources */,
-				1FF71B7015024C7F00BEE663 /* OSPOSMWriter.m in Sources */,
+				1FF71B7015024C7F00BEE663 /* OSPOpenStreetMapXMLWriter.m in Sources */,
 				1FF71BCA1503D63B00BEE663 /* NSString+XMLEscaping.m in Sources */,
+				1FEBBF3B1503F64000DAA87A /* OSPOpenStreetMapPBFParser.m in Sources */,
+				1FEBBF4E1503F76600DAA87A /* OSPOpenStreetMapParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

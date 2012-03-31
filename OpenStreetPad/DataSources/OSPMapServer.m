@@ -21,7 +21,7 @@
 
 #import "OSPTileArray.h"
 
-#import "OSPOSMParser.h"
+#import "OSPOpenStreetMapXMLParser.h"
 
 typedef enum
 {
@@ -39,12 +39,12 @@ typedef enum
 
 @end
 
-@interface OSPConnection : NSObject <NSStreamDelegate, NSURLConnectionDelegate, NSURLConnectionDataDelegate, OSPOSMParserDelegate>
+@interface OSPConnection : NSObject <NSStreamDelegate, NSURLConnectionDelegate, NSURLConnectionDataDelegate, OSPOpenStreetMapParserDelegate>
 
 @property (readwrite, strong) NSURLConnection *connection;
 @property (readwrite, strong) NSURLRequest *request;
 @property (readwrite, assign) OSPRequestType requestType;
-@property (readwrite, strong) OSPOSMParser *parser;
+@property (readwrite, strong) OSPOpenStreetMapXMLParser *parser;
 @property (readwrite, strong) NSOutputStream *parserStream;
 @property (readwrite, assign, getter=isCompleted) BOOL completed;
 @property (readwrite, strong) NSMutableData *data;
@@ -145,18 +145,18 @@ typedef enum
     [self attemptToWriteToStream];
 }
 
-- (void)parser:(OSPOSMParser *)parser didFindAPIObject:(OSPAPIObject *)object
+- (void)parser:(OSPOpenStreetMapXMLParser *)parser didFindAPIObject:(OSPAPIObject *)object
 {
     [receivedObjects addObject:object];
     [[self delegate] connection:self didReceiveAPIObject:object];
 }
 
-- (void)parser:(OSPOSMParser *)parser didFailWithError:(NSError *)error
+- (void)parser:(OSPOpenStreetMapXMLParser *)parser didFailWithError:(NSError *)error
 {
     [[self delegate] connection:self didFailWithError:error];
 }
 
-- (void)parserDidEndDocument:(OSPOSMParser *)parser
+- (void)parserDidEndDocument:(OSPOpenStreetMapXMLParser *)parser
 {
     dispatch_async(dispatch_get_main_queue(), ^()
                    {
@@ -302,7 +302,7 @@ typedef enum
                 [iStream open];
                 [oStream open];
                 [rec setParserStream:oStream];
-                OSPOSMParser *parser = [[OSPOSMParser alloc] initWithStream:iStream];
+                OSPOpenStreetMapXMLParser *parser = [[OSPOpenStreetMapXMLParser alloc] initWithStream:iStream];
                 [parser setDelegate:rec];
                 [rec setParser:parser];
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^()
