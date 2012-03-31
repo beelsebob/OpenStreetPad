@@ -172,7 +172,6 @@
         [metaView setCenter:CGPointMake((c.x - newC.x) * invPixelSize + p.x, (c.y - newC.y) * invPixelSize + p.y)];
     }
     
-    NSLog(@"Checking whether we've left the meta tile area");
     CGRect b = [self bounds];
     if ([[self bottomLeft] frame].origin.x > 0.0f)
     {
