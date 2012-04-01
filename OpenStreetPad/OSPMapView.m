@@ -23,6 +23,9 @@
 
 @property (readwrite, strong) OSPDataSource *dataSource;
 
+@property (readwrite, strong) UIView *frontView;
+@property (readwrite, strong) UIView *backView;
+
 @property (readwrite, strong) OSPMetaTileView *bottomLeft;
 @property (readwrite, strong) OSPMetaTileView *bottomRight;
 @property (readwrite, strong) OSPMetaTileView *topLeft;
@@ -33,6 +36,7 @@
 - (void)commonInit;
 
 - (IBAction)pan:(id)sender;
+- (IBAction)zoom:(id)sender;
 
 @end
 
@@ -40,6 +44,8 @@
 
 @synthesize dataSource;
 @synthesize mapArea;
+@synthesize frontView;
+@synthesize backView;
 @synthesize bottomLeft;
 @synthesize bottomRight;
 @synthesize topLeft;
@@ -102,29 +108,16 @@
     
     [self setClipsToBounds:YES];
     
-    float metaZoom = zoom - 2.0f;
-    float numberOfMetaTilesAcrossWorld = pow(2.0, metaZoom);
-    float xFloatingMetaTile = numberOfMetaTilesAcrossWorld * mapRect.origin.x;
-    int xMetaTile = (int)xFloatingMetaTile;
-    float xMetaTilePosition = 1024.0f * (xFloatingMetaTile - (float)xMetaTile);
-    float yFloatingMetaTile = numberOfMetaTilesAcrossWorld * mapRect.origin.y;
-    int yMetaTile = (int)yFloatingMetaTile;
-    float yMetaTilePosition = 1024.0f * (yFloatingMetaTile - (float)yMetaTile);
-    double metaTileSize = 1.0 / numberOfMetaTilesAcrossWorld;
-    
-    [self setBottomLeft: [self metaTileViewWithFrame:CGRectMake(-xMetaTilePosition          , -yMetaTilePosition          , 1024.0f, 1024.0f) mapArea:OSPMapAreaMake(OSPCoordinate2DMake(((float)xMetaTile + 0.5f) * metaTileSize, ((float)yMetaTile + 0.5f) * metaTileSize), zoom)]];
-    [self setBottomRight:[self metaTileViewWithFrame:CGRectMake(-xMetaTilePosition + 1024.0f, -yMetaTilePosition          , 1024.0f, 1024.0f) mapArea:OSPMapAreaMake(OSPCoordinate2DMake(((float)xMetaTile + 1.5f) * metaTileSize, ((float)yMetaTile + 0.5f) * metaTileSize), zoom)]];
-    [self setTopLeft:    [self metaTileViewWithFrame:CGRectMake(-xMetaTilePosition          , -yMetaTilePosition + 1024.0f, 1024.0f, 1024.0f) mapArea:OSPMapAreaMake(OSPCoordinate2DMake(((float)xMetaTile + 0.5f) * metaTileSize, ((float)yMetaTile + 1.5f) * metaTileSize), zoom)]];
-    [self setTopRight:   [self metaTileViewWithFrame:CGRectMake(-xMetaTilePosition + 1024.0f, -yMetaTilePosition + 1024.0f, 1024.0f, 1024.0f) mapArea:OSPMapAreaMake(OSPCoordinate2DMake(((float)xMetaTile + 1.5f) * metaTileSize, ((float)yMetaTile + 1.5f) * metaTileSize), zoom)]];
-    [self addSubview:[self bottomLeft]];
-    [self addSubview:[self bottomRight]];
-    [self addSubview:[self topLeft]];
-    [self addSubview:[self topRight]];
+    [self setBackView:nil];
+    [self regenerateMetaTileViews];
         
     UIPanGestureRecognizer *gestureRecogniser = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
     [gestureRecogniser setMaximumNumberOfTouches:1];
     [gestureRecogniser setMinimumNumberOfTouches:1];
     [self addGestureRecognizer:gestureRecogniser];
+    
+    UIPinchGestureRecognizer *pinchRecogniser = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(zoom:)];
+    [self addGestureRecognizer:pinchRecogniser];
 }
 
 - (void)dataSource:(OSPDataSource *)mapServer didLoadObjectsInArea:(OSPCoordinateRect)area
@@ -238,6 +231,60 @@
     NSAssert([[self bottomRight] frame].origin.y < [[self topRight] frame].origin.y, @"bottom right is not below top right");
 }
 
+#define kMinZoom 14.0f
+#define kMaxZoom 20.0f
+
+- (void)zoom:(UIPinchGestureRecognizer *)sender
+{
+    CGFloat s = [sender scale];
+    CGFloat newZoom = [self mapArea].zoomLevel + log2(s);
+    NSLog(@"%f, %F", s, newZoom);
+    if (newZoom < kMinZoom)
+    {
+        newZoom = kMinZoom;
+        s = exp2(kMinZoom - [self mapArea].zoomLevel);
+    }
+    if (newZoom > kMaxZoom)
+    {
+        newZoom = kMaxZoom;
+        s = exp2(kMaxZoom - [self mapArea].zoomLevel);
+    }
+    
+    switch ([sender state])
+    {
+        case UIGestureRecognizerStateBegan:
+        {
+            [[self backView] removeFromSuperview];
+            [self setBackView:nil];
+            break;
+        }
+        case UIGestureRecognizerStateEnded:
+        {
+            [self setMapArea:OSPMapAreaMake([self mapArea].centre, newZoom)];
+            [self setBackView:[self frontView]];
+            [UIView animateWithDuration:2.0
+                             animations:^()
+             {
+                 [[self backView] setAlpha:0.0f];
+             }
+                             completion:^(BOOL finished)
+             {
+                 if (finished)
+                 {
+                     [[self backView] removeFromSuperview];
+                     [self setBackView:nil];
+                 }
+             }];
+            [self regenerateMetaTileViews];
+            break;
+        }
+        case UIGestureRecognizerStateChanged:
+            [[[self frontView] layer] setAffineTransform:CGAffineTransformMakeScale(s, s)];
+        default:
+            break;
+    }
+}
+
 - (OSPMetaTileView *)metaTileViewWithFrame:(CGRect)frame mapArea:(OSPMapArea)ma
 {
     OSPMetaTileView *metaTileView = [[OSPMetaTileView alloc] initWithFrame:frame];
@@ -245,6 +292,35 @@
     [metaTileView setDataSource:[self dataSource]];
     [metaTileView setStylesheet:[self stylesheet]];
     return metaTileView;
+}
+
+- (void)regenerateMetaTileViews
+{
+    float zoom = [self mapArea].zoomLevel;
+    OSPCoordinateRect mapRect = OSPRectForMapAreaInRect([self mapArea], [self bounds]);
+    float metaZoom = zoom - 2.0f;
+    float numberOfMetaTilesAcrossWorld = pow(2.0, metaZoom);
+    float xFloatingMetaTile = numberOfMetaTilesAcrossWorld * mapRect.origin.x;
+    int xMetaTile = (int)xFloatingMetaTile;
+    float xMetaTilePosition = 1024.0f * (xFloatingMetaTile - (float)xMetaTile);
+    float yFloatingMetaTile = numberOfMetaTilesAcrossWorld * mapRect.origin.y;
+    int yMetaTile = (int)yFloatingMetaTile;
+    float yMetaTilePosition = 1024.0f * (yFloatingMetaTile - (float)yMetaTile);
+    double metaTileSize = 1.0 / numberOfMetaTilesAcrossWorld;
+    
+    [self setFrontView:[[UIView alloc] initWithFrame:[self bounds]]];
+    [[self frontView] setOpaque:NO];
+    [[self frontView] setBackgroundColor:[UIColor clearColor]];
+    [self addSubview:[self frontView]];
+    
+    [self setBottomLeft: [self metaTileViewWithFrame:CGRectMake(-xMetaTilePosition          , -yMetaTilePosition          , 1024.0f, 1024.0f) mapArea:OSPMapAreaMake(OSPCoordinate2DMake(((float)xMetaTile + 0.5f) * metaTileSize, ((float)yMetaTile + 0.5f) * metaTileSize), zoom)]];
+    [self setBottomRight:[self metaTileViewWithFrame:CGRectMake(-xMetaTilePosition + 1024.0f, -yMetaTilePosition          , 1024.0f, 1024.0f) mapArea:OSPMapAreaMake(OSPCoordinate2DMake(((float)xMetaTile + 1.5f) * metaTileSize, ((float)yMetaTile + 0.5f) * metaTileSize), zoom)]];
+    [self setTopLeft:    [self metaTileViewWithFrame:CGRectMake(-xMetaTilePosition          , -yMetaTilePosition + 1024.0f, 1024.0f, 1024.0f) mapArea:OSPMapAreaMake(OSPCoordinate2DMake(((float)xMetaTile + 0.5f) * metaTileSize, ((float)yMetaTile + 1.5f) * metaTileSize), zoom)]];
+    [self setTopRight:   [self metaTileViewWithFrame:CGRectMake(-xMetaTilePosition + 1024.0f, -yMetaTilePosition + 1024.0f, 1024.0f, 1024.0f) mapArea:OSPMapAreaMake(OSPCoordinate2DMake(((float)xMetaTile + 1.5f) * metaTileSize, ((float)yMetaTile + 1.5f) * metaTileSize), zoom)]];
+    [[self frontView] addSubview:[self bottomLeft]];
+    [[self frontView] addSubview:[self bottomRight]];
+    [[self frontView] addSubview:[self topLeft]];
+    [[self frontView] addSubview:[self topRight]];
 }
 
 @end
