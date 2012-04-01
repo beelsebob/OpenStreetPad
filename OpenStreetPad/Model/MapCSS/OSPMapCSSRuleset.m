@@ -13,6 +13,8 @@
 #import "OSPMapCSSDeclaration.h"
 #import "OSPMapCSSStyle.h"
 
+#import "OSPMapCSSSelector.h"
+
 @implementation OSPMapCSSRuleset
 
 @synthesize rules;
@@ -43,15 +45,30 @@
 
 - (NSDictionary *)applyToObjcet:(OSPAPIObject *)object atZoom:(float)zoom
 {
-    NSMutableDictionary *style = [NSMutableDictionary dictionary];
+    NSMutableDictionary *styles = [NSMutableDictionary dictionary];
     for (id rule in [self rules])
     {
         if ([rule isKindOfClass:[OSPMapCSSRule class]])
         {
-            [style addEntriesFromDictionary:[rule applyToObjcet:object atZoom:zoom]];
+            NSDictionary *ruleStyles = [rule applyToObject:object atZoom:zoom];
+            
+            for (NSString *layerIdentifier in ruleStyles)
+            {
+                NSMutableDictionary *currentStyle = [styles objectForKey:layerIdentifier];
+                NSDictionary *style = [ruleStyles objectForKey:layerIdentifier];
+                
+                if (nil == currentStyle)
+                {
+                    [styles setObject:[style mutableCopy] forKey:layerIdentifier];
+                }
+                else
+                {
+                    [currentStyle addEntriesFromDictionary:style];
+                }
+            }
         }
     }
-    return style;
+    return styles;
 }
 
 - (NSDictionary *)styleForCanvasAtZoom:(float)zoom
@@ -61,11 +78,11 @@
         if ([rule isKindOfClass:[OSPMapCSSRule class]])
         {
             BOOL matches = NO;
-            for (NSArray *selector in [rule selectors])
+            for (OSPMapCSSSelector *selector in [rule selectors])
             {
-                if ([selector count] == 1)
+                if ([[selector subselectors] count] == 1)
                 {
-                    OSPMapCSSSubselector *subSelector = [selector objectAtIndex:0];
+                    OSPMapCSSSubselector *subSelector = [[selector subselectors] objectAtIndex:0];
                     if ([subSelector objectType] == OSPMapCSSObjectTypeCanvas && [subSelector zoomIsInRange:zoom])
                     {
                         matches = YES;

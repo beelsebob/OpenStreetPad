@@ -8,7 +8,7 @@
 
 #import "OSPMapCSSRule.h"
 
-#import "OSPMapCSSSubselector.h"
+#import "OSPMapCSSSelector.h"
 #import "OSPMapCSSDeclaration.h"
 
 #import "OSPAPIObjectReference.h"
@@ -22,12 +22,6 @@
 #import "OSPMapCSSTagSpecifier.h"
 
 #import <objc/runtime.h>
-
-@interface OSPMapCSSRule ()
-
-- (BOOL)selector:(NSArray *)selector matchesObject:(OSPAPIObject *)object atZoom:(float)zoom;
-
-@end
 
 @implementation OSPMapCSSRule
 
@@ -46,7 +40,7 @@
         }
         else
         {
-            [self setSelectors:[[NSArray arrayWithObject:[[[[syntaxTree children] objectAtIndex:0] children] objectAtIndex:0]] arrayByAddingObjectsFromArray:[[syntaxTree children] objectAtIndex:1]]];
+            [self setSelectors:[[NSArray arrayWithObject:[[syntaxTree children] objectAtIndex:0]] arrayByAddingObjectsFromArray:[[syntaxTree children] objectAtIndex:1]]];
             [self setDeclarations:[[syntaxTree children] objectAtIndex:2]];
         }
     }
@@ -58,21 +52,9 @@
 {
     NSMutableString *desc = [NSMutableString string];
     
-    for (NSArray *selector in [self selectors])
+    for (OSPMapCSSSelector *selector in [self selectors])
     {
-        NSUInteger subselNumber = 0;
-        for (OSPMapCSSSubselector *subselector in selector)
-        {
-            if (subselNumber < [selector count] - 1)
-            {
-                [desc appendFormat:@"%@ ", subselector];
-            }
-            else
-            {
-                [desc appendString:[subselector description]];
-            }
-        }
-        [desc appendString:@",\n"];
+        [desc appendFormat:@"%@,\n", [selector description]];
     }
     
     for (OSPMapCSSDeclaration *decl in [self declarations])
@@ -84,22 +66,21 @@
 
 extern char styleKey;
 
-- (NSDictionary *)applyToObjcet:(OSPAPIObject *)object atZoom:(float)zoom
+- (NSDictionary *)applyToObject:(OSPAPIObject *)object atZoom:(float)zoom
 {
-    BOOL matched = NO;
+    NSMutableArray *matchingLayerIdentifiers = [NSMutableArray array];
     
-    for (NSArray *selector in [self selectors])
+    for (OSPMapCSSSelector *selector in [self selectors])
     {
-        if ([self selector:selector matchesObject:object atZoom:(float)zoom])
+        if ([selector matchesObject:object atZoom:zoom])
         {
-            matched = YES;
-            break;
+            [matchingLayerIdentifiers addObject:[selector layerIdentifier]];
         }
     }
     
-    if (matched)
+    if ([matchingLayerIdentifiers count] > 0)
     {
-        NSMutableDictionary *style = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary *style = [NSMutableDictionary dictionary];
         for (OSPMapCSSDeclaration *decl in [self declarations])
         {
             for (OSPMapCSSStyle *st in [decl styles])
@@ -129,45 +110,18 @@ extern char styleKey;
                 }
             }
         }
-        return [style copy];
+        
+        NSDictionary *st = [style copy];
+        NSMutableDictionary *layerIdentifiers = [NSMutableDictionary dictionaryWithCapacity:[matchingLayerIdentifiers count]];
+        for (NSString *layerIdentifier in matchingLayerIdentifiers)
+        {
+            [layerIdentifiers setObject:st forKey:layerIdentifier];
+        }
+        
+        return layerIdentifiers;
     }
     
     return [NSDictionary dictionary];
-}
-
-- (BOOL)selector:(NSArray *)selector matchesObject:(OSPAPIObject *)object atZoom:(float)zoom
-{
-    NSUInteger c = [selector count];
-    
-    if (c == 1)
-    {
-        return [[selector objectAtIndex:0] matchesObject:object atZoom:zoom];
-    }
-    else if (c > 0)
-    {
-        if ([[selector lastObject] matchesObject:object atZoom:zoom])
-        {
-            OSPMap *m = [object map];
-            for (OSPAPIObjectReference *parent in [object parents])
-            {
-                if ([self selector:[selector subarrayWithRange:NSMakeRange(0, c - 1)]
-                     matchesObject:[m apiObjectOfType:[parent memberType] withId:[parent identity]]
-                            atZoom:zoom])
-                {
-                    return YES;
-                }
-            }
-            return NO;
-        }
-        else
-        {
-            return NO;
-        }
-    }
-    else
-    {
-        return YES;
-    }
 }
 
 @end

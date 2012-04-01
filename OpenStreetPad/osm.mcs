@@ -92,6 +92,43 @@ way[highway="tertiary"]
   color: rgb(0.99, 1.0, 0.7);
 }
 
+way[highway][bridge]
+{
+//  linecap: none;
+  casing-linecap: none;
+}
+
+way[highway][bridge]::Bridge
+{
+  linecap: none;
+  color: white;
+  casing-linecap: none;
+  casing-width: 2pt;
+  casing-color: black;
+  z-index: 99.95;
+  width: 12pt;
+}
+
+way[highway="motorway"][bridge]::Bridge,
+way[highway="trunk"][bridge]::Bridge,
+way[highway="primary"][bridge]::Bridge
+{
+  width: 20pt;
+  z-index: 100.35;
+}
+
+way[highway="secondary"][bridge]::Bridge
+{
+  width: 18pt;
+  z-index: 100.25;
+}
+
+way[highway="tertiary"][bridge]::Bridge
+{
+  width: 14pt;
+  z-index: 100.15;
+}
+
 way[highway="footway"]
 {
   width: 2pt;
@@ -100,6 +137,20 @@ way[highway="footway"]
   casing-color: rgba(1.0, 1.0, 1.0, 0.5);
   color: rgb(1.0, 0.56, 0.56);
   dashes: 1, 4;
+}
+
+way[highway="footway"][bridge]::Bridge,
+way[highway="cycleway"][bridge]::Bridge,
+way[highway="track"][bridge]::Bridge
+{
+  width: 6pt;
+  z-index: 99.65;
+}
+
+way[highway="service"][bridge]::Bridge
+{
+  width: 8pt;
+  z-index: 99.75;
 }
 
 way[highway="motorway_link"],
@@ -111,6 +162,13 @@ way[highway="primary_link"]
     z-index: 99.9;
 }
 
+way[highway="motorway_link"][bridge]::Bridge,
+way[highway="trunk_link"][bridge]::Bridge,
+way[highway="primary_link"][bridge]::Bridge
+{
+  width: 20pt;
+  z-index: 99.85;
+}
 
 way[highway="cycleway"]
 {

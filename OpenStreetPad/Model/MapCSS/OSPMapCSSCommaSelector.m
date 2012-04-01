@@ -12,7 +12,7 @@
 
 - (id)initWithSyntaxTree:(CPSyntaxTree *)syntaxTree
 {
-    return [[[[syntaxTree children] objectAtIndex:1] children] objectAtIndex:0];
+    return [[syntaxTree children] objectAtIndex:1];
 }
 
 @end

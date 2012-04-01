@@ -44,8 +44,13 @@ static char oldZoomRef;
         }
         if (nil == newStyledObjects)
         {
-            NSDictionary *style = [[self ruleset] applyToObjcet:object atZoom:zoom];
-            newStyledObjects = [NSArray arrayWithObjects:[OSPMapCSSStyledObject object:object withStyle:style], nil];
+            NSDictionary *layerStyles = [[self ruleset] applyToObjcet:object atZoom:zoom];
+            NSMutableArray *sos = [NSMutableArray arrayWithCapacity:[layerStyles count]];
+            for (NSString *layerStyle in layerStyles)
+            {
+                [sos addObject:[OSPMapCSSStyledObject object:object withStyle:[layerStyles objectForKey:layerStyle]]];
+            }
+            newStyledObjects = [sos copy];
             objc_setAssociatedObject(object, &styleRef, newStyledObjects, OBJC_ASSOCIATION_RETAIN);
             objc_setAssociatedObject(object, &oldZoomRef, [NSNumber numberWithFloat:zoom], OBJC_ASSOCIATION_RETAIN);
         }
