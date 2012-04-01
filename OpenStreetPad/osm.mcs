@@ -30,10 +30,10 @@ way[highway]
   text-halo-color: white;
 }
 
-way|z16-20[highway],
-way|z12-20[highway="motorway"],
-way|z14-20[highway="trunk"],
-way|z15-20[highway="primary"]
+way|z16-[highway],
+way|z12-[highway="motorway"],
+way|z14-[highway="trunk"],
+way|z15-[highway="primary"]
 {
   text: tag("name");
 }

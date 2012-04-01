@@ -106,7 +106,7 @@
 
 - (BOOL)zoomIsInRange:(float)zoom
 {
-    return ![self isConstrainedToZoomRange] || ([self minimumZoom] <= zoom && [self maximumZoom] >= zoom);
+    return ![self isConstrainedToZoomRange] || (([self minimumZoom] < 0.0f || [self minimumZoom] <= zoom) && ([self maximumZoom] < 0.0f || [self maximumZoom] >= zoom));
 }
 
 - (BOOL)typeMatchesObject:(OSPAPIObject *)object

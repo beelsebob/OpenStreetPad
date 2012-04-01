@@ -83,7 +83,7 @@ int main (int argc, const char * argv[])
                                   @"OSPMapCSSSelector       ::= <OSPMapCSSSubselector>+;"
                                   @"OSPMapCSSSubselector    ::= <OSPMapCSSObject> 'Whitespace' | <OSPMapCSSObject> <OSPMapCSSZoom> <OSPMapCSSTest>* | <OSPMapCSSObject> <OSPMapCSSTest>* | <OSPMapCSSObject> 'Whitespace' <OSPMapCSSClass>;"
                                   @"OSPMapCSSZoom           ::= '|z' <range>;"
-                                  @"range                   ::= 'Number' | 'Number' '-' 'Number';"
+                                  @"range                   ::= 'Number' | 'Number' '-' 'Number' | 'Number' '-' | '-' 'Number';"
                                   @"OSPMapCSSTest           ::= '[' <condition> ']';"
                                   @"condition               ::= <OSPMapCSSTag> <binary> <value> | <unary> <OSPMapCSSTag> | <OSPMapCSSTag>;"
                                   @"OSPMapCSSTag            ::= <OSPMapCSSKey> (':' <OSPMapCSSKey>)*;"
