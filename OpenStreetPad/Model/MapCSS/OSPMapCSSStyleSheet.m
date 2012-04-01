@@ -13,6 +13,7 @@
 #import <objc/runtime.h>
 
 static char styleRef;
+static char oldZoomRef;
 
 @implementation OSPMapCSSStyleSheet
 
@@ -30,26 +31,32 @@ static char styleRef;
     return self;
 }
 
-- (NSArray *)styledObjects:(NSSet *)objects
+- (NSArray *)styledObjects:(NSSet *)objects atZoom:(float)zoom
 {
     NSMutableArray *styledObjects = [NSMutableSet setWithCapacity:[objects count]];
     for (OSPAPIObject *object in objects)
     {
-        NSArray *sos = objc_getAssociatedObject(object, &styleRef);
-        if (nil == sos)
+        NSNumber *cachedStyleZoom = objc_getAssociatedObject(object, &oldZoomRef);
+        NSArray *newStyledObjects = nil;
+        if ([cachedStyleZoom floatValue] == zoom)
         {
-            NSDictionary *style = [[self ruleset] applyToObjcet:object];
-            sos = [NSArray arrayWithObjects:[OSPMapCSSStyledObject object:object withStyle:style], nil];
-            objc_setAssociatedObject(object, &styleRef, sos, OBJC_ASSOCIATION_RETAIN);
+            newStyledObjects = objc_getAssociatedObject(object, &styleRef);
         }
-        [styledObjects addObjectsFromArray:sos];
+        if (nil == newStyledObjects)
+        {
+            NSDictionary *style = [[self ruleset] applyToObjcet:object atZoom:zoom];
+            newStyledObjects = [NSArray arrayWithObjects:[OSPMapCSSStyledObject object:object withStyle:style], nil];
+            objc_setAssociatedObject(object, &styleRef, newStyledObjects, OBJC_ASSOCIATION_RETAIN);
+            objc_setAssociatedObject(object, &oldZoomRef, [NSNumber numberWithFloat:zoom], OBJC_ASSOCIATION_RETAIN);
+        }
+        [styledObjects addObjectsFromArray:newStyledObjects];
     }
     return styledObjects;
 }
 
-- (NSDictionary *)styleForCanvas
+- (NSDictionary *)styleForCanvasAtZoom:(float)zoom
 {
-    return [[self ruleset] styleForCanvas];
+    return [[self ruleset] styleForCanvasAtZoom:zoom];
 }
 
 @end

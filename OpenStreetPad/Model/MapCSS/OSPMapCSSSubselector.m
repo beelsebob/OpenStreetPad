@@ -99,9 +99,14 @@
     return desc;
 }
 
-- (BOOL)matchesObject:(OSPAPIObject *)object
+- (BOOL)matchesObject:(OSPAPIObject *)object atZoom:(float)zoom
 {
-    return [self typeMatchesObject:object] && [self testsMatchObject:object];
+    return [self typeMatchesObject:object] && [self testsMatchObject:object] && [self zoomIsInRange:zoom];
+}
+
+- (BOOL)zoomIsInRange:(float)zoom
+{
+    return ![self isConstrainedToZoomRange] || ([self minimumZoom] <= zoom && [self maximumZoom] >= zoom);
 }
 
 - (BOOL)typeMatchesObject:(OSPAPIObject *)object

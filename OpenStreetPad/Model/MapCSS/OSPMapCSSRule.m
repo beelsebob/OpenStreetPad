@@ -25,7 +25,7 @@
 
 @interface OSPMapCSSRule ()
 
-- (BOOL)selector:(NSArray *)selector matchesObject:(OSPAPIObject *)object;
+- (BOOL)selector:(NSArray *)selector matchesObject:(OSPAPIObject *)object atZoom:(float)zoom;
 
 @end
 
@@ -84,13 +84,13 @@
 
 extern char styleKey;
 
-- (NSDictionary *)applyToObjcet:(OSPAPIObject *)object
+- (NSDictionary *)applyToObjcet:(OSPAPIObject *)object atZoom:(float)zoom
 {
     BOOL matched = NO;
     
     for (NSArray *selector in [self selectors])
     {
-        if ([self selector:selector matchesObject:object])
+        if ([self selector:selector matchesObject:object atZoom:(float)zoom])
         {
             matched = YES;
             break;
@@ -135,23 +135,24 @@ extern char styleKey;
     return [NSDictionary dictionary];
 }
 
-- (BOOL)selector:(NSArray *)selector matchesObject:(OSPAPIObject *)object
+- (BOOL)selector:(NSArray *)selector matchesObject:(OSPAPIObject *)object atZoom:(float)zoom
 {
     NSUInteger c = [selector count];
     
     if (c == 1)
     {
-        return [[selector objectAtIndex:0] matchesObject:object];
+        return [[selector objectAtIndex:0] matchesObject:object atZoom:zoom];
     }
     else if (c > 0)
     {
-        if ([[selector lastObject] matchesObject:object])
+        if ([[selector lastObject] matchesObject:object atZoom:zoom])
         {
             OSPMap *m = [object map];
             for (OSPAPIObjectReference *parent in [object parents])
             {
                 if ([self selector:[selector subarrayWithRange:NSMakeRange(0, c - 1)]
-                     matchesObject:[m apiObjectOfType:[parent memberType] withId:[parent identity]]])
+                     matchesObject:[m apiObjectOfType:[parent memberType] withId:[parent identity]]
+                            atZoom:zoom])
                 {
                     return YES;
                 }

@@ -125,7 +125,7 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     CGFloat scale = b.size.width / r.size.x;
     CGFloat oneOverScale = 1.0f / scale;
     
-    NSDictionary *canvasStyle = [[self stylesheet] styleForCanvas];
+    NSDictionary *canvasStyle = [[self stylesheet] styleForCanvasAtZoom:[self mapArea].zoomLevel];
     UIColor *c = [self colourWithColourSpecifierList:[canvasStyle objectForKey:@"fill-color"] opacitySpecifierList:[canvasStyle objectForKey:@"fill-opacity"]];
     UIImage *fillImage = [self imageWithSpecifierList:[canvasStyle objectForKey:@"fill-image"]];
     if (nil != fillImage)
@@ -160,7 +160,7 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     
     NSSet *objects = [[self dataSource] objectsInBounds:dataRect];
     
-    NSArray *styledObjects = [[self stylesheet] styledObjects:objects];
+    NSArray *styledObjects = [[self stylesheet] styledObjects:objects atZoom:[self mapArea].zoomLevel];
     [self renderLayers:[self sortedObjects:styledObjects] inContext:ctx withScaleMultiplier:oneOverScale];
 }
 

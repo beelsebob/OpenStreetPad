@@ -16,7 +16,7 @@
 
 @property (readwrite, copy) NSArray *rules;
 
-- (NSDictionary *)applyToObjcet:(OSPAPIObject *)object;
-- (NSDictionary *)styleForCanvas;
+- (NSDictionary *)applyToObjcet:(OSPAPIObject *)object atZoom:(float)zoom;
+- (NSDictionary *)styleForCanvasAtZoom:(float)zoom;
 
 @end

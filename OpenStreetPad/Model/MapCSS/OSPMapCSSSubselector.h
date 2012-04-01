@@ -24,6 +24,7 @@
 @property (readwrite, copy) NSArray *tests;
 @property (readwrite, strong) OSPMapCSSClass *requiredClass;
 
-- (BOOL)matchesObject:(OSPAPIObject *)object;
+- (BOOL)matchesObject:(OSPAPIObject *)object atZoom:(float)zoom;
+- (BOOL)zoomIsInRange:(float)zoom;
 
 @end

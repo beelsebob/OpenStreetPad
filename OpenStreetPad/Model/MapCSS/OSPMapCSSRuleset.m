@@ -41,20 +41,20 @@
     return ruleset;
 }
 
-- (NSDictionary *)applyToObjcet:(OSPAPIObject *)object
+- (NSDictionary *)applyToObjcet:(OSPAPIObject *)object atZoom:(float)zoom
 {
     NSMutableDictionary *style = [NSMutableDictionary dictionary];
     for (id rule in [self rules])
     {
         if ([rule isKindOfClass:[OSPMapCSSRule class]])
         {
-            [style addEntriesFromDictionary:[rule applyToObjcet:object]];
+            [style addEntriesFromDictionary:[rule applyToObjcet:object atZoom:zoom]];
         }
     }
     return style;
 }
 
-- (NSDictionary *)styleForCanvas
+- (NSDictionary *)styleForCanvasAtZoom:(float)zoom
 {
     for (id rule in [self rules])
     {
@@ -63,9 +63,13 @@
             BOOL matches = NO;
             for (NSArray *selector in [rule selectors])
             {
-                if ([selector count] == 1 && [[selector objectAtIndex:0] objectType] == OSPMapCSSObjectTypeCanvas)
+                if ([selector count] == 1)
                 {
-                    matches = YES;
+                    OSPMapCSSSubselector *subSelector = [selector objectAtIndex:0];
+                    if ([subSelector objectType] == OSPMapCSSObjectTypeCanvas && [subSelector zoomIsInRange:zoom])
+                    {
+                        matches = YES;
+                    }
                 }
             }
             

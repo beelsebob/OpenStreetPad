@@ -19,15 +19,23 @@ way[highway]
   casing-color: rgb(0.5, 0.5, 0.5);
   
   z-index: 100;
-  
-  text: tag("name");
+
   text-position: line;
+  
   font-family: Helvetica;
   font-size: 12pt;
   text-color: black;
   text-offset: 6;
   text-halo-radius: 2pt;
   text-halo-color: white;
+}
+
+way|z16-20[highway],
+way|z12-20[highway="motorway"],
+way|z14-20[highway="trunk"],
+way|z15-20[highway="primary"]
+{
+  text: tag("name");
 }
 
 way[highway="service"]
@@ -252,7 +260,7 @@ area[leisure="park"]
   fill-color: rgb(0.82, 0.96, 0.79);
 }
 
-area[building]
+area|z16-20[building]
 {
   z-index: 20;
   width: 1 pt;

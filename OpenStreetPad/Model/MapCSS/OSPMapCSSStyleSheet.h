@@ -18,7 +18,7 @@
 
 - (id)initWithRules:(OSPMapCSSRuleset *)ruleset;
 
-- (NSArray *)styledObjects:(NSSet *)objects;
-- (NSDictionary *)styleForCanvas;
+- (NSArray *)styledObjects:(NSSet *)objects atZoom:(float)zoom;
+- (NSDictionary *)styleForCanvasAtZoom:(float)zoom;
 
 @end
