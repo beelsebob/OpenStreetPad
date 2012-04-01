@@ -1,0 +1,186 @@
+way[highway]
+{
+  width: 8pt;
+  color: rgb(1.0, 1.0, 1.0);
+  casing-width: 1pt;
+  casing-color: rgb(0.5, 0.5, 0.5);
+  
+  z-index: 100;
+
+  text-position: line;
+  
+  font-family: Helvetica;
+  font-size: 12pt;
+  text-color: black;
+  text-offset: 6;
+  text-halo-radius: 2pt;
+  text-halo-color: white;
+}
+
+way|z16-[highway],
+way|z12-[highway="motorway"],
+way|z14-[highway="trunk"],
+way|z15-[highway="primary"]
+{
+  text: tag("name");
+}
+
+way[highway="service"]
+{
+  z-index: 99.9;
+  width:6pt;
+}
+
+way[highway="service"][service="parking_aisle"]
+{
+  z-index: 99.8;
+  width:4pt;
+}
+
+way[highway="motorway"],
+way[highway="motorway_link"]
+{
+  width: 16pt;
+  z-index: 100.5;
+  color: rgb(0.745 , 0.784, 1.0);
+  font-family: Helvetica;
+  font-size: 14pt;
+}
+
+way[highway="trunk"],
+way[highway="trunk_link"]
+{
+  width: 16pt;
+  z-index: 100.5;
+  color: rgb(0.66, 0.86, 0.66);
+  font-family: Helvetica;
+  font-size: 14pt;
+}
+
+way[highway="primary"],
+way[highway="primary_link"]
+{
+  width: 16pt;
+  z-index: 100.4;
+  color: rgb(0.92, 0.6, 0.6);
+}
+
+way[highway="secondary"]
+{
+  width: 12pt;
+  z-index: 100.3;
+  color: rgb(1.0, 0.84, 0.64);
+}
+
+way[highway="tertiary"]
+{
+  z-index: 100.2;
+  width: 10pt;
+  color: rgb(0.99, 1.0, 0.7);
+}
+
+way[highway][bridge]
+{
+//  linecap: none;
+  casing-linecap: none;
+}
+
+way[highway][bridge]::Bridge
+{
+  linecap: none;
+  color: white;
+  casing-linecap: none;
+  casing-width: 2pt;
+  casing-color: black;
+  z-index: 99.95;
+  width: 12pt;
+}
+
+way[highway="motorway"][bridge]::Bridge,
+way[highway="trunk"][bridge]::Bridge,
+way[highway="primary"][bridge]::Bridge
+{
+  width: 20pt;
+  z-index: 100.35;
+}
+
+way[highway="secondary"][bridge]::Bridge
+{
+  width: 18pt;
+  z-index: 100.25;
+}
+
+way[highway="tertiary"][bridge]::Bridge
+{
+  width: 14pt;
+  z-index: 100.15;
+}
+
+way[highway="footway"]
+{
+  width: 2pt;
+  z-index: 99.7;
+  casing-width: 0.1;
+  casing-color: rgba(1.0, 1.0, 1.0, 0.5);
+  color: rgb(1.0, 0.56, 0.56);
+  dashes: 1, 4;
+}
+
+way[highway="footway"][bridge]::Bridge,
+way[highway="cycleway"][bridge]::Bridge,
+way[highway="track"][bridge]::Bridge
+{
+  width: 6pt;
+  z-index: 99.65;
+}
+
+way[highway="service"][bridge]::Bridge
+{
+  width: 8pt;
+  z-index: 99.75;
+}
+
+way[highway="motorway_link"],
+way[highway="trunk_link"],
+way[highway="primary_link"]
+{
+    // Where a *_link terminates on a roundabout or other road, it is less important
+    // and should be drawn "behind"
+    z-index: 99.9;
+}
+
+way[highway="motorway_link"][bridge]::Bridge,
+way[highway="trunk_link"][bridge]::Bridge,
+way[highway="primary_link"][bridge]::Bridge
+{
+  width: 20pt;
+  z-index: 99.85;
+}
+
+way[highway="cycleway"]
+{
+  width: 2pt;
+  z-index: 99.7;
+  casing-color: rgba(1.0, 1.0, 1.0, 0.5);
+  color: rgb(0.56, 0.56, 1.0);
+  dashes: 1, 4;
+}
+
+way[highway="track"]
+{
+  width: 2pt;
+  z-index: 99.7;
+  casing-color: rgba(1.0, 1.0, 1.0, 0.5);
+  color: rgb(0.6, 0.4, 0.0);
+  dashes: 4, 4;
+}
+
+way[highway="path"]
+{
+  casing-width: 0;
+  dashes: 4, 4;
+  width: 0.5pt;
+  z-index: 99.7;
+  casing-color: rgba(1.0, 1.0, 1.0, 0.0);
+  color: rgb(0.0, 0.0, 0.0);
+}

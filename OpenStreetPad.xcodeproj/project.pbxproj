@@ -34,6 +34,7 @@
 		1F30B4F9146DC9C100EB7F80 /* icons in Resources */ = {isa = PBXBuildFile; fileRef = 1F30B4F8146DC9C100EB7F80 /* icons */; };
 		1F34D83A1528968C00B92E20 /* OSPMapCSSSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F34D8391528968B00B92E20 /* OSPMapCSSSelector.m */; };
 		1F34D83B15289E5900B92E20 /* OSPMapCSSSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F34D8391528968B00B92E20 /* OSPMapCSSSelector.m */; };
+		1F34D83F1528F12B00B92E20 /* highways.mcs in Resources */ = {isa = PBXBuildFile; fileRef = 1F34D83E1528F12B00B92E20 /* highways.mcs */; };
 		1F3D678F14ADD331002575EC /* UIColor+CSS.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3D678E14ADD331002575EC /* UIColor+CSS.m */; };
 		1F3D67BC14B1E0C4002575EC /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F3D67BB14B1E0C4002575EC /* CoreText.framework */; };
 		1F4D13B7146C4E97007EF1B4 /* fills in Resources */ = {isa = PBXBuildFile; fileRef = 1F4D13B6146C4E97007EF1B4 /* fills */; };
@@ -234,6 +235,7 @@
 		1F30B4F8146DC9C100EB7F80 /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = icons; sourceTree = "<group>"; };
 		1F34D8381528968B00B92E20 /* OSPMapCSSSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapCSSSelector.h; sourceTree = "<group>"; };
 		1F34D8391528968B00B92E20 /* OSPMapCSSSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapCSSSelector.m; sourceTree = "<group>"; };
+		1F34D83E1528F12B00B92E20 /* highways.mcs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = highways.mcs; sourceTree = "<group>"; };
 		1F3D678D14ADD331002575EC /* UIColor+CSS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+CSS.h"; path = "../../UIColor+CSS.h"; sourceTree = "<group>"; };
 		1F3D678E14ADD331002575EC /* UIColor+CSS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+CSS.m"; path = "../../UIColor+CSS.m"; sourceTree = "<group>"; };
 		1F3D67BB14B1E0C4002575EC /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -539,6 +541,7 @@
 				1FD8C52C13ED378600ADD20A /* InfoPlist.strings */,
 				1FD8C52F13ED378600ADD20A /* main.m */,
 				1FD8C53113ED378600ADD20A /* OpenStreetPad-Prefix.pch */,
+				1F34D83E1528F12B00B92E20 /* highways.mcs */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -752,6 +755,7 @@
 				1F4D13B7146C4E97007EF1B4 /* fills in Resources */,
 				1F30B4F9146DC9C100EB7F80 /* icons in Resources */,
 				1FC80D3914FD804000512C3E /* TestData.xml in Resources */,
+				1F34D83F1528F12B00B92E20 /* highways.mcs in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

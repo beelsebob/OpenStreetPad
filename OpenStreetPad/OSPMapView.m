@@ -93,11 +93,13 @@
 - (void)commonInit
 {
     NSError *err;
-    NSString *style = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"osm" ofType:@"mcs"] encoding:NSASCIIStringEncoding error:&err];
+    NSURL *url = [[NSBundle mainBundle] URLForResource:@"osm" withExtension:@"mcs"];
+    NSString *style = [NSString stringWithContentsOfURL:url encoding:NSASCIIStringEncoding error:&err];
     if (nil != style)
     {
         OSPMapCSSParser *p = [[OSPMapCSSParser alloc] init];
         [self setStylesheet:[p parse:style]];
+        [[self stylesheet] loadImportsRelativeToURL:[url URLByDeletingLastPathComponent]];
     }
     
     [[self dataSource] setDelegate:self];

@@ -9,11 +9,14 @@
 #import "OSPMapCSSRuleset.h"
 
 #import "OSPMapCSSRule.h"
+#import "OSPMapCSSImport.h"
 #import "OSPMapCSSSubselector.h"
 #import "OSPMapCSSDeclaration.h"
 #import "OSPMapCSSStyle.h"
 
 #import "OSPMapCSSSelector.h"
+
+#import "OSPMapCSSParser.h"
 
 @implementation OSPMapCSSRuleset
 
@@ -29,6 +32,36 @@
     }
     
     return self;
+}
+
+- (void)loadImportsRelativeToURL:(NSURL *)baseURL
+{
+    NSMutableArray *newRules = [[self rules] mutableCopy];
+    OSPMapCSSParser *parser = [[OSPMapCSSParser alloc] init];
+    
+    for (id rule in [self rules])
+    {
+        if ([rule isKindOfClass:[OSPMapCSSImport class]])
+        {
+            OSPMapCSSImport *import = rule;
+            NSURL *completeURL = [NSURL URLWithString:[import url] relativeToURL:baseURL];
+            if (nil != completeURL)
+            {
+                OSPMapCSSStyleSheet *stylesheet = [parser parse:[NSString stringWithContentsOfURL:completeURL encoding:NSUTF8StringEncoding error:NULL]];
+                [stylesheet loadImportsRelativeToURL:[completeURL URLByDeletingLastPathComponent]];
+                for (OSPMapCSSRule *importedRule in [[stylesheet ruleset] rules])
+                {
+                    [newRules addObject:importedRule];
+                }
+            }
+        }
+        else
+        {
+            [newRules addObject:rule];
+        }
+    }
+    
+    [self setRules:newRules];
 }
 
 - (NSString *)description

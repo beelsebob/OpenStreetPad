@@ -19,7 +19,7 @@
     
     if (nil != self)
     {
-        [self setUrl:[NSURL URLWithString:[[[syntaxTree children] objectAtIndex:3] content]]];
+        [self setUrl:[[[syntaxTree children] objectAtIndex:3] content]];
         [self setMediaType:[[[syntaxTree children] objectAtIndex:5] identifier]];
     }
     
@@ -28,7 +28,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"@import url(\"%@\") %@\n", url, mediaType];
+    return [NSString stringWithFormat:@"@import url(\"%@\") %@\n", [self url], [self mediaType]];
 }
 
 @end

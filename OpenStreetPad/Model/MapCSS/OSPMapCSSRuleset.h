@@ -16,6 +16,8 @@
 
 @property (readwrite, copy) NSArray *rules;
 
+- (void)loadImportsRelativeToURL:(NSURL *)baseURL;
+
 - (NSDictionary *)applyToObjcet:(OSPAPIObject *)object atZoom:(float)zoom;
 - (NSDictionary *)styleForCanvasAtZoom:(float)zoom;
 

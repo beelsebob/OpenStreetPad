@@ -31,6 +31,11 @@ static char oldZoomRef;
     return self;
 }
 
+- (void)loadImportsRelativeToURL:(NSURL *)baseURL
+{
+    [[self ruleset] loadImportsRelativeToURL:baseURL];
+}
+
 - (NSArray *)styledObjects:(NSSet *)objects atZoom:(float)zoom
 {
     NSMutableArray *styledObjects = [NSMutableSet setWithCapacity:[objects count]];

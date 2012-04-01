@@ -12,7 +12,7 @@
 
 @interface OSPMapCSSImport : NSObject <CPParseResult>
 
-@property (readwrite, copy) NSURL *url;
+@property (readwrite, copy) NSString *url;
 @property (readwrite, copy) NSString *mediaType;
 
 @end
