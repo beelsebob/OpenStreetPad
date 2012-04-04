@@ -1,0 +1,3 @@
+[submodule "CoreParse"]
+	path = CoreParse
+	url = https://github.com/beelsebob/CoreParse.git
