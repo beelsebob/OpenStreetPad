@@ -7,6 +7,6 @@ ScreenShot
 ==========
 ![Screenshot](https://github.com/beelsebob/OpenStreetPad/raw/master/Screenshot.png)
 
-CoreParse
-=========
-To use OpenStreetPad, you must clone [CoreParse](http://www.github.org/beelsebob/CoreParse) into the same directory you clone OpenStreetPad into.
+Dependencies
+============
+To build OpenStreetPad, you must clone the dependency [CoreParse](https://github.com/beelsebob/CoreParse) as well. Do this with either a deep clone (`git clone --recursive <OpenStreetPad>`) or after cloning the project (`cd OpenStreetPad; git submodule update --init`). 
