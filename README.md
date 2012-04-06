@@ -12,6 +12,7 @@ CoreParse
 To use OpenStreetPad, you must clone [CoreParse](http://www.github.org/beelsebob/CoreParse) into the same directory you clone OpenStreetPad into:
 
 > git clone git://github.com/beelsebob/CoreParse.git
+> 
 > git clone git://github.com/beelsebob/OpenStreetPad.git
 
 Once you've done this, open the OpenStreetPad and build the OpenStreetPad target.  You should not need to build any other target.
