@@ -11,6 +11,7 @@
 #import "OSPMapCSSZoom.h"
 #import "OSPMapCSSTest.h"
 
+#import "OSPNode.h"
 #import "OSPWay.h"
 #import "OSPRelation.h"
 
@@ -101,18 +102,20 @@
 
 - (BOOL)matchesObject:(OSPAPIObject *)object atZoom:(float)zoom
 {
-    return [self typeMatchesObject:object] && [self testsMatchObject:object] && [self zoomIsInRange:zoom];
+    return ((!constrainedToZoomRange || ((minimumZoom < 0.0f || minimumZoom <= zoom) && (maximumZoom < 0.0f || maximumZoom >= zoom))) &&
+            [self typeMatchesObject:object] &&
+            [self testsMatchObject:object]);
 }
 
 - (BOOL)zoomIsInRange:(float)zoom
 {
-    return ![self isConstrainedToZoomRange] || (([self minimumZoom] < 0.0f || [self minimumZoom] <= zoom) && ([self maximumZoom] < 0.0f || [self maximumZoom] >= zoom));
+    return !constrainedToZoomRange || ((minimumZoom < 0.0f || minimumZoom <= zoom) && (maximumZoom < 0.0f || maximumZoom >= zoom));
 }
 
 - (BOOL)typeMatchesObject:(OSPAPIObject *)object
 {
     OSPMemberType t = [object memberType];
-    switch ([self objectType])
+    switch (objectType)
     {
         case OSPMapCSSObjectTypeNode:
             return t == OSPMemberTypeNode;
@@ -121,11 +124,27 @@
         case OSPMapCSSObjectTypeRelation:
             return t == OSPMemberTypeRelation;
         case OSPMapCSSObjectTypeLine:
-            return t == OSPMemberTypeWay && (![[[(OSPWay *)object nodes] objectAtIndex:0] isEqual:[[(OSPWay *)object nodes] lastObject]] &&
-                                             ![[[object tags] objectForKey:@"area"] ospTruthValue]);
+            if (t == OSPMemberTypeWay)
+            {
+                if (![[[object tags] objectForKey:@"area"] ospTruthValue])
+                {
+                    return YES;
+                }
+                NSArray *nodes = [(OSPWay *)object nodes];
+                return [[nodes objectAtIndex:0] integerValue] != [[nodes lastObject] integerValue];
+            }
+            return NO;
         case OSPMapCSSObjectTypeArea:
-            return t == OSPMemberTypeWay && ([[[(OSPWay *)object nodes] objectAtIndex:0] isEqual:[[(OSPWay *)object nodes] lastObject]] ||
-                                             [[[object tags] objectForKey:@"area"] ospTruthValue]);
+            if (t == OSPMemberTypeWay)
+            {
+                if ([[[object tags] objectForKey:@"area"] ospTruthValue])
+                {
+                    return YES;
+                }
+                NSArray *nodes = [(OSPWay *)object nodes];
+                return [[nodes objectAtIndex:0] integerValue] == [[nodes lastObject] integerValue];
+            }
+            return NO;
         case OSPMapCSSObjectTypeAll:
             return YES;
         case OSPMapCSSObjectTypeCanvas:
@@ -135,7 +154,7 @@
 
 - (BOOL)testsMatchObject:(OSPAPIObject *)object
 {
-    for (OSPMapCSSTest *t in [self tests])
+    for (OSPMapCSSTest *t in tests)
     {
         if (![t matchesObject:object])
         {

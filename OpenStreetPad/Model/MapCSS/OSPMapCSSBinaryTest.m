@@ -62,7 +62,7 @@ NSString *NSStringFromOSPMapCSSBinaryOperator(OSPMapCSSBinaryOperator o)
 
 @implementation OSPMapCSSBinaryTest
 
-@synthesize tag;
+@synthesize tagName;
 @synthesize operator;
 @synthesize value;
 
@@ -72,7 +72,7 @@ NSString *NSStringFromOSPMapCSSBinaryOperator(OSPMapCSSBinaryOperator o)
     
     if (nil != self)
     {
-        [self setTag:[[syntaxTree children] objectAtIndex:0]];
+        [self setTagName:[[[syntaxTree children] objectAtIndex:0] description]];
         [self setOperator:OSPMapCSSBinaryOperatorFromNSString([[[[[syntaxTree children] objectAtIndex:1] children] objectAtIndex:0] keyword])];
         [self setValue:[[[[[syntaxTree children] objectAtIndex:2] children] objectAtIndex:0] content]];
     }
@@ -82,39 +82,32 @@ NSString *NSStringFromOSPMapCSSBinaryOperator(OSPMapCSSBinaryOperator o)
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"[%@ %@ \"%@\"]", [self tag], NSStringFromOSPMapCSSBinaryOperator([self operator]), [self value]];
+    return [NSString stringWithFormat:@"[%@ %@ \"%@\"]", [self tagName], NSStringFromOSPMapCSSBinaryOperator([self operator]), [self value]];
 }
 
 - (BOOL)matchesObject:(OSPAPIObject *)object
 {
-    NSString *objectValue = [[object tags] objectForKey:[[self tag] description]];
+    NSString *objectValue = [[object tags] objectForKey:tagName];
     switch ([self operator])
     {
         case OSPMapCSSBinaryOperatorEquals:
-//            NSLog(@"Matching object against %@ and returning %d:\n%@", self, [objectValue isEqualToString:[self value]], [object tags]);
-            return [objectValue isEqualToString:[self value]];
+            return [objectValue isEqualToString:value];
         case OSPMapCSSBinaryOperatorNotEquals:
-//            NSLog(@"Matching object against %@ and returning %d:\n%@", self, ![objectValue isEqualToString:[self value]], [object tags]);
-            return ![objectValue isEqualToString:[self value]];
+            return ![objectValue isEqualToString:value];
         case OSPMapCSSBinaryOperatorMatches:
         {
             NSError *err = nil;
-            NSRegularExpression *e = [NSRegularExpression regularExpressionWithPattern:[self value] options:0 error:&err];
-//            NSLog(@"Matching object against %@ and returning %d:\n%@", self, ([e numberOfMatchesInString:objectValue options:NSMatchingAnchored range:NSMakeRange(0, [objectValue length])] > 0), object);
+            NSRegularExpression *e = [NSRegularExpression regularExpressionWithPattern:value options:0 error:&err];
             return [e numberOfMatchesInString:objectValue options:NSMatchingAnchored range:NSMakeRange(0, [objectValue length])] > 0;
         }
         case OSPMapCSSBinaryOperatorLessThan:
-//            NSLog(@"Matching object against %@ and returning %d:\n%@", self, [objectValue floatValue] < [[self value] floatValue], [object tags]);
-            return [objectValue floatValue] < [[self value] floatValue];
+            return [objectValue floatValue] < [value floatValue];
         case OSPMapCSSBinaryOperatorGreaterThan:
-//            NSLog(@"Matching object against %@ and returning %d:\n%@", self, [objectValue floatValue] > [[self value] floatValue], [object tags]);
-            return [objectValue floatValue] > [[self value] floatValue];
+            return [objectValue floatValue] > [value floatValue];
         case OSPMapCSSBinaryOperatorLessThanOrEqual:
-//            NSLog(@"Matching object against %@ and returning %d:\n%@", self, [objectValue floatValue] <= [[self value] floatValue], [object tags]);
-            return [objectValue floatValue] <= [[self value] floatValue];
+            return [objectValue floatValue] <= [value floatValue];
         case OSPMapCSSBinaryOperatorGreaterThanOrEqual:
-//            NSLog(@"Matching object against %@ and returning %d:\n%@", self, [objectValue floatValue] >= [[self value] floatValue], [object tags]);
-            return [objectValue floatValue] >= [[self value] floatValue];
+            return [objectValue floatValue] >= [value floatValue];
     }
 }
 

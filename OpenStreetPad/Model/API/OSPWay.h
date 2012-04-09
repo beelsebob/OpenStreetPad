@@ -10,7 +10,7 @@
 
 @interface OSPWay : OSPAPIObject
 
-@property (readwrite,strong) NSArray *nodes;
+@property (readwrite,strong,nonatomic) NSArray *nodes;
 @property (readonly) NSArray *nodeObjects;
 
 - (void)addNodeWithId:(NSInteger)nodeId;

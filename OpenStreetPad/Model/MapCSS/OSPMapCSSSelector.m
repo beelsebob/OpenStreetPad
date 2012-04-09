@@ -12,11 +12,31 @@
 
 #import "OSPAPIObjectReference.h"
 
-@interface OSPMapCSSSelector ()
+BOOL subSelectorsMatchObjectAtZoom(NSArray *subSelectors, NSInteger lastIndex, OSPAPIObject *object, float zoom);
 
-- (BOOL)subSelectors:(NSArray *)subSelectors matchObject:(OSPAPIObject *)object atZoom:(float)zoom;
-
-@end
+BOOL subSelectorsMatchObjectAtZoom(NSArray *subSelectors, NSInteger lastIndex, OSPAPIObject *object, float zoom)
+{
+    if (lastIndex == 0)
+    {
+        return [[subSelectors objectAtIndex:0] matchesObject:object atZoom:zoom];
+    }
+        
+    if (![[subSelectors objectAtIndex:lastIndex] matchesObject:object atZoom:zoom])
+    {
+        return NO;
+    }
+    
+    OSPMap *m = [object map];
+    for (OSPAPIObjectReference *parent in [object parents])
+    {
+        if (subSelectorsMatchObjectAtZoom(subSelectors, lastIndex - 1, [m apiObjectOfType:[parent memberType] withId:[parent identity]], zoom))
+        {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
 
 @implementation OSPMapCSSSelector
 
@@ -39,42 +59,7 @@
 
 - (BOOL)matchesObject:(OSPAPIObject *)object atZoom:(float)zoom
 {
-    return [self subSelectors:[self subselectors] matchObject:object atZoom:zoom];
-}
-
-- (BOOL)subSelectors:(NSArray *)subSelectors matchObject:(OSPAPIObject *)object atZoom:(float)zoom
-{
-    NSUInteger c = [subSelectors count];
-    
-    if (c == 1)
-    {
-        return [[subSelectors objectAtIndex:0] matchesObject:object atZoom:zoom];
-    }
-    else if (c > 0)
-    {
-        if ([[subSelectors lastObject] matchesObject:object atZoom:zoom])
-        {
-            OSPMap *m = [object map];
-            for (OSPAPIObjectReference *parent in [object parents])
-            {
-                if ([self subSelectors:[subSelectors subarrayWithRange:NSMakeRange(0, c - 1)]
-                           matchObject:[m apiObjectOfType:[parent memberType] withId:[parent identity]]
-                                atZoom:zoom])
-                {
-                    return YES;
-                }
-            }
-            return NO;
-        }
-        else
-        {
-            return NO;
-        }
-    }
-    else
-    {
-        return YES;
-    }
+    return subSelectorsMatchObjectAtZoom(subselectors, [subselectors count] - 1, object, zoom);
 }
 
 - (NSString *)description

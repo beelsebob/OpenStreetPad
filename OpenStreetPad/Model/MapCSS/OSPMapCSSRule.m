@@ -70,7 +70,7 @@ extern char styleKey;
 {
     NSMutableArray *matchingLayerIdentifiers = [NSMutableArray array];
     
-    for (OSPMapCSSSelector *selector in [self selectors])
+    for (OSPMapCSSSelector *selector in selectors)
     {
         if ([selector matchesObject:object atZoom:zoom])
         {
@@ -86,8 +86,9 @@ extern char styleKey;
             for (OSPMapCSSStyle *st in [decl styles])
             {
                 OSPMapCSSSpecifierList *specList = [st specifiers];
-                NSMutableArray *processedSpecifiers = [NSMutableArray arrayWithCapacity:[[specList specifiers] count]];
-                for (OSPMapCSSSpecifier *spec in [specList specifiers])
+                NSArray *specs = [specList specifiers];
+                NSMutableArray *processedSpecifiers = [NSMutableArray arrayWithCapacity:[specs count]];
+                for (OSPMapCSSSpecifier *spec in specs)
                 {
                     if ([spec isKindOfClass:[OSPMapCSSTagSpecifier class]])
                     {
@@ -106,7 +107,7 @@ extern char styleKey;
                 {
                     OSPMapCSSSpecifierList *newList = [[OSPMapCSSSpecifierList alloc] init];
                     [newList setSpecifiers:processedSpecifiers];
-                    [style setObject:newList forKey:[[st key] description]];
+                    [style setObject:newList forKey:[st key]];
                 }
             }
         }

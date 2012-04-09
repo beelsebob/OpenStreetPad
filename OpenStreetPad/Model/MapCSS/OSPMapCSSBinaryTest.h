@@ -26,7 +26,7 @@ NSString *NSStringFromOSPMapCSSBinaryOperator(OSPMapCSSBinaryOperator o);
 
 @interface OSPMapCSSBinaryTest : OSPMapCSSTest
 
-@property (readwrite, strong) OSPMapCSSTag *tag;
+@property (readwrite, strong) NSString *tagName;
 @property (readwrite, assign) OSPMapCSSBinaryOperator operator;
 @property (readwrite, copy) NSString *value;
 

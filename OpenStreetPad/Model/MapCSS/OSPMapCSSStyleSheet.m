@@ -38,7 +38,7 @@ static char oldZoomRef;
 
 - (NSArray *)styledObjects:(NSSet *)objects atZoom:(float)zoom
 {
-    NSMutableArray *styledObjects = [NSMutableSet setWithCapacity:[objects count]];
+    NSMutableArray *styledObjects = [NSMutableArray arrayWithCapacity:[objects count]];
     for (OSPAPIObject *object in objects)
     {
         NSNumber *cachedStyleZoom = objc_getAssociatedObject(object, &oldZoomRef);
@@ -49,7 +49,7 @@ static char oldZoomRef;
         }
         if (nil == newStyledObjects)
         {
-            NSDictionary *layerStyles = [[self ruleset] applyToObjcet:object atZoom:zoom];
+            NSDictionary *layerStyles = [[self ruleset] applyToObject:object atZoom:zoom];
             NSMutableArray *sos = [NSMutableArray arrayWithCapacity:[layerStyles count]];
             for (NSString *layerStyle in layerStyles)
             {

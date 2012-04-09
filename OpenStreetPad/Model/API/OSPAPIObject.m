@@ -83,7 +83,7 @@
     if ([object isKindOfClass:[OSPAPIObject class]])
     {
         OSPAPIObject *o = (OSPAPIObject *)object;
-        return [self identity] == [o identity] && [o memberType] == [self memberType];
+        return identity == [o identity] && [o memberType] == [self memberType];
     }
     
     return NO;
@@ -91,7 +91,7 @@
 
 - (BOOL)isEqualToAPIObject:(OSPAPIObject *)object
 {
-    return [self identity] == [object identity] && [object memberType] == [self memberType];
+    return identity == [object identity] && [object memberType] == [self memberType];
 }
 
 - (NSUInteger)hash

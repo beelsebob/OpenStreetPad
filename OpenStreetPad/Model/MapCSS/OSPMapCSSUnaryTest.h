@@ -13,6 +13,6 @@
 @interface OSPMapCSSUnaryTest : OSPMapCSSTest
 
 @property (readwrite, assign, getter=isNegated) BOOL negated;
-@property (readwrite, strong) OSPMapCSSTag *tag;
+@property (readwrite, strong) NSString *tagName;
 
 @end

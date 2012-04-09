@@ -18,7 +18,7 @@
 
 - (void)loadImportsRelativeToURL:(NSURL *)baseURL;
 
-- (NSDictionary *)applyToObjcet:(OSPAPIObject *)object atZoom:(float)zoom;
+- (NSDictionary *)applyToObject:(OSPAPIObject *)object atZoom:(float)zoom;
 - (NSDictionary *)styleForCanvasAtZoom:(float)zoom;
 
 @end

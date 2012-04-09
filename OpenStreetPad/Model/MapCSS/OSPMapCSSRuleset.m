@@ -76,7 +76,7 @@
     return ruleset;
 }
 
-- (NSDictionary *)applyToObjcet:(OSPAPIObject *)object atZoom:(float)zoom
+- (NSDictionary *)applyToObject:(OSPAPIObject *)object atZoom:(float)zoom
 {
     NSMutableDictionary *styles = [NSMutableDictionary dictionary];
     for (id rule in [self rules])

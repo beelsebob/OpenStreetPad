@@ -11,7 +11,7 @@
 @implementation OSPMapCSSUnaryTest
 
 @synthesize negated;
-@synthesize tag;
+@synthesize tagName;
 
 - (id)initWithSyntaxTree:(CPSyntaxTree *)syntaxTree
 {
@@ -23,11 +23,11 @@
         {
             case 1:
                 [self setNegated:NO];
-                [self setTag:[[syntaxTree children] objectAtIndex:0]];
+                [self setTagName:[[[syntaxTree children] objectAtIndex:0] description]];
                 break;
             case 2:
                 [self setNegated:YES];
-                [self setTag:[[syntaxTree children] objectAtIndex:1]];
+                [self setTagName:[[[syntaxTree children] objectAtIndex:1] description]];
             default:
                 break;
         }
@@ -38,20 +38,12 @@
 
 - (NSString *)description
 {
-    if ([self isNegated])
-    {
-        return [NSString stringWithFormat:@"[!%@]", [self tag]];
-    }
-    else
-    {
-        return [NSString stringWithFormat:@"[%@]", [self tag]];
-    }
+    return [self isNegated] ? [NSString stringWithFormat:@"[!%@]", tagName] : [NSString stringWithFormat:@"[%@]", tagName];
 }
 
 - (BOOL)matchesObject:(OSPAPIObject *)object
 {
-    id value = [[object tags] objectForKey:[[self tag] description]];
-//    NSLog(@"Matching object against %@ and returning %d:\n%@", self, (negated ? value == nil : value != nil), [object tags]);
+    id value = [[object tags] objectForKey:tagName];
     
     return negated ? value == nil : value != nil;
 }

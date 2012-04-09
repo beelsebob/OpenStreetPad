@@ -32,24 +32,18 @@
 
 - (NSArray *)nodes
 {
-    @synchronized(self)
-    {
-        return nodes;
-    }
+    return nodes;
 }
 
 - (void)setNodes:(NSArray *)newNodes
 {
-    @synchronized(self)
+    nodes = [newNodes mutableCopy];
+    boundsValid = NO;
+    centroidValid = NO;
+    if (NULL != edgeLengths)
     {
-        nodes = [newNodes mutableCopy];
-        boundsValid = NO;
-        centroidValid = NO;
-        if (NULL != edgeLengths)
-        {
-            free(edgeLengths);
-            edgeLengths = NULL;
-        }
+        free(edgeLengths);
+        edgeLengths = NULL;
     }
 }
 
