@@ -60,31 +60,25 @@ static char oldZoomRef;
         if (nil == newStyledObjects)
         {
             NSNumber *zNum = [NSNumber numberWithFloat:zoom];
+            NSDictionary *layerStyles = nil;
             if ([object memberType] == OSPMemberTypeNode && [[object tags] count] == 0)
             {
-                newStyledObjects = [[self emptyNodeStyles] objectForKey:zNum];
-                if (nil == newStyledObjects)
+                layerStyles = [[self emptyNodeStyles] objectForKey:zNum];
+                if (nil == layerStyles)
                 {
-                    NSDictionary *layerStyles = [[self ruleset] applyToObject:object atZoom:zoom];
-                    NSMutableArray *sos = [NSMutableArray arrayWithCapacity:[layerStyles count]];
-                    for (NSString *layerStyle in layerStyles)
-                    {
-                        [sos addObject:[OSPMapCSSStyledObject object:object withStyle:[layerStyles objectForKey:layerStyle]]];
-                    }
-                    newStyledObjects = [sos copy];
-                    [[self emptyNodeStyles] setObject:newStyledObjects forKey:zNum];
+                    layerStyles = [[self ruleset] applyToObject:object atZoom:zoom];
                 }
             }
             else
             {
-                NSDictionary *layerStyles = [[self ruleset] applyToObject:object atZoom:zoom];
-                NSMutableArray *sos = [NSMutableArray arrayWithCapacity:[layerStyles count]];
-                for (NSString *layerStyle in layerStyles)
-                {
-                    [sos addObject:[OSPMapCSSStyledObject object:object withStyle:[layerStyles objectForKey:layerStyle]]];
-                }
-                newStyledObjects = [sos copy];
+                layerStyles = [[self ruleset] applyToObject:object atZoom:zoom];
             }
+            NSMutableArray *sos = [NSMutableArray arrayWithCapacity:[layerStyles count]];
+            for (NSString *layerStyle in layerStyles)
+            {
+                [sos addObject:[OSPMapCSSStyledObject object:object withStyle:[layerStyles objectForKey:layerStyle]]];
+            }
+            newStyledObjects = [sos copy];
             objc_setAssociatedObject(object, &styleRef, newStyledObjects, OBJC_ASSOCIATION_RETAIN);
             objc_setAssociatedObject(object, &oldZoomRef, zNum, OBJC_ASSOCIATION_RETAIN);
         }
