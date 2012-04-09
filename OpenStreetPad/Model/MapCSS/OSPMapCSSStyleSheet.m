@@ -10,14 +10,23 @@
 
 #import "OSPMapCSSStyledObject.h"
 
+#import "OSPNode.h"
+
 #import <objc/runtime.h>
 
 static char styleRef;
 static char oldZoomRef;
 
+@interface OSPMapCSSStyleSheet ()
+
+@property (readwrite, strong) NSMutableDictionary *emptyNodeStyles;
+
+@end
+
 @implementation OSPMapCSSStyleSheet
 
 @synthesize ruleset;
+@synthesize emptyNodeStyles;
 
 - (id)initWithRules:(OSPMapCSSRuleset *)initRuleset
 {
@@ -26,6 +35,7 @@ static char oldZoomRef;
     if (nil != self)
     {
         [self setRuleset:initRuleset];
+        [self setEmptyNodeStyles:[NSMutableDictionary dictionary]];
     }
     
     return self;
@@ -49,15 +59,34 @@ static char oldZoomRef;
         }
         if (nil == newStyledObjects)
         {
-            NSDictionary *layerStyles = [[self ruleset] applyToObject:object atZoom:zoom];
-            NSMutableArray *sos = [NSMutableArray arrayWithCapacity:[layerStyles count]];
-            for (NSString *layerStyle in layerStyles)
+            NSNumber *zNum = [NSNumber numberWithFloat:zoom];
+            if ([object memberType] == OSPMemberTypeNode && [[object tags] count] == 0)
             {
-                [sos addObject:[OSPMapCSSStyledObject object:object withStyle:[layerStyles objectForKey:layerStyle]]];
+                newStyledObjects = [[self emptyNodeStyles] objectForKey:zNum];
+                if (nil == newStyledObjects)
+                {
+                    NSDictionary *layerStyles = [[self ruleset] applyToObject:object atZoom:zoom];
+                    NSMutableArray *sos = [NSMutableArray arrayWithCapacity:[layerStyles count]];
+                    for (NSString *layerStyle in layerStyles)
+                    {
+                        [sos addObject:[OSPMapCSSStyledObject object:object withStyle:[layerStyles objectForKey:layerStyle]]];
+                    }
+                    newStyledObjects = [sos copy];
+                    [[self emptyNodeStyles] setObject:newStyledObjects forKey:zNum];
+                }
             }
-            newStyledObjects = [sos copy];
+            else
+            {
+                NSDictionary *layerStyles = [[self ruleset] applyToObject:object atZoom:zoom];
+                NSMutableArray *sos = [NSMutableArray arrayWithCapacity:[layerStyles count]];
+                for (NSString *layerStyle in layerStyles)
+                {
+                    [sos addObject:[OSPMapCSSStyledObject object:object withStyle:[layerStyles objectForKey:layerStyle]]];
+                }
+                newStyledObjects = [sos copy];
+            }
             objc_setAssociatedObject(object, &styleRef, newStyledObjects, OBJC_ASSOCIATION_RETAIN);
-            objc_setAssociatedObject(object, &oldZoomRef, [NSNumber numberWithFloat:zoom], OBJC_ASSOCIATION_RETAIN);
+            objc_setAssociatedObject(object, &oldZoomRef, zNum, OBJC_ASSOCIATION_RETAIN);
         }
         [styledObjects addObjectsFromArray:newStyledObjects];
     }

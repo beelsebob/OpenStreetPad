@@ -159,7 +159,6 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     CGContextSetTextMatrix(ctx, CGAffineTransformMakeScale(1.0f, -1.0f));
     
     NSSet *objects = [[self dataSource] objectsInBounds:dataRect];
-    
     NSArray *styledObjects = [[self stylesheet] styledObjects:objects atZoom:[self mapArea].zoomLevel];
     [self renderLayers:[self sortedObjects:styledObjects] inContext:ctx withScaleMultiplier:oneOverScale];
 }
