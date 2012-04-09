@@ -10,23 +10,14 @@
 
 #import "OSPMapCSSStyledObject.h"
 
-#import "OSPNode.h"
-
 #import <objc/runtime.h>
 
 static char styleRef;
 static char oldZoomRef;
 
-@interface OSPMapCSSStyleSheet ()
-
-@property (readwrite, strong) NSMutableDictionary *emptyNodeStyles;
-
-@end
-
 @implementation OSPMapCSSStyleSheet
 
 @synthesize ruleset;
-@synthesize emptyNodeStyles;
 
 - (id)initWithRules:(OSPMapCSSRuleset *)initRuleset
 {
@@ -35,7 +26,6 @@ static char oldZoomRef;
     if (nil != self)
     {
         [self setRuleset:initRuleset];
-        [self setEmptyNodeStyles:[NSMutableDictionary dictionary]];
     }
     
     return self;
@@ -59,20 +49,7 @@ static char oldZoomRef;
         }
         if (nil == newStyledObjects)
         {
-            NSNumber *zNum = [NSNumber numberWithFloat:zoom];
-            NSDictionary *layerStyles = nil;
-            if ([object memberType] == OSPMemberTypeNode && [[object tags] count] == 0)
-            {
-                layerStyles = [[self emptyNodeStyles] objectForKey:zNum];
-                if (nil == layerStyles)
-                {
-                    layerStyles = [[self ruleset] applyToObject:object atZoom:zoom];
-                }
-            }
-            else
-            {
-                layerStyles = [[self ruleset] applyToObject:object atZoom:zoom];
-            }
+            NSDictionary *layerStyles = [[self ruleset] applyToObject:object atZoom:zoom];
             NSMutableArray *sos = [NSMutableArray arrayWithCapacity:[layerStyles count]];
             for (NSString *layerStyle in layerStyles)
             {
@@ -80,7 +57,7 @@ static char oldZoomRef;
             }
             newStyledObjects = [sos copy];
             objc_setAssociatedObject(object, &styleRef, newStyledObjects, OBJC_ASSOCIATION_RETAIN);
-            objc_setAssociatedObject(object, &oldZoomRef, zNum, OBJC_ASSOCIATION_RETAIN);
+            objc_setAssociatedObject(object, &oldZoomRef, [NSNumber numberWithFloat:zoom], OBJC_ASSOCIATION_RETAIN);
         }
         [styledObjects addObjectsFromArray:newStyledObjects];
     }
