@@ -10,6 +10,7 @@
 
 #import "OSPMapServer.h"
 #import "OSPOpenStreetMapXMLFile.h"
+#import "OSPOpenStreetMapPBFFile.h"
 
 #import "OSPAPIObject.h"
 #import "OSPWay.h"
@@ -65,9 +66,10 @@
     
     if (nil != self)
     {
-        [self setDataSource:[OSPOpenStreetMapXMLFile osmFileWithPath:[[NSBundle mainBundle] pathForResource:@"TestData" ofType:@"xml"]]];
+        [self setDataSource:[OSPOpenStreetMapPBFFile osmFileWithPath:[[NSBundle mainBundle] pathForResource:@"TestData" ofType:@"pbf"]]];
+        //[self setDataSource:[OSPOpenStreetMapXMLFile osmFileWithPath:[[NSBundle mainBundle] pathForResource:@"TestData" ofType:@"xml"]]];
         //[self setDataSource:[OSPMapServer serverWithURL:[NSURL URLWithString:@"http://api.openstreetmap.org"]]];
-        [self setMapArea:OSPMapAreaMake(OSPCoordinate2DProjectLocation(CLLocationCoordinate2DMake(57.64674,-3.30908)), 17.0)];
+        [self setMapArea:OSPMapAreaMake(OSPCoordinate2DProjectLocation(CLLocationCoordinate2DMake(43.73602,7.42166)), 17.0)];
         
         [self commonInit];
     }
