@@ -49,9 +49,9 @@ OSPMemberType OSPMemberTypeFromRelation_MemberType(Relation_MemberType t)
      dateGranularity:(double)dateGranularity;
 - (void)processDenseNodes:(PrimitiveGroup *)group
               stringTable:(NSArray *)stable
-				latOffset:(double)latOffset
-				lonOffset:(double)lonOffset
-			  granularity:(double)granularity
+                latOffset:(double)latOffset
+                lonOffset:(double)lonOffset
+              granularity:(double)granularity
           dateGranularity:(double)dateGranularity;
 - (void)processWays:(PrimitiveGroup *)group
         stringTable:(NSArray *)stringTable
@@ -213,9 +213,9 @@ OSPMemberType OSPMemberTypeFromRelation_MemberType(Relation_MemberType t)
     for (Node *node in [group nodesList])
     {
         Info *info = [node info];
-		OSPNode *ospNode = [[OSPNode alloc] init];
+        OSPNode *ospNode = [[OSPNode alloc] init];
         
-		NSMutableDictionary *tags = [NSMutableDictionary dictionaryWithCapacity:[[node valsList] count]];
+        NSMutableDictionary *tags = [NSMutableDictionary dictionaryWithCapacity:[[node valsList] count]];
         PSYMultiEnumerator([NSArray arrayWithObjects:[node valsList], [node keysList], nil], NO, ^ (__unsafe_unretained id const *objects, BOOL *stop)
                            {
                                [tags setValue:[stringTable objectAtIndex:[objects[0] unsignedLongValue]]
@@ -224,16 +224,16 @@ OSPMemberType OSPMemberTypeFromRelation_MemberType(Relation_MemberType t)
 		
         [ospNode setLocation:CLLocationCoordinate2DMake([node lat] * granularity + latOffset, [node lon] * granularity + lonOffset)];
         [ospNode setIdentity:[node id]];
-		[ospNode setTags:tags];
+        [ospNode setTags:tags];
         [ospNode setTimestamp:[NSDate dateWithTimeIntervalSince1970:[info timestamp] * dateGranularity]];
         [ospNode setChangesetId:[info changeset]];
         [ospNode setUserId:[info uid]];
         [ospNode setUser:[stringTable objectAtIndex:[info userSid]]];
-		[ospNode setVisible:[info visible]];
+        [ospNode setVisible:[info visible]];
         [ospNode setVersion:[info version]];
         
         [[self delegate] parser:self didFindAPIObject:ospNode];
-	}
+    }
 }
 
 - (void)processDenseNodes:(PrimitiveGroup *)group
@@ -316,16 +316,16 @@ OSPMemberType OSPMemberTypeFromRelation_MemberType(Relation_MemberType t)
     for (Way *way in [group waysList])
     {
         Info *info = [way info];
-		OSPWay *ospWay = [[OSPWay alloc] init];
+        OSPWay *ospWay = [[OSPWay alloc] init];
         
-		int64_t deltaRef = 0;
+        int64_t deltaRef = 0;
         for (NSNumber *ref in [way refsList])
         {
-			deltaRef += [ref longLongValue];
-			[ospWay addNodeWithId:deltaRef];
+            deltaRef += [ref longLongValue];
+            [ospWay addNodeWithId:deltaRef];
         }
 		
-		NSMutableDictionary *tags = [NSMutableDictionary dictionaryWithCapacity:[[way valsList] count]];
+        NSMutableDictionary *tags = [NSMutableDictionary dictionaryWithCapacity:[[way valsList] count]];
         PSYMultiEnumerator([NSArray arrayWithObjects:[way valsList], [way keysList], nil], NO, ^ (__unsafe_unretained id const *objects, BOOL *stop)
                            {
                                [tags setValue:[stringTable objectAtIndex:[objects[0] unsignedLongValue]]
@@ -333,16 +333,16 @@ OSPMemberType OSPMemberTypeFromRelation_MemberType(Relation_MemberType t)
                            });
 		
         [ospWay setIdentity:[way id]];
-		[ospWay setTags:tags];
+        [ospWay setTags:tags];
         [ospWay setTimestamp:[NSDate dateWithTimeIntervalSince1970:[info timestamp] * dateGranularity]];
         [ospWay setChangesetId:[info changeset]];
         [ospWay setUserId:[info uid]];
         [ospWay setUser:[stringTable objectAtIndex:[info userSid]]];
-		[ospWay setVisible:[info visible]];
+        [ospWay setVisible:[info visible]];
         [ospWay setVersion:[info version]];
         
         [[self delegate] parser:self didFindAPIObject:ospWay];
-	}
+    }
 }
 
 - (void)processRelations:(PrimitiveGroup *)group
@@ -352,9 +352,9 @@ OSPMemberType OSPMemberTypeFromRelation_MemberType(Relation_MemberType t)
     for (Relation *relation in [group relationsList])
     {
         Info *info = [relation info];
-		OSPRelation *ospRelation = [[OSPRelation alloc] init];
-        		
-		NSMutableDictionary *tags = [NSMutableDictionary dictionaryWithCapacity:[[relation valsList] count]];
+        OSPRelation *ospRelation = [[OSPRelation alloc] init];
+        
+        NSMutableDictionary *tags = [NSMutableDictionary dictionaryWithCapacity:[[relation valsList] count]];
         PSYMultiEnumerator([NSArray arrayWithObjects:[relation valsList], [relation keysList], nil], NO, ^ (__unsafe_unretained id const *objects, BOOL *stop)
                            {
                                [tags setValue:[stringTable objectAtIndex:[objects[0] unsignedLongValue]]
@@ -362,7 +362,7 @@ OSPMemberType OSPMemberTypeFromRelation_MemberType(Relation_MemberType t)
                            });
         __block int64_t deltaMemberId = 0;
         NSMutableArray *members = [NSMutableArray arrayWithCapacity:[[relation rolesSidList] count]];
-		PSYMultiEnumerator([NSArray arrayWithObjects:[relation rolesSidList], [relation memidsList], [relation typesList], nil], NO, ^ (__unsafe_unretained id const *objects, BOOL *stop)
+        PSYMultiEnumerator([NSArray arrayWithObjects:[relation rolesSidList], [relation memidsList], [relation typesList], nil], NO, ^ (__unsafe_unretained id const *objects, BOOL *stop)
                            {
                                deltaMemberId += [objects[1] longLongValue];
                                [members addObject:[[OSPMember alloc] initWithType:OSPMemberTypeFromRelation_MemberType([objects[2] intValue])
@@ -371,16 +371,16 @@ OSPMemberType OSPMemberTypeFromRelation_MemberType(Relation_MemberType t)
                            });
         
         [ospRelation setIdentity:[relation id]];
-		[ospRelation setTags:tags];
+        [ospRelation setTags:tags];
         [ospRelation setTimestamp:[NSDate dateWithTimeIntervalSince1970:[info timestamp] * dateGranularity]];
         [ospRelation setChangesetId:[info changeset]];
         [ospRelation setUserId:[info uid]];
         [ospRelation setUser:[stringTable objectAtIndex:[info userSid]]];
-		[ospRelation setVisible:[info visible]];
+        [ospRelation setVisible:[info visible]];
         [ospRelation setVersion:[info version]];
         
         [[self delegate] parser:self didFindAPIObject:ospRelation];
-	}
+    }
 }
 
 @end
