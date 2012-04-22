@@ -331,7 +331,7 @@
             pointNumber++;
         }
         
-        if (pointNumber < numPoints)
+        if (pointNumber < numPoints - 1)
         {
             distanceAlongEdge = xOffset - lengthSoFar;
             nextPointLocation = [[ns objectAtIndex:pointNumber + 1] projectedLocation];

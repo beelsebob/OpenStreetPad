@@ -38,7 +38,7 @@ area[landuse="military"]
 
 area[landuse="residential"]
 {
-  fill-color: rgb(0.9, 0.9, 0.9);
+  fill-color: rgba(0.9, 0.9, 0.9, 0.5);
 }
 
 area[landuse="retail"]
@@ -164,4 +164,10 @@ area[power="sub_station"]
   width: 1pt;
   color: rgb(0.54, 0.54, 0.54);
   fill-color: rgb(0.74, 0.74, 0.74);
+}
+
+way[natural="coastline"]
+{
+  width: 2pt;
+  color: rgb(0.72, 0.82, 0.82);
 }
