@@ -171,3 +171,12 @@ way[natural="coastline"]
   width: 2pt;
   color: rgb(0.72, 0.82, 0.82);
 }
+
+way[boundary="administrative"]
+{
+  width: 2pt;
+  color: rgba(0.5, 0.15, 0.7, 0.5);
+  dashes: 8, 6;
+  casing-color: rgba(0.5, 0.15, 0.7, 0.3);
+  casing-width: 4pt;
+}
