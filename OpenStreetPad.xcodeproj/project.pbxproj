@@ -28,6 +28,7 @@
 		1F09C63914612DDF003BBE17 /* OSPMapCSSRule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F09C63814612DDF003BBE17 /* OSPMapCSSRule.m */; };
 		1F09C63C14612F31003BBE17 /* OSPMapCSSImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F09C63B14612F31003BBE17 /* OSPMapCSSImport.m */; };
 		1F09C63F14613063003BBE17 /* OSPMapCSSRuleset.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F09C63E14613062003BBE17 /* OSPMapCSSRuleset.m */; };
+		1F168DB0154B63100005E15D /* landuse.mcs in Resources */ = {isa = PBXBuildFile; fileRef = 1F168DAF154B63100005E15D /* landuse.mcs */; };
 		1F2C266A13F6DB7B00D3AE25 /* OSPCoordinateRect.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C266913F6DB7B00D3AE25 /* OSPCoordinateRect.m */; };
 		1F2C267213F6E41D00D3AE25 /* OSPMapArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C267113F6E41D00D3AE25 /* OSPMapArea.m */; };
 		1F2C267613F6FC2500D3AE25 /* OSPMaths.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C267513F6FC2500D3AE25 /* OSPMaths.m */; };
@@ -254,6 +255,7 @@
 		1F09C63B14612F31003BBE17 /* OSPMapCSSImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapCSSImport.m; sourceTree = "<group>"; };
 		1F09C63D14613062003BBE17 /* OSPMapCSSRuleset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapCSSRuleset.h; sourceTree = "<group>"; };
 		1F09C63E14613062003BBE17 /* OSPMapCSSRuleset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPMapCSSRuleset.m; sourceTree = "<group>"; };
+		1F168DAF154B63100005E15D /* landuse.mcs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = landuse.mcs; sourceTree = "<group>"; };
 		1F2C266913F6DB7B00D3AE25 /* OSPCoordinateRect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPCoordinateRect.m; sourceTree = "<group>"; };
 		1F2C266B13F6DB8F00D3AE25 /* OSPCoordinateRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPCoordinateRect.h; sourceTree = "<group>"; };
 		1F2C267013F6E41D00D3AE25 /* OSPMapArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPMapArea.h; sourceTree = "<group>"; };
@@ -688,6 +690,7 @@
 				1F30B4F8146DC9C100EB7F80 /* icons */,
 				1F4D13B6146C4E97007EF1B4 /* fills */,
 				1FFFC271146558B00052D1B6 /* osm.mcs */,
+				1F168DAF154B63100005E15D /* landuse.mcs */,
 				1FFFC24A146541F70052D1B6 /* parser.osp */,
 				1FD8C52B13ED378600ADD20A /* OpenStreetPad-Info.plist */,
 				1FD8C52C13ED378600ADD20A /* InfoPlist.strings */,
@@ -912,6 +915,7 @@
 				1FC80D3914FD804000512C3E /* TestData.xml in Resources */,
 				1F34D83F1528F12B00B92E20 /* highways.mcs in Resources */,
 				1FB4C0A315435FDE0026164E /* TestData.pbf in Resources */,
+				1F168DB0154B63100005E15D /* landuse.mcs in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

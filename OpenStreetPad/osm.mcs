@@ -1,11 +1,11 @@
+node
+{
+  exit;
+}
+
 canvas
 {
   fill-color: cornsilk;
-}
-
-node[!:tagged]
-{
-  exit;
 }
 
 way
@@ -16,7 +16,27 @@ way
   casing-linejoin: round;
 }
 
+area|z16-20[building]
+{
+  z-index: 20;
+  width: 1 pt;
+  color: rgb(0.74, 0.68, 0.68);
+  fill-color: rgba(0.84, 0.68, 0.68, 0.68);
+  text: tag('name');
+  font-family: Helvetica;
+  font-size: 14pt;
+  text-color: black;
+  text-halo-radius: 2pt;
+  text-halo-color: white;
+}
+
+area[building]
+{
+  exit;
+}
+
 @import url("highways.mcs") highways
+@import url("landuse.mcs") landuse
 
 way[railway="rail"]
 {
@@ -27,74 +47,17 @@ way[railway="rail"]
   linecap: none;
   linejoin: round;
   dashes: 8, 8;
+  exit;
 }
 
-way[landuse]
+way[boundary="administrative"]
 {
-  z-index: -5;
-}
-
-area[landuse="military"]
-{
-  fill-image: url("fills/military.png");
-  width: 3pt;
-  color: rgb(1.0, 0.46, 0.47);
-}
-
-area[landuse="residential"]
-{
-  fill-color: rgba(0.9, 0.9, 0.9, 0.5);
-}
-
-area[landuse="retail"]
-{
-  fill-color: rgb(0.94, 0.85, 0.85);
-  color: rgb(0.95, 0.7, 0.7);
-  width: 1pt;
-}
-
-area[landuse="forest"]
-{
-  fill-image: url("fills/forest.png");
-}
-
-area[landuse="cemetery"]
-{
-  fill-image: url("fills/graveyard.png");
-}
-
-area[landuse="railway"],
-area[landuse="industrial"]
-{
-  fill-color: rgb(0.87, 0.82, 0.84);
-  z-index: -4;
-}
-
-area[landuse="landfill"]
-{
-  fill-color: rgb(0.72, 0.71, 0.58);
-}
-
-way[waterway]
-{
-    color: rgb(0.72, 0.82, 0.82);
-}
-
-way[waterway]
-{
-    width: 1pt;
-}
-
-
-way[waterway="river"],
-way[waterway="canal"]
-{
-    width: 3pt;
-}
-
-area[waterway="riverbank"]
-{
-  fill-color: rgb(0.72, 0.82, 0.82);
+  width: 2pt;
+  color: rgba(0.5, 0.15, 0.7, 0.5);
+  dashes: 8, 6;
+  casing-color: rgba(0.5, 0.15, 0.7, 0.3);
+  casing-width: 4pt;
+  exit;
 }
 
 area[amenity]
@@ -138,20 +101,6 @@ area[leisure="park"]
   fill-color: rgb(0.82, 0.96, 0.79);
 }
 
-area|z16-20[building]
-{
-  z-index: 20;
-  width: 1 pt;
-  color: rgb(0.74, 0.68, 0.68);
-  fill-color: rgba(0.84, 0.68, 0.68, 0.68);
-  text: tag('name');
-  font-family: Helvetica;
-  font-size: 14pt;
-  text-color: black;
-  text-halo-radius: 2pt;
-  text-halo-color: white;
-}
-
 way[barrier]
 {
   width: 0.5pt;
@@ -171,16 +120,24 @@ area[power="sub_station"]
   fill-color: rgb(0.74, 0.74, 0.74);
 }
 
-area[natural="coastline"]
+way[waterway]
+{
+    color: rgb(0.72, 0.82, 0.82);
+    width: 1pt;
+}
+
+way[waterway="river"],
+way[waterway="canal"]
+{
+    width: 3pt;
+}
+
+area[waterway="riverbank"]
 {
   fill-color: rgb(0.72, 0.82, 0.82);
 }
 
-way[boundary="administrative"]
+area[natural="coastline"]
 {
-  width: 2pt;
-  color: rgba(0.5, 0.15, 0.7, 0.5);
-  dashes: 8, 6;
-  casing-color: rgba(0.5, 0.15, 0.7, 0.3);
-  casing-width: 4pt;
+  fill-color: rgb(0.72, 0.82, 0.82);
 }
