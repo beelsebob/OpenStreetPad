@@ -13,6 +13,7 @@
 
 @interface OSPMapCSSStyle : NSObject <CPParseResult>
 
+@property (readwrite, assign, getter = isExit) BOOL exit;
 @property (readwrite, copy) NSString *key;
 @property (readwrite, retain) OSPMapCSSSpecifierList *specifiers;
 

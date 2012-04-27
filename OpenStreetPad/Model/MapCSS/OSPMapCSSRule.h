@@ -17,6 +17,6 @@
 @property (readwrite, copy) NSArray *selectors;
 @property (readwrite, copy) NSArray *declarations;
 
-- (NSDictionary *)applyToObject:(OSPAPIObject *)object atZoom:(float)zoom;
+- (NSDictionary *)applyToObject:(OSPAPIObject *)object atZoom:(float)zoom stop:(BOOL *)stop;
 
 @end

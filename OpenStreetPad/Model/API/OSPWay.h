@@ -13,6 +13,8 @@
 @property (readwrite,strong,nonatomic) NSArray *nodes;
 @property (readonly) NSArray *nodeObjects;
 
+- (id)wayByCopyingTagsAndNodes;
+
 - (void)addNodeWithId:(NSInteger)nodeId;
 
 - (OSPCoordinate2D)projectedCentroid;

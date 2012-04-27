@@ -11,5 +11,6 @@
 @interface NSString (OpenStreetPad)
 
 - (BOOL)ospTruthValue;
+- (BOOL)ospUntruthValue;
 
 @end

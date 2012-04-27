@@ -10,7 +10,7 @@
 
 #import "CoreParse.h"
 
-@interface OSPMapCSSParser () <CPTokeniserDelegate>
+@interface OSPMapCSSParser () <CPTokeniserDelegate, CPParserDelegate>
 
 @property (readwrite, strong) CPTokeniser *tokeniser;
 @property (readwrite, strong) CPParser *parser;
@@ -92,7 +92,8 @@
                 [name isEqualToString:@"pt"]   ||
                 [name isEqualToString:@"px"]   ||
                 [name isEqualToString:@"rgb"]  ||
-                [name isEqualToString:@"rgba"]);
+                [name isEqualToString:@"rgba"] ||
+                [name isEqualToString:@"exit"]);
     }
     
     return YES;
@@ -101,6 +102,7 @@
 - (NSArray *)tokeniser:(CPTokeniser *)tokeniser willProduceToken:(CPToken *)token
 {
     NSString *name = [token name];
+    
     if ([token isKindOfClass:[CPWhiteSpaceToken class]])
     {
         if (justTokenisedObject)

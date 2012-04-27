@@ -47,4 +47,6 @@ typedef enum
 - (NSSet *)childObjects;
 - (void)addParent:(OSPAPIObjectReference *)newParent;
 
+- (id)valueForTag:(NSString *)tagName;
+
 @end

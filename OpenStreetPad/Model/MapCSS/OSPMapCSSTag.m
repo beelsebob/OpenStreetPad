@@ -12,6 +12,7 @@
 
 @implementation OSPMapCSSTag
 
+@synthesize pseudoTag;
 @synthesize keys;
 
 - (id)initWithSyntaxTree:(CPSyntaxTree *)syntaxTree
@@ -20,8 +21,14 @@
     
     if (nil != self)
     {
+        NSArray *possiblyTag = [[syntaxTree children] objectAtIndex:0];
+        BOOL ps = [possiblyTag count] == 0;
+        [self setPseudoTag:ps];
         NSMutableArray *ks = [[NSMutableArray alloc] initWithCapacity:[[[syntaxTree children] objectAtIndex:1] count] + 1];
-        [ks addObject:[[[syntaxTree children] objectAtIndex:0] key]];
+        if (!ps)
+        {
+            [ks addObject:[[possiblyTag objectAtIndex:0] key]];
+        }
         for (NSArray *k in [[syntaxTree children] objectAtIndex:1])
         {
             [ks addObject:[[k objectAtIndex:1] key]];
@@ -34,7 +41,7 @@
 
 - (NSString *)description
 {
-    NSMutableString *desc = [NSMutableString string];
+    NSMutableString *desc = [self isPseudoTag] ? [NSMutableString stringWithString:@":"] : [NSMutableString string];
     NSUInteger keyNum = 0;
     
     for (NSString *key in [self keys])

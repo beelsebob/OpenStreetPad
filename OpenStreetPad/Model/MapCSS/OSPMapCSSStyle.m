@@ -10,6 +10,7 @@
 
 @implementation OSPMapCSSStyle
 
+@synthesize exit;
 @synthesize key;
 @synthesize specifiers;
 
@@ -21,8 +22,12 @@
     {
         CPSyntaxTree *styledef = [[syntaxTree children] objectAtIndex:0];
         
-        [self setKey:[[[styledef children] objectAtIndex:0] key]];
-        [self setSpecifiers:[[styledef children] objectAtIndex:2]];
+        [self setExit:[[[styledef children] objectAtIndex:0] isKindOfClass:[CPKeywordToken class]]];
+        if (![self isExit])
+        {
+            [self setKey:[[[styledef children] objectAtIndex:0] key]];
+            [self setSpecifiers:[[styledef children] objectAtIndex:2]];
+        }
     }
     
     return self;
@@ -30,7 +35,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@: %@;", [self key], [self specifiers]];
+    return [self isExit] ? @"exit" : [NSString stringWithFormat:@"%@: %@;", [self key], [self specifiers]];
 }
 
 @end

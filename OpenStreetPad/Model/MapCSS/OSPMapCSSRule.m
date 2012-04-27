@@ -66,7 +66,7 @@
 
 extern char styleKey;
 
-- (NSDictionary *)applyToObject:(OSPAPIObject *)object atZoom:(float)zoom
+- (NSDictionary *)applyToObject:(OSPAPIObject *)object atZoom:(float)zoom stop:(BOOL *)stop
 {
     NSMutableArray *matchingLayerIdentifiers = [NSMutableArray array];
     
@@ -85,30 +85,42 @@ extern char styleKey;
         {
             for (OSPMapCSSStyle *st in [decl styles])
             {
-                OSPMapCSSSpecifierList *specList = [st specifiers];
-                NSArray *specs = [specList specifiers];
-                NSMutableArray *processedSpecifiers = [NSMutableArray arrayWithCapacity:[specs count]];
-                for (OSPMapCSSSpecifier *spec in specs)
+                if ([st isExit])
                 {
-                    if ([spec isKindOfClass:[OSPMapCSSTagSpecifier class]])
+                    *stop = YES;
+                    break;
+                }
+                else
+                {
+                    OSPMapCSSSpecifierList *specList = [st specifiers];
+                    NSArray *specs = [specList specifiers];
+                    NSMutableArray *processedSpecifiers = [NSMutableArray arrayWithCapacity:[specs count]];
+                    for (OSPMapCSSSpecifier *spec in specs)
                     {
-                        OSPMapCSSSpecifier *newSpec = [(OSPMapCSSTagSpecifier *)spec specifierWithAPIObject:object];
-                        if (nil != newSpec)
+                        if ([spec isKindOfClass:[OSPMapCSSTagSpecifier class]])
                         {
-                            [processedSpecifiers addObject:newSpec];
+                            OSPMapCSSSpecifier *newSpec = [(OSPMapCSSTagSpecifier *)spec specifierWithAPIObject:object];
+                            if (nil != newSpec)
+                            {
+                                [processedSpecifiers addObject:newSpec];
+                            }
+                        }
+                        else
+                        {
+                            [processedSpecifiers addObject:spec];
                         }
                     }
-                    else
+                    if ([processedSpecifiers count] > 0)
                     {
-                        [processedSpecifiers addObject:spec];
+                        OSPMapCSSSpecifierList *newList = [[OSPMapCSSSpecifierList alloc] init];
+                        [newList setSpecifiers:processedSpecifiers];
+                        [style setObject:newList forKey:[st key]];
                     }
                 }
-                if ([processedSpecifiers count] > 0)
-                {
-                    OSPMapCSSSpecifierList *newList = [[OSPMapCSSSpecifierList alloc] init];
-                    [newList setSpecifiers:processedSpecifiers];
-                    [style setObject:newList forKey:[st key]];
-                }
+            }
+            if (*stop)
+            {
+                break;
             }
         }
         

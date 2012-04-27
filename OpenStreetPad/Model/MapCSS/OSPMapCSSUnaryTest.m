@@ -8,6 +8,8 @@
 
 #import "OSPMapCSSUnaryTest.h"
 
+#import "NSString+OpenStreetPad.h"
+
 @implementation OSPMapCSSUnaryTest
 
 @synthesize negated;
@@ -43,9 +45,9 @@
 
 - (BOOL)matchesObject:(OSPAPIObject *)object
 {
-    id value = [[object tags] objectForKey:tagName];
+    NSString *value = [object valueForTag:tagName];
     
-    return negated ? value == nil : value != nil;
+    return negated ? nil == value || [value ospUntruthValue] : nil != value && ![value ospUntruthValue];
 }
 
 @end

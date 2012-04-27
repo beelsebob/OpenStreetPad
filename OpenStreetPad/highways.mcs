@@ -194,3 +194,8 @@ way[highway="path"]
   casing-color: rgba(1.0, 1.0, 1.0, 0.0);
   color: rgb(0.0, 0.0, 0.0);
 }
+
+way[highway]
+{
+  exit;
+}

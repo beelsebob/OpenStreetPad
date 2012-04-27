@@ -116,6 +116,9 @@
 		1FDD699E14790C520095E634 /* OSPMapCSSStyledObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD699D14790C510095E634 /* OSPMapCSSStyledObject.m */; };
 		1FDD69A1147974470095E634 /* OSPQuadTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD69A0147974470095E634 /* OSPQuadTree.m */; };
 		1FEBBF4E1503F76600DAA87A /* OSPOpenStreetMapParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEBBF4D1503F76600DAA87A /* OSPOpenStreetMapParser.m */; };
+		1FEE65A1154B2C0B003DB750 /* OSPMapCSSParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFE3A50145C2C0B00B47ED0 /* OSPMapCSSParser.m */; };
+		1FEE65A2154B2C1F003DB750 /* OSPMapCSSStyleSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFFC27414655B460052D1B6 /* OSPMapCSSStyleSheet.m */; };
+		1FEE65A3154B2C2C003DB750 /* OSPMapCSSStyledObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD699D14790C510095E634 /* OSPMapCSSStyledObject.m */; };
 		1FF71B5D150243B800BEE663 /* OSPXMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF71B5C150243B800BEE663 /* OSPXMLWriter.m */; };
 		1FF71B7015024C7F00BEE663 /* OSPOpenStreetMapXMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF71B6F15024C7F00BEE663 /* OSPOpenStreetMapXMLWriter.m */; };
 		1FF71BCA1503D63B00BEE663 /* NSString+XMLEscaping.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF71BC91503D63B00BEE663 /* NSString+XMLEscaping.m */; };
@@ -1018,6 +1021,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FEE65A3154B2C2C003DB750 /* OSPMapCSSStyledObject.m in Sources */,
+				1FEE65A2154B2C1F003DB750 /* OSPMapCSSStyleSheet.m in Sources */,
+				1FEE65A1154B2C0B003DB750 /* OSPMapCSSParser.m in Sources */,
 				1F34D83B15289E5900B92E20 /* OSPMapCSSSelector.m in Sources */,
 				1FDD699B147908930095E634 /* OSPMapCSSHashColourToken.m in Sources */,
 				1FDD6999147907D50095E634 /* OSPMapCSSHashColourRecogniser.m in Sources */,

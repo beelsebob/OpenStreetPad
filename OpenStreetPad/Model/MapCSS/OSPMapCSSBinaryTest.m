@@ -87,7 +87,7 @@ NSString *NSStringFromOSPMapCSSBinaryOperator(OSPMapCSSBinaryOperator o)
 
 - (BOOL)matchesObject:(OSPAPIObject *)object
 {
-    NSString *objectValue = [[object tags] objectForKey:tagName];
+    NSString *objectValue = [object valueForTag:tagName];
     switch ([self operator])
     {
         case OSPMapCSSBinaryOperatorEquals:

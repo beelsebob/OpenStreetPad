@@ -92,6 +92,14 @@
     return self;
 }
 
+- (id)wayByCopyingTagsAndNodes
+{
+    OSPWay *w = [[OSPWay alloc] init];
+    [w setNodes:[self nodes]];
+    [w setTags:[self tags]];
+    return w;
+}
+
 - (void)addNodeWithId:(NSInteger)nodeId
 {
     @synchronized(self)

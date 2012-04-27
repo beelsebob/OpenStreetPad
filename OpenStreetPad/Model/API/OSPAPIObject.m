@@ -109,4 +109,13 @@
     [parents addObject:newParent];
 }
 
+- (id)valueForTag:(NSString *)tagName
+{
+    if ([tagName isEqualToString:@":tagged"])
+    {
+        return [tags count] > 0 ? @"yes" : @"no";
+    }
+    return [tags objectForKey:tagName];
+}
+
 @end

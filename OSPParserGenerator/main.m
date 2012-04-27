@@ -40,6 +40,7 @@ int main (int argc, const char * argv[])
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"rgb"      invalidFollowingCharacters:identifierCharacters]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"pt"       invalidFollowingCharacters:identifierCharacters]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"px"       invalidFollowingCharacters:identifierCharacters]];
+            [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"exit"     invalidFollowingCharacters:identifierCharacters]];
             [mapCssTokeniser addTokenRecogniser:[OSPMapCSSHashColourRecogniser hashColourRecogniser]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"*"]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"["]];
@@ -88,7 +89,7 @@ int main (int argc, const char * argv[])
                                   @"range                    ::= 'Number' | 'Number' '-' 'Number' | 'Number' '-' | '-' 'Number';"
                                   @"OSPMapCSSTest            ::= '[' <condition> ']';"
                                   @"condition                ::= <OSPMapCSSTag> <binary> <value> | <unary> <OSPMapCSSTag> | <OSPMapCSSTag>;"
-                                  @"OSPMapCSSTag             ::= <OSPMapCSSKey> (':' <OSPMapCSSKey>)*;"
+                                  @"OSPMapCSSTag             ::= <OSPMapCSSKey>? (':' <OSPMapCSSKey>)*;"
                                   @"OSPMapCSSKey             ::= 'Identifier';"
                                   @"value                    ::= 'String' | 'Regex';"
                                   @"binary                   ::= '=' | '!=' | '=~' | '<' | '>' | '<=' | '>=';"
@@ -98,7 +99,7 @@ int main (int argc, const char * argv[])
                                   @"OSPMapCSSObject          ::= 'node' | 'way' | 'relation' | 'area' | 'line' | 'canvas' | '*';"
                                   @"OSPMapCSSDeclaration     ::= '{' <OSPMapCSSStyle>* '}';"
                                   @"OSPMapCSSStyle           ::= <Styledef> ';';"
-                                  @"Styledef                 ::= <OSPMapCSSKey> ':' <OSPMapCSSSpecifierList>;"
+                                  @"Styledef                 ::= 'exit' | <OSPMapCSSKey> ':' <OSPMapCSSSpecifierList>;"
                                   @"OSPMapCSSSpecifierList   ::= <OSPMapCSSSpecifier> <OSPMapCSSCommaSpecifier>*;"
                                   @"OSPMapCSSCommaSpecifier  ::= ',' <OSPMapCSSSpecifier>;"
                                   @"OSPMapCSSSpecifier       ::= <OSPMapCSSNamed> | <OSPMapCSSSize> | <OSPMapCSSColour> | <OSPMapCSSUrl> | <OSPMapCSSEval> | <OSPMapCSSTagSpec>;"

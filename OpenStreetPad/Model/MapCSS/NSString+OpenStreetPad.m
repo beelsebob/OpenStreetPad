@@ -16,4 +16,10 @@
     return [l isEqual:@"yes"] || [l isEqual:@"true"] || [l isEqual:@"1"];
 }
 
+- (BOOL)ospUntruthValue
+{
+    NSString *l = [self lowercaseString];
+    return [l isEqual:@"no"] || [l isEqual:@"false"];
+}
+
 @end

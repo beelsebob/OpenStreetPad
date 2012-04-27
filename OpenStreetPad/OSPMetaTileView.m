@@ -159,9 +159,60 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     CGContextSetTextMatrix(ctx, CGAffineTransformMakeScale(1.0f, -1.0f));
     
     NSSet *objects = [[self dataSource] objectsInBounds:dataRect];
-    NSArray *styledObjects = [[self stylesheet] styledObjects:objects atZoom:[self mapArea].zoomLevel];
+//    NSSet *seaAreas = [self seaAreasFromObjects:objects rect:dataRect];
+    NSArray *styledObjects = [[self stylesheet] styledObjects:objects/*[objects setByAddingObjectsFromSet:seaAreas]*/ atZoom:[self mapArea].zoomLevel];
     [self renderLayers:[self sortedObjects:styledObjects] inContext:ctx withScaleMultiplier:oneOverScale];
 }
+
+/*- (NSSet *)seaAreasFromObjects:(NSSet *)objects rect:(OSPCoordinateRect)r
+{
+    NSMutableArray *segments = [NSMutableArray array];
+    for (OSPAPIObject *obj in objects)
+    {
+        if ([obj memberType] == OSPMemberTypeWay && [[[obj tags] objectForKey:@"natural"] isEqualToString:@"coastline"] && [[(OSPWay *)obj nodes] count] > 0)
+        {
+            [segments addObject:obj];
+        }
+    }
+    
+    NSMutableArray *realSegments = [NSMutableArray array];
+    while ([segments count] > 0)
+    {
+        OSPWay *obj = [segments lastObject];
+        OSPWay *constructedWay = [obj wayByCopyingTagsAndNodes];
+        [segments removeLastObject];
+        
+        BOOL didFindMoreWay = NO;
+        do
+        {
+            NSUInteger candidateIndex = 0;
+            for (OSPWay *candidate in segments)
+            {
+                if ([[[candidate nodes] lastObject] isEqualToNumber:[[obj nodes] objectAtIndex:0]])
+                {
+                    [constructedWay addNodesFromArray:[[candidate nodes] subarrayWithRange:NSMakeRange(1, [[candidate nodes] count] - 1)]];
+                    didFindMoreWay = YES;
+                    break;
+                }
+                if ([[[candidate nodes] objectAtIndex:0] isEqualToNumber:[[obj nodes] lastObject]])
+                {
+                    [constructedWay prependNodesFromArray:[[candidate nodes] subarrayWithRange:NSMakeRange(0, [[candidate nodes] count] - 1)]];
+                    didFindMoreWay = YES;
+                    break;
+                }
+                candidateIndex++;
+            }
+            if (didFindMoreWay)
+            {
+                [segments removeObjectAtIndex:candidateIndex];
+            }
+            didFindMoreWay = NO;
+        }
+        while (didFindMoreWay);
+        
+        [realSegments addObject:constructedWay];
+    }
+}*/
 
 - (UIColor *)colourWithColourSpecifierList:(OSPMapCSSSpecifierList *)colour opacitySpecifierList:(OSPMapCSSSpecifierList *)opacity
 {

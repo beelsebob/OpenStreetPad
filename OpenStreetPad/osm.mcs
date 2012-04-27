@@ -3,6 +3,11 @@ canvas
   fill-color: cornsilk;
 }
 
+node[!:tagged]
+{
+  exit;
+}
+
 way
 {
   linecap: round;
@@ -166,10 +171,9 @@ area[power="sub_station"]
   fill-color: rgb(0.74, 0.74, 0.74);
 }
 
-way[natural="coastline"]
+area[natural="coastline"]
 {
-  width: 2pt;
-  color: rgb(0.72, 0.82, 0.82);
+  fill-color: rgb(0.72, 0.82, 0.82);
 }
 
 way[boundary="administrative"]

@@ -83,7 +83,8 @@
     {
         if ([rule isKindOfClass:[OSPMapCSSRule class]])
         {
-            NSDictionary *ruleStyles = [rule applyToObject:object atZoom:zoom];
+            BOOL stop = NO;
+            NSDictionary *ruleStyles = [rule applyToObject:object atZoom:zoom stop:&stop];
             
             for (NSString *layerIdentifier in ruleStyles)
             {
@@ -98,6 +99,11 @@
                 {
                     [currentStyle addEntriesFromDictionary:style];
                 }
+            }
+            
+            if (stop)
+            {
+                return styles;
             }
         }
     }
