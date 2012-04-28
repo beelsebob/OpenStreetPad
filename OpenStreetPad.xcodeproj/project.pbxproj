@@ -691,12 +691,12 @@
 				1F4D13B6146C4E97007EF1B4 /* fills */,
 				1FFFC271146558B00052D1B6 /* osm.mcs */,
 				1F168DAF154B63100005E15D /* landuse.mcs */,
+				1F34D83E1528F12B00B92E20 /* highways.mcs */,
 				1FFFC24A146541F70052D1B6 /* parser.osp */,
 				1FD8C52B13ED378600ADD20A /* OpenStreetPad-Info.plist */,
 				1FD8C52C13ED378600ADD20A /* InfoPlist.strings */,
 				1FD8C52F13ED378600ADD20A /* main.m */,
 				1FD8C53113ED378600ADD20A /* OpenStreetPad-Prefix.pch */,
-				1F34D83E1528F12B00B92E20 /* highways.mcs */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";

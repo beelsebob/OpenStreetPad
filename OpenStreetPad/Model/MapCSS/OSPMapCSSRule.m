@@ -80,7 +80,11 @@ extern char styleKey;
     
     if ([matchingLayerIdentifiers count] > 0)
     {
-        NSMutableDictionary *style = [NSMutableDictionary dictionary];
+        NSMutableDictionary *layerIdentifiers = [NSMutableDictionary dictionaryWithCapacity:[matchingLayerIdentifiers count]];
+        for (NSString *layerIdentifier in matchingLayerIdentifiers)
+        {
+            [layerIdentifiers setObject:[NSMutableDictionary dictionary] forKey:layerIdentifier];
+        }
         for (OSPMapCSSDeclaration *decl in [self declarations])
         {
             for (OSPMapCSSStyle *st in [decl styles])
@@ -88,7 +92,33 @@ extern char styleKey;
                 if ([st isExit])
                 {
                     *stop = YES;
-                    break;
+                }
+                else if ([st containsRule])
+                {
+                    NSDictionary *subStyle = [[st rule] applyToObject:object atZoom:zoom stop:stop];
+                    for (NSString *layerIdentifier in matchingLayerIdentifiers)
+                    {
+                        if ([layerIdentifier isEqualToString:@"default"])
+                        {
+                            for (NSString *subLayerIdentifier in subStyle)
+                            {
+                                NSMutableDictionary *d = [layerIdentifiers objectForKey:subLayerIdentifier];
+                                NSDictionary *otherD = [subStyle objectForKey:subLayerIdentifier];
+                                if (nil == d)
+                                {
+                                    d = [NSMutableDictionary dictionaryWithCapacity:[otherD count]];
+                                    [layerIdentifiers setObject:d forKey:subLayerIdentifier];
+                                }
+                                [d addEntriesFromDictionary:otherD];
+                            }
+                        }
+                        else
+                        {
+                            NSMutableDictionary *d = [layerIdentifiers objectForKey:layerIdentifier];
+                            [d addEntriesFromDictionary:[subStyle objectForKey:layerIdentifier]];
+                            [d addEntriesFromDictionary:[subStyle objectForKey:@"default"]];
+                        }
+                    }
                 }
                 else
                 {
@@ -114,21 +144,21 @@ extern char styleKey;
                     {
                         OSPMapCSSSpecifierList *newList = [[OSPMapCSSSpecifierList alloc] init];
                         [newList setSpecifiers:processedSpecifiers];
-                        [style setObject:newList forKey:[st key]];
+                        for (NSString *layerIdentifier in matchingLayerIdentifiers)
+                        {
+                            [[layerIdentifiers objectForKey:layerIdentifier] setObject:newList forKey:[st key]];
+                        }
                     }
+                }
+                if (*stop)
+                {
+                    break;
                 }
             }
             if (*stop)
             {
                 break;
             }
-        }
-        
-        NSDictionary *st = [style copy];
-        NSMutableDictionary *layerIdentifiers = [NSMutableDictionary dictionaryWithCapacity:[matchingLayerIdentifiers count]];
-        for (NSString *layerIdentifier in matchingLayerIdentifiers)
-        {
-            [layerIdentifiers setObject:st forKey:layerIdentifier];
         }
         
         return layerIdentifiers;

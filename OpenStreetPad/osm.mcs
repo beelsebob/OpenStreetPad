@@ -63,27 +63,27 @@ way[boundary="administrative"]
 area[amenity]
 {
   z-index: -3;
-}
-
-area[amenity="parking"]
-{
-  fill-color: rgb(0.97, 0.93, 0.71);
-  icon-image: url("icons/parking.png");
-}
-
-area[amenity="school"],
-area[amenity="college"]
-{
-  width:1 pt;
-  color: rgb(0.82, 0.67, 0.64);
-  fill-color: rgb(0.94, 0.94, 0.85);
   
-  text: tag('name');
-  font-family: Helvetica;
-  font-size: 14pt;
-  text-color: black;
-  text-halo-radius: 2pt;
-  text-halo-color: white;
+  area[amenity="parking"]
+  {
+    fill-color: rgb(0.97, 0.93, 0.71);
+    icon-image: url("icons/parking.png");
+  }
+  
+  area[amenity="school"],
+  area[amenity="college"]
+  {
+    width:1 pt;
+    color: rgb(0.82, 0.67, 0.64);
+    fill-color: rgb(0.94, 0.94, 0.85);
+    
+    text: tag('name');
+    font-family: Helvetica;
+    font-size: 14pt;
+    text-color: black;
+    text-halo-radius: 2pt;
+    text-halo-color: white;
+  }
 }
 
 area[leisure]

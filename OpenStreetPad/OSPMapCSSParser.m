@@ -21,6 +21,8 @@
 {
     NSCharacterSet *symbolsSet;
     int nestingDepth;
+    BOOL inTest;
+    BOOL inStyle;
     BOOL justTokenisedObject;
     BOOL inRange;
 }
@@ -61,13 +63,21 @@
 - (BOOL)tokeniser:(CPTokeniser *)tokeniser shouldConsumeToken:(CPToken *)token
 {
     NSString *name = [token name];
-    if ([name isEqualToString:@"{"] || [name isEqualToString:@"["])
+    if ([name isEqualToString:@"["])
     {
-        nestingDepth++;
+        inTest = YES;
     }
-    else if ([name isEqualToString:@"}"] || [name isEqualToString:@"]"])
+    else if ([name isEqualToString:@"]"])
     {
-        nestingDepth--;
+        inTest = NO;
+    }
+    else if ([name isEqualToString:@":"])
+    {
+        inStyle = !inTest;
+    }
+    else if ([name isEqualToString:@";"])
+    {
+        inStyle = NO;
     }
     else if ([name isEqualToString:@"|z"])
     {
@@ -83,7 +93,7 @@
     }
     else if ([token isKindOfClass:[CPKeywordToken class]])
     {
-        return (0 == nestingDepth ||
+        return (!inStyle ||
                 [symbolsSet characterIsMember:[name characterAtIndex:0]] ||
                 [name isEqualToString:@"eval"] ||
                 [name isEqualToString:@"tag"]  ||
@@ -92,8 +102,7 @@
                 [name isEqualToString:@"pt"]   ||
                 [name isEqualToString:@"px"]   ||
                 [name isEqualToString:@"rgb"]  ||
-                [name isEqualToString:@"rgba"] ||
-                [name isEqualToString:@"exit"]);
+                [name isEqualToString:@"rgba"]);
     }
     
     return YES;

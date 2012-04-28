@@ -8,8 +8,12 @@
 
 #import "OSPMapCSSStyle.h"
 
+#import "OSPMapCSSRule.h"
+
 @implementation OSPMapCSSStyle
 
+@synthesize containsRule;
+@synthesize rule;
 @synthesize exit;
 @synthesize key;
 @synthesize specifiers;
@@ -20,13 +24,21 @@
     
     if (nil != self)
     {
-        CPSyntaxTree *styledef = [[syntaxTree children] objectAtIndex:0];
+        id styledef = [[syntaxTree children] objectAtIndex:0];
         
-        [self setExit:[[[styledef children] objectAtIndex:0] isKindOfClass:[CPKeywordToken class]]];
-        if (![self isExit])
+        if ([styledef isKindOfClass:[OSPMapCSSRule class]])
         {
-            [self setKey:[[[styledef children] objectAtIndex:0] key]];
-            [self setSpecifiers:[[styledef children] objectAtIndex:2]];
+            [self setContainsRule:YES];
+            [self setRule:styledef];
+        }
+        else
+        {
+            [self setExit:[[[styledef children] objectAtIndex:0] isKindOfClass:[CPKeywordToken class]]];
+            if (![self isExit])
+            {
+                [self setKey:[[[styledef children] objectAtIndex:0] key]];
+                [self setSpecifiers:[[styledef children] objectAtIndex:2]];
+            }
         }
     }
     
