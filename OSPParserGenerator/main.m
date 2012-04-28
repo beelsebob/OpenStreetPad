@@ -18,14 +18,10 @@ int main (int argc, const char * argv[])
     {
         if (argc >= 2)
         {
-            NSCharacterSet *identifierCharacters = [NSCharacterSet characterSetWithCharactersInString:
-                                                    @"abcdefghijklmnopqrstuvwxyz"
-                                                    @"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                                    @"0123456789-_"];
-            NSCharacterSet *initialIdCharacters = [NSCharacterSet characterSetWithCharactersInString:
-                                                   @"abcdefghijklmnopqrstuvwxyz"
-                                                   @"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                                   @"_-"];
+            NSMutableCharacterSet *identifierCharacters = [NSMutableCharacterSet alphanumericCharacterSet];
+            [identifierCharacters addCharactersInString:@"-_"];
+            NSMutableCharacterSet *initialIdCharacters = [NSMutableCharacterSet letterCharacterSet];
+            [initialIdCharacters addCharactersInString:@"-_"];
             CPTokeniser *mapCssTokeniser = [[CPTokeniser alloc] init];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"node"     invalidFollowingCharacters:identifierCharacters]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"way"      invalidFollowingCharacters:identifierCharacters]];
@@ -49,19 +45,19 @@ int main (int argc, const char * argv[])
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"}"]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"("]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@")"]];
-            [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"."]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@","]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@";"]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"@import"]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"|z"]];
             [mapCssTokeniser addTokenRecogniser:[CPNumberRecogniser numberRecogniser]];
-            [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"-"]];
+            [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"."]];
+            [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"-" invalidFollowingCharacters:initialIdCharacters]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"!="]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"=~"]];
-            [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"<"]];
-            [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@">"]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"<="]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@">="]];
+            [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"<"]];
+            [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@">"]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"="]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"::"]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@":"]];
@@ -79,9 +75,8 @@ int main (int argc, const char * argv[])
             CPGrammar *grammar = [CPGrammar grammarWithStart:@"OSPMapCSSRuleset"
                                               backusNaurForm:
                                   @"OSPMapCSSRuleset         ::= <OSPMapCSSRule>*;"
-                                  @"OSPMapCSSRule            ::= <OSPMapCSSSelector> <OSPMapCSSCommaSelector>* <OSPMapCSSDeclaration>+ | <OSPMapCSSImport>;"
+                                  @"OSPMapCSSRule            ::= (<OSPMapCSSSelector> ',')+ <OSPMapCSSDeclaration>+ | <OSPMapCSSImport>;"
                                   @"OSPMapCSSImport          ::= '@import' 'url' '(' 'String' ')' 'Identifier';"
-                                  @"OSPMapCSSCommaSelector   ::= ',' <OSPMapCSSSelector>;"
                                   @"OSPMapCSSSelector        ::= <OSPMapCSSSubselector>+ <OSPMapCSSLayerIdentifier>?;"
                                   @"OSPMapCSSLayerIdentifier ::= '::' 'Identifier';"
                                   @"OSPMapCSSSubselector     ::= <OSPMapCSSObject> 'Whitespace' | <OSPMapCSSObject> <OSPMapCSSZoom> <OSPMapCSSTest>* | <OSPMapCSSObject> <OSPMapCSSTest>* | <OSPMapCSSObject> 'Whitespace' <OSPMapCSSClass>;"
@@ -91,7 +86,7 @@ int main (int argc, const char * argv[])
                                   @"condition                ::= <OSPMapCSSTag> <binary> <value> | <unary> <OSPMapCSSTag> | <OSPMapCSSTag>;"
                                   @"OSPMapCSSTag             ::= <OSPMapCSSKey>? (':' <OSPMapCSSKey>)*;"
                                   @"OSPMapCSSKey             ::= 'Identifier';"
-                                  @"value                    ::= 'String' | 'Regex';"
+                                  @"value                    ::= 'Identifier' | 'Number' | 'String' | 'Regex';"
                                   @"binary                   ::= '=' | '!=' | '=~' | '<' | '>' | '<=' | '>=';"
                                   @"unary                    ::= '-' | '!';"
                                   @"OSPMapCSSClass           ::= <class> | '!' <class>;"
@@ -108,7 +103,7 @@ int main (int argc, const char * argv[])
                                   @"Unit                     ::= 'pt' | 'px' | '%' | ;"
                                   @"OSPMapCSSCommaSize       ::= ',' <OSPMapCSSSize>;"
                                   @"OSPMapCSSColour          ::= 'HashColour' | 'rgb' '(' 'Number' ',' 'Number' ',' 'Number' ')' | 'rgba' '(' 'Number' ',' 'Number' ',' 'Number'  ',' 'Number' ')';"
-                                  @"OSPMapCSSUrl             ::= 'url' '(' 'String' ')';"
+                                  @"OSPMapCSSUrl             ::= 'url' '(' 'String' ')' | 'String';"
                                   @"OSPMapCSSEval            ::= 'eval' '(' 'String' ')';"
                                   @"OSPMapCSSTagSpec         ::= 'tag' '(' 'String' ')';"];
             CPParser *mapCssParser = [[CPLALR1Parser alloc] initWithGrammar:grammar];

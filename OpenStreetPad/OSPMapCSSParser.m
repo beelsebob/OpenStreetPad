@@ -42,6 +42,7 @@
         [self setTokeniser:[pt objectForKey:@"tokeniser"]];
         [self setParser:[pt objectForKey:@"parser"]];
         [[self tokeniser] setDelegate:self];
+        [[self parser] setDelegate:self];
     }
     
     return self;
@@ -75,7 +76,7 @@
     {
         inStyle = !inTest;
     }
-    else if ([name isEqualToString:@";"])
+    else if ([name isEqualToString:@";"] || [name isEqualToString:@"}"])
     {
         inStyle = NO;
     }
@@ -83,26 +84,30 @@
     {
         inRange = YES;
     }
-    else if (inRange && ![token isKindOfClass:[CPNumberToken class]] && ![name isEqualToString:@"-"])
-    {
-        inRange = NO;
-    }
     else if (inRange && [token isKindOfClass:[CPNumberToken class]])
     {
         return [[(CPNumberToken *)token number] floatValue] >= 0;
     }
-    else if ([token isKindOfClass:[CPKeywordToken class]])
+    else
     {
-        return (!inStyle ||
-                [symbolsSet characterIsMember:[name characterAtIndex:0]] ||
-                [name isEqualToString:@"eval"] ||
-                [name isEqualToString:@"tag"]  ||
-                [name isEqualToString:@"url"]  ||
-                [name isEqualToString:@"set"]  ||
-                [name isEqualToString:@"pt"]   ||
-                [name isEqualToString:@"px"]   ||
-                [name isEqualToString:@"rgb"]  ||
-                [name isEqualToString:@"rgba"]);
+        if (inRange && ![name isEqualToString:@"-"])
+        {
+            inRange = NO;
+        }
+        
+        if ([token isKindOfClass:[CPKeywordToken class]])
+        {
+            return (!(inStyle || inTest) || 
+                    [symbolsSet characterIsMember:[name characterAtIndex:0]] ||
+                    [name isEqualToString:@"eval"] ||
+                    [name isEqualToString:@"tag"]  ||
+                    [name isEqualToString:@"url"]  ||
+                    [name isEqualToString:@"set"]  ||
+                    [name isEqualToString:@"pt"]   ||
+                    [name isEqualToString:@"px"]   ||
+                    [name isEqualToString:@"rgb"]  ||
+                    [name isEqualToString:@"rgba"]);
+        }
     }
     
     return YES;
@@ -137,6 +142,30 @@
     }
     
     return [NSArray arrayWithObject:token];
+}
+
+- (NSUInteger)tokeniser:(CPTokeniser *)tokeniser didNotFindTokenOnInput:(NSString *)input position:(NSUInteger)position error:(NSString *__autoreleasing *)errorMessage
+{
+    NSLog(@"Argh");
+    return 1;
+}
+
+- (CPRecoveryAction *)parser:(CPParser *)parser didEncounterErrorOnInput:(CPTokenStream *)inputStream expecting:(NSSet *)acceptableTokens
+{
+    CPToken *t = [inputStream peekToken];
+    if ([t isEqual:[CPKeywordToken tokenWithKeyword:@"}"]] &&
+        [acceptableTokens containsObject:@";"])
+    {
+        return [CPRecoveryAction recoveryActionWithAdditionalToken:[CPKeywordToken tokenWithKeyword:@";"]];
+    }
+    if ([t isEqual:[CPKeywordToken tokenWithKeyword:@"{"]] &&
+        [acceptableTokens containsObject:@","])
+    {
+        return [CPRecoveryAction recoveryActionWithAdditionalToken:[CPKeywordToken tokenWithKeyword:@","]];
+    }
+    
+    NSLog(@"%ld:%ld: parse error.  Expected %@, found %@", (long)[t lineNumber] + 1, (long)[t columnNumber] + 1, acceptableTokens, t);
+    return [CPRecoveryAction recoveryActionStop];
 }
 
 @end

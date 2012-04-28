@@ -20,7 +20,8 @@
     
     if (nil != self)
     {
-        [self setContent:[NSURL URLWithString:[[[syntaxTree children] objectAtIndex:2] content]]];
+        NSArray *c = [syntaxTree children];
+        [self setContent:[NSURL URLWithString:[[c objectAtIndex:[c count] == 1 ? 0 : 2] content]]];
     }
     
     return self;

@@ -96,7 +96,7 @@
 {
     NSError *err;
     NSURL *url = [[NSBundle mainBundle] URLForResource:@"osm" withExtension:@"mcs"];
-    NSString *style = [NSString stringWithContentsOfURL:url encoding:NSASCIIStringEncoding error:&err];
+    NSString *style = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&err];
     if (nil != style)
     {
         OSPMapCSSParser *p = [[OSPMapCSSParser alloc] init];

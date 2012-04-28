@@ -34,14 +34,21 @@
     
     if (nil != self)
     {
-        if ([[syntaxTree children] count] == 1)
+        NSArray *c = [syntaxTree children];
+        if ([c count] == 1)
         {
-            return [[syntaxTree children] objectAtIndex:0];
+            return [c objectAtIndex:0];
         }
         else
         {
-            [self setSelectors:[[NSArray arrayWithObject:[[syntaxTree children] objectAtIndex:0]] arrayByAddingObjectsFromArray:[[syntaxTree children] objectAtIndex:1]]];
-            [self setDeclarations:[[syntaxTree children] objectAtIndex:2]];
+            NSArray *selectorCommas = [c objectAtIndex:0];
+            NSMutableArray *ses = [NSMutableArray arrayWithCapacity:[selectorCommas count]];
+            for (NSArray *t in selectorCommas)
+            {
+                [ses addObject:[t objectAtIndex:0]];
+            }
+            [self setSelectors:ses];
+            [self setDeclarations:[c objectAtIndex:1]];
         }
     }
     
