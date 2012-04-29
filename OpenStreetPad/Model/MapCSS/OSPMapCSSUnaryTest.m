@@ -38,6 +38,19 @@
     return self;
 }
 
+- (id)initWithTagName:(NSString *)tn negated:(BOOL)n
+{
+    self = [super init];
+    
+    if (nil != self)
+    {
+        [self setTagName:tn];
+        [self setNegated:n];
+    }
+    
+    return self;
+}
+
 - (NSString *)description
 {
     return [self isNegated] ? [NSString stringWithFormat:@"[!%@]", tagName] : [NSString stringWithFormat:@"[%@]", tagName];

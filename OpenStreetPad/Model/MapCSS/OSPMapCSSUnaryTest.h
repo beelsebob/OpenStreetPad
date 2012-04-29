@@ -15,4 +15,6 @@
 @property (readwrite, assign, getter=isNegated) BOOL negated;
 @property (readwrite, strong) NSString *tagName;
 
+- (id)initWithTagName:(NSString *)tagName negated:(BOOL)negated;
+
 @end
