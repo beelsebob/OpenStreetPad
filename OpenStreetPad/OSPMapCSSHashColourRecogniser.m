@@ -37,24 +37,43 @@
 - (CPToken *)recogniseTokenInString:(NSString *)tokenString currentTokenPosition:(NSUInteger *)tokenPosition
 {
     NSUInteger remainingChars = [tokenString length] - *tokenPosition;
-    if (remainingChars >= 7 &&
-        [[tokenString substringWithRange:NSMakeRange(*tokenPosition, 1)] isEqualToString:@"#"])
+    if ([[tokenString substringWithRange:NSMakeRange(*tokenPosition, 1)] isEqualToString:@"#"])
     {
-        NSString *redChars   = [tokenString substringWithRange:NSMakeRange(*tokenPosition + 1, 2)];
-        NSString *greenChars = [tokenString substringWithRange:NSMakeRange(*tokenPosition + 3, 2)];
-        NSString *blueChars  = [tokenString substringWithRange:NSMakeRange(*tokenPosition + 5, 2)];
         uint8_t red;
         uint8_t green;
         uint8_t blue;
-        BOOL isValid = [self interpretHex:redChars into:&red];
-        isValid &= [self interpretHex:greenChars into:&green];
-        isValid &= [self interpretHex:blueChars into:&blue];
-        if (isValid)
+        
+        if (remainingChars >= 7)
         {
-            *tokenPosition += 7;
-            return [OSPMapCSSHashColourToken tokenWithRed:red green:green blue:blue];
+            NSString *redChars   = [tokenString substringWithRange:NSMakeRange(*tokenPosition + 1, 2)];
+            NSString *greenChars = [tokenString substringWithRange:NSMakeRange(*tokenPosition + 3, 2)];
+            NSString *blueChars  = [tokenString substringWithRange:NSMakeRange(*tokenPosition + 5, 2)];
+            BOOL isValid = [self interpretHex:redChars into:&red];
+            isValid &= [self interpretHex:greenChars into:&green];
+            isValid &= [self interpretHex:blueChars into:&blue];
+            if (isValid)
+            {
+                *tokenPosition += 7;
+                return [OSPMapCSSHashColourToken tokenWithRed:red green:green blue:blue];
+            }
+        }
+        
+        if (remainingChars >= 4)
+        {
+            const char redChar   = [[tokenString substringWithRange:NSMakeRange(*tokenPosition + 1, 1)] cStringUsingEncoding:NSASCIIStringEncoding][0];
+            const char greenChar = [[tokenString substringWithRange:NSMakeRange(*tokenPosition + 2, 1)] cStringUsingEncoding:NSASCIIStringEncoding][0];
+            const char blueChar  = [[tokenString substringWithRange:NSMakeRange(*tokenPosition + 3, 1)] cStringUsingEncoding:NSASCIIStringEncoding][0];
+            BOOL isValid = [self interpetHexChar:redChar into:&red];
+            isValid &= [self interpetHexChar:greenChar into:&red];
+            isValid &= [self interpetHexChar:blueChar into:&blue];
+            if (isValid)
+            {
+                *tokenPosition += 4;
+                return [OSPMapCSSHashColourToken tokenWithRed:red * 16 green:green * 16 blue:blue * 16];
+            }
         }
     }
+             
     return nil;
 }
 
