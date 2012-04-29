@@ -418,4 +418,14 @@
     return [NSString stringWithFormat:@"Way with highway tag: %@", [[self tags] objectForKey:@"highway"]];
 }
 
+- (id)valueForTag:(NSString *)tagName
+{
+    if ([tagName isEqualToString:@":closed"])
+    {
+        return [nodes count] > 0 && [[nodes objectAtIndex:0] isEqualToNumber:[nodes lastObject]] ? @"yes" : @"no";
+    }
+    
+    return [super valueForTag:tagName];
+}
+
 @end
