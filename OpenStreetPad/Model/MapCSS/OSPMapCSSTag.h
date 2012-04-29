@@ -13,6 +13,6 @@
 @interface OSPMapCSSTag : NSObject <CPParseResult>
 
 @property (readwrite, assign, getter = isPseudoTag) BOOL pseudoTag;
-@property (readwrite, copy) NSArray *keys;
+@property (readwrite, copy) NSString *tagName;
 
 @end

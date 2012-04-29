@@ -21,7 +21,7 @@ way
   casing-linejoin: round;
 }
 
-area|z16-20[building]
+area|z16-20["building"]
 {
   z-index: 20;
   width: 1 pt;
@@ -43,7 +43,7 @@ area[building]
 @import url("highways.mcs") highways
 @import url("landuse.mcs") landuse
 
-way[railway="rail"]
+way["railway"="rail"]
 {
   width: 2pt;
   casing-width: 1pt;

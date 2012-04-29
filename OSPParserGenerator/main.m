@@ -85,7 +85,7 @@ int main (int argc, const char * argv[])
                                   @"range                    ::= 'Number' | 'Number' '-' 'Number' | 'Number' '-' | '-' 'Number';"
                                   @"OSPMapCSSTest            ::= '[' <condition> ']';"
                                   @"condition                ::= <OSPMapCSSTag> <binary> <value> | <unary> <OSPMapCSSTag> | <OSPMapCSSTag>;"
-                                  @"OSPMapCSSTag             ::= <OSPMapCSSKey>? (':' <OSPMapCSSKey>)*;"
+                                  @"OSPMapCSSTag             ::= 'String' | <OSPMapCSSKey>? (':' <OSPMapCSSKey>)*;"
                                   @"OSPMapCSSKey             ::= 'Identifier';"
                                   @"value                    ::= 'Identifier' | 'Number' | 'String' | 'Regex';"
                                   @"binary                   ::= '=' | '!=' | '=~' | '<' | '>' | '<=' | '>=';"

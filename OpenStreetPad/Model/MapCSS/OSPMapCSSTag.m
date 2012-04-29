@@ -13,7 +13,7 @@
 @implementation OSPMapCSSTag
 
 @synthesize pseudoTag;
-@synthesize keys;
+@synthesize tagName;
 
 - (id)initWithSyntaxTree:(CPSyntaxTree *)syntaxTree
 {
@@ -21,19 +21,30 @@
     
     if (nil != self)
     {
-        NSArray *possiblyTag = [[syntaxTree children] objectAtIndex:0];
-        BOOL ps = [possiblyTag count] == 0;
-        [self setPseudoTag:ps];
-        NSMutableArray *ks = [[NSMutableArray alloc] initWithCapacity:[[[syntaxTree children] objectAtIndex:1] count] + 1];
-        if (!ps)
+        NSArray *c = [syntaxTree children];
+        NSString *tn = nil;
+        
+        if ([c count] == 1)
         {
-            [ks addObject:[[possiblyTag objectAtIndex:0] key]];
+            tn = [[c objectAtIndex:0] content];
+            if ([tn characterAtIndex:0] == ':')
+            {
+                [self setPseudoTag:YES];
+            }
         }
-        for (NSArray *k in [[syntaxTree children] objectAtIndex:1])
+        else
         {
-            [ks addObject:[[k objectAtIndex:1] key]];
+            NSArray *possiblyTag = [c objectAtIndex:0];
+            BOOL ps = [possiblyTag count] == 0;
+            [self setPseudoTag:ps];
+            tn = ps ? [NSMutableString string] : [[[possiblyTag objectAtIndex:0] key] mutableCopy];
+            for (NSArray *k in [c objectAtIndex:1])
+            {
+                [(NSMutableString *)tn appendFormat:@":%@", [[k objectAtIndex:1] key]];
+            }
         }
-        [self setKeys:ks];
+        
+        [self setTagName:[self isPseudoTag] ? [tn substringFromIndex:1] : tn];
     }
     
     return self;
@@ -41,22 +52,7 @@
 
 - (NSString *)description
 {
-    NSMutableString *desc = [self isPseudoTag] ? [NSMutableString stringWithString:@":"] : [NSMutableString string];
-    NSUInteger keyNum = 0;
-    
-    for (NSString *key in [self keys])
-    {
-        if (keyNum < [[self keys] count] - 1)
-        {
-            [desc appendFormat:@"%@:", key];
-        }
-        else
-        {
-            [desc appendString:key];
-        }
-        keyNum++;
-    }
-    return desc;
+    return [self isPseudoTag] ? [NSString stringWithFormat:@":%@", [self tagName]] : [self tagName];
 }
 
 @end
