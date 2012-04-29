@@ -93,11 +93,39 @@
                 
                 if (nil == currentStyle)
                 {
-                    [styles setObject:[style mutableCopy] forKey:layerIdentifier];
+                    if ([layerIdentifier isEqualToString:@"*"])
+                    {
+                        [styles setObject:[style mutableCopy] forKey:layerIdentifier];
+                    }
+                    else
+                    {
+                        currentStyle = [[styles objectForKey:@"*"] mutableCopy];
+                        if (nil == currentStyle)
+                        {
+                            currentStyle = [style mutableCopy];
+                        }
+                        else
+                        {
+                            [currentStyle addEntriesFromDictionary:style];
+                        }
+                        [styles setObject:currentStyle forKey:layerIdentifier];
+                    }
                 }
                 else
                 {
                     [currentStyle addEntriesFromDictionary:style];
+                }
+                
+                if ([layerIdentifier isEqualToString:@"*"])
+                {
+                    for (NSString *existingLayerIdentifier in styles)
+                    {
+                        if (![existingLayerIdentifier isEqualToString:@"*"])
+                        {
+                            currentStyle = [styles objectForKey:existingLayerIdentifier];
+                            [currentStyle addEntriesFromDictionary:style];
+                        }
+                    }
                 }
             }
             

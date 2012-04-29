@@ -1,6 +1,6 @@
-//meta {
-//    title: "Osmosnimki mapcss stylesheet";   /* title shown in the menu */
-//}
+meta {
+    title: "Osmosnimki mapcss stylesheet";   /* title shown in the menu */
+}
 
 
 /*
@@ -21,46 +21,19 @@ canvas {
   default-lines: false;
 }
 
-way {
-    linejoin: miter;
-    linecap: none;
-    casing-linecap:none;
-}
-way::centerline {
-    linejoin: miter;
-    linecap: none;
-    casing-linecap:none;
-}
-way::ticks {
-    linejoin: miter;
-    linecap: none;
-    casing-linecap:none;
-}
-way::label {
-    linejoin: miter;
-    linecap: none;
-    casing-linecap:none;
-}
-way::lable {
-    linejoin: miter;
-    linecap: none;
-    casing-linecap:none;
-}
-
-
-/*area {
+area {
     fill-opacity: 0.0001;
-}*/
+}
 
-/*way:closed, relation[type=multipolygon] {
+way:closed, relation[type=multipolygon] {
     fill-opacity: 1.0;
-}*/
+}
 
-/**::* {
+*::* {
     text-halo-color: white;
     text-anchor-horizontal: center;
     text-anchor-vertical: center;
-}*/
+}
 
 
 

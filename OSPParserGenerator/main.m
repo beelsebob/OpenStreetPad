@@ -79,7 +79,7 @@ int main (int argc, const char * argv[])
                                   @"OSPMapCSSRule            ::= (<OSPMapCSSSelector> ',')+ <OSPMapCSSDeclaration>+ | <OSPMapCSSImport>;"
                                   @"OSPMapCSSImport          ::= '@import' 'url' '(' 'String' ')' 'Identifier';"
                                   @"OSPMapCSSSelector        ::= (<OSPMapCSSSubselector> '>'?)+ <OSPMapCSSLayerIdentifier>?;"
-                                  @"OSPMapCSSLayerIdentifier ::= '::' 'Identifier';"
+                                  @"OSPMapCSSLayerIdentifier ::= '::' 'Identifier' | '::' '*';"
                                   @"OSPMapCSSSubselector     ::= <OSPMapCSSObject> 'Whitespace' | <OSPMapCSSObject> <OSPMapCSSZoom>? <OSPMapCSSTest>* <OSPMapCSSClass>*;"
                                   @"OSPMapCSSZoom            ::= '|z' <range>;"
                                   @"range                    ::= 'Number' | 'Number' '-' 'Number' | 'Number' '-' | '-' 'Number';"

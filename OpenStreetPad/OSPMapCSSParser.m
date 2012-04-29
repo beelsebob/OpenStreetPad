@@ -24,6 +24,7 @@
     BOOL inTest;
     BOOL inStyle;
     BOOL justTokenisedObject;
+    BOOL justTokenisedDoubleColon;
     BOOL inRange;
 }
 
@@ -71,6 +72,11 @@
     else if ([name isEqualToString:@"]"])
     {
         inTest = NO;
+    }
+    else if ([name isEqualToString:@","])
+    {
+        inTest = NO;
+        inStyle = NO;
     }
     else if ([name isEqualToString:@":"])
     {
@@ -134,11 +140,17 @@
     {
         return [NSArray array];
     }
-    
+        
     if ([name isEqualToString:@"node"] || [name isEqualToString:@"way" ] || [name isEqualToString:@"relation"] ||
-        [name isEqualToString:@"area"] || [name isEqualToString:@"line"] || [name isEqualToString:@"canvas"] || [name isEqualToString:@"*"])
+        [name isEqualToString:@"area"] || [name isEqualToString:@"line"] || [name isEqualToString:@"canvas"] || ([name isEqualToString:@"*"] && !justTokenisedDoubleColon))
     {
         justTokenisedObject = YES;
+    }
+    
+    justTokenisedDoubleColon = NO;
+    if ([name isEqualToString:@"::"])
+    {
+        justTokenisedDoubleColon = YES;
     }
     
     return [NSArray arrayWithObject:token];
