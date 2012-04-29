@@ -171,6 +171,7 @@ way[highway]
     width: 0.5pt;
     z-index: 99.7;
     casing-color: rgba(1.0, 1.0, 1.0, 0.0);
+    casing-dashes: off;
     color: rgb(0.0, 0.0, 0.0);
   }
   

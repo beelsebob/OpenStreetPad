@@ -18,6 +18,7 @@ typedef enum
     OSPMapCSSObjectTypeArea,
     OSPMapCSSObjectTypeLine,
     OSPMapCSSObjectTypeCanvas,
+    OSPMapCSSObjectTypeMeta,
     OSPMapCSSObjectTypeAll
 } OSPMapCSSObjectType;
 

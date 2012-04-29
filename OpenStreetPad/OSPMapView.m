@@ -101,7 +101,7 @@
     {
         OSPMapCSSParser *p = [[OSPMapCSSParser alloc] init];
         [self setStylesheet:[p parse:style]];
-        [[self stylesheet] loadImportsRelativeToURL:[url URLByDeletingLastPathComponent]];
+        [[self stylesheet] deleteMetaAndLoadImportsRelativeToURL:[url URLByDeletingLastPathComponent]];
     }
     
     [[self dataSource] setDelegate:self];

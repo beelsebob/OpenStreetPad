@@ -19,4 +19,6 @@
 
 - (NSDictionary *)applyToObject:(OSPAPIObject *)object atZoom:(float)zoom stop:(BOOL *)stop;
 
+- (BOOL)isOnlyMeta;
+
 @end

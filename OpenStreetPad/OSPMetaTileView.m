@@ -422,21 +422,29 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
         CGContextSetStrokeColorWithColor(ctx, colour == nil ? [[UIColor blackColor] CGColor] : [colour CGColor]);
         NSString *lineCapName = [[[[style objectForKey:@"casing-linecap"] specifiers] objectAtIndex:0] stringValue];
         CGContextSetLineCap(ctx, nil != lineCapName ? CGLineCapFromNSString(lineCapName) : kCGLineCapRound);
-        NSString *lineJoinName = [[[[style objectForKey:@"casing-linejoin"] specifiers] objectAtIndex:0] stringValue];
+        NSString *lineJoinName = [[[[style objectForKey:@"casing-linejoin"] specifiers] objectAtIndex:0] stringValue] ?: [[[[style objectForKey:@"linejoin"] specifiers] objectAtIndex:0] stringValue];
         CGContextSetLineJoin(ctx, nil != lineJoinName ? CGLineJoinFromNSString(lineJoinName) : kCGLineJoinRound);
         
-        OSPMapCSSSpecifierList *dashSpec = [style objectForKey:@"casing-dashes"];
-        if (nil != dashSpec)
+        OSPMapCSSSpecifierList *dashSpec = [style objectForKey:@"casing-dashes"] ?: [style objectForKey:@"dashes"];
+        NSArray *dashSpecSpecifiers = [dashSpec specifiers];
+        if (nil != dashSpec && [dashSpecSpecifiers count] > 0)
         {
-            CGFloat *dashes = malloc([[dashSpec specifiers] count] * sizeof(CGFloat));
-            int i = 0;
-            for (OSPMapCSSSizeSpecifier *spec in [dashSpec specifiers])
+            if ([[dashSpecSpecifiers objectAtIndex:0] isKindOfClass:[OSPMapCSSNamedSpecifier class]])
             {
-                OSPMapCSSSize *size = [spec sizeValue];
-                if (nil != size)
+                CGContextSetLineDash(ctx, 0.0f, NULL, 0);
+            }
+            else
+            {
+                CGFloat *dashes = malloc([dashSpecSpecifiers count] * sizeof(CGFloat));
+                int i = 0;
+                for (OSPMapCSSSizeSpecifier *spec in dashSpecSpecifiers)
                 {
-                    dashes[i] = [size value] * scale;
-                    i++;
+                    OSPMapCSSSize *size = [spec sizeValue];
+                    if (nil != size)
+                    {
+                        dashes[i] = [size value] * scale;
+                        i++;
+                    }
                 }
                 CGContextSetLineDash(ctx, 0.0f, dashes, i);
                 free(dashes);
@@ -475,21 +483,29 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
         CGContextSetLineJoin(ctx, nil != lineJoinName ? CGLineJoinFromNSString(lineJoinName) : kCGLineJoinRound);
         
         OSPMapCSSSpecifierList *dashSpec = [style objectForKey:@"dashes"];
-        if (nil != dashSpec)
+        NSArray *dashSpecSpecifiers = [dashSpec specifiers];
+        if (nil != dashSpec && [dashSpecSpecifiers count] > 0)
         {
-            CGFloat *dashes = malloc([[dashSpec specifiers] count] * sizeof(CGFloat));
-            int i = 0;
-            for (OSPMapCSSSizeSpecifier *spec in [dashSpec specifiers])
+            if ([[dashSpecSpecifiers objectAtIndex:0] isKindOfClass:[OSPMapCSSNamedSpecifier class]])
             {
-                OSPMapCSSSize *size = [spec sizeValue];
-                if (nil != size)
-                {
-                    dashes[i] = [size value] * scale;
-                    i++;
-                }
+                CGContextSetLineDash(ctx, 0.0f, NULL, 0);
             }
-            CGContextSetLineDash(ctx, 0.0f, dashes, i);
-            free(dashes);
+            else
+            {
+                CGFloat *dashes = malloc([dashSpecSpecifiers count] * sizeof(CGFloat));
+                int i = 0;
+                for (OSPMapCSSSizeSpecifier *spec in dashSpecSpecifiers)
+                {
+                    OSPMapCSSSize *size = [spec sizeValue];
+                    if (nil != size)
+                    {
+                        dashes[i] = [size value] * scale;
+                        i++;
+                    }
+                }
+                CGContextSetLineDash(ctx, 0.0f, dashes, i);
+                free(dashes);
+            }
         }
         else
         {

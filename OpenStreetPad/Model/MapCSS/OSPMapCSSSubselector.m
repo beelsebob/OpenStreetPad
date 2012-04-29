@@ -148,6 +148,7 @@
         case OSPMapCSSObjectTypeAll:
             return YES;
         case OSPMapCSSObjectTypeCanvas:
+        case OSPMapCSSObjectTypeMeta:
             return NO;
     }
 }

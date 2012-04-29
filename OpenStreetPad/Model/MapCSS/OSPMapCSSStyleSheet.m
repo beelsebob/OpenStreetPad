@@ -31,9 +31,9 @@ static char oldZoomRef;
     return self;
 }
 
-- (void)loadImportsRelativeToURL:(NSURL *)baseURL
+- (void)deleteMetaAndLoadImportsRelativeToURL:(NSURL *)baseURL
 {
-    [[self ruleset] loadImportsRelativeToURL:baseURL];
+    [[self ruleset] deleteMetaAndLoadImportsRelativeToURL:baseURL];
 }
 
 - (NSArray *)styledObjects:(NSSet *)objects atZoom:(float)zoom

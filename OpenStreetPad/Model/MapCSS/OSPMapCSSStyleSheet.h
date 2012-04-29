@@ -18,7 +18,7 @@
 
 - (id)initWithRules:(OSPMapCSSRuleset *)ruleset;
 
-- (void)loadImportsRelativeToURL:(NSURL *)baseURL;
+- (void)deleteMetaAndLoadImportsRelativeToURL:(NSURL *)baseURL;
 
 - (NSArray *)styledObjects:(NSSet *)objects atZoom:(float)zoom;
 - (NSDictionary *)styleForCanvasAtZoom:(float)zoom;

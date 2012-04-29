@@ -1,3 +1,8 @@
+meta
+{
+  title: "A quick and dirty rip off of OSM.org's mapnik style";
+}
+
 node
 {
   exit;
@@ -47,6 +52,7 @@ way[railway="rail"]
   linecap: none;
   linejoin: round;
   dashes: 8, 8;
+  casing-dashes: off;
   exit;
 }
 

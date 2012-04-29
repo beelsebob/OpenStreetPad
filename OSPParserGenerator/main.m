@@ -29,6 +29,7 @@ int main (int argc, const char * argv[])
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"area"     invalidFollowingCharacters:identifierCharacters]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"line"     invalidFollowingCharacters:identifierCharacters]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"canvas"   invalidFollowingCharacters:identifierCharacters]];
+            [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"meta"     invalidFollowingCharacters:identifierCharacters]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"url"      invalidFollowingCharacters:identifierCharacters]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"eval"     invalidFollowingCharacters:identifierCharacters]];
             [mapCssTokeniser addTokenRecogniser:[CPKeywordRecogniser recogniserForKeyword:@"tag"      invalidFollowingCharacters:identifierCharacters]];
@@ -77,7 +78,7 @@ int main (int argc, const char * argv[])
                                   @"OSPMapCSSRuleset         ::= <OSPMapCSSRule>*;"
                                   @"OSPMapCSSRule            ::= (<OSPMapCSSSelector> ',')+ <OSPMapCSSDeclaration>+ | <OSPMapCSSImport>;"
                                   @"OSPMapCSSImport          ::= '@import' 'url' '(' 'String' ')' 'Identifier';"
-                                  @"OSPMapCSSSelector        ::= <OSPMapCSSSubselector>+ <OSPMapCSSLayerIdentifier>?;"
+                                  @"OSPMapCSSSelector        ::= (<OSPMapCSSSubselector> '>'?)+ <OSPMapCSSLayerIdentifier>?;"
                                   @"OSPMapCSSLayerIdentifier ::= '::' 'Identifier';"
                                   @"OSPMapCSSSubselector     ::= <OSPMapCSSObject> 'Whitespace' | <OSPMapCSSObject> <OSPMapCSSZoom> <OSPMapCSSTest>* | <OSPMapCSSObject> <OSPMapCSSTest>* | <OSPMapCSSObject> 'Whitespace' <OSPMapCSSClass>;"
                                   @"OSPMapCSSZoom            ::= '|z' <range>;"
@@ -91,7 +92,7 @@ int main (int argc, const char * argv[])
                                   @"unary                    ::= '-' | '!';"
                                   @"OSPMapCSSClass           ::= <class> | '!' <class>;"
                                   @"class                    ::= '.' 'Identifier';"
-                                  @"OSPMapCSSObject          ::= 'node' | 'way' | 'relation' | 'area' | 'line' | 'canvas' | '*';"
+                                  @"OSPMapCSSObject          ::= 'node' | 'way' | 'relation' | 'area' | 'line' | 'canvas' | 'meta' | '*';"
                                   @"OSPMapCSSDeclaration     ::= '{' <OSPMapCSSStyle>* '}';"
                                   @"OSPMapCSSStyle           ::= <Styledef> ';' | <OSPMapCSSRule>;"
                                   @"Styledef                 ::= <OSPMapCSSKey> ':' <OSPMapCSSSpecifierList> | 'exit';"

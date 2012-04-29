@@ -49,7 +49,13 @@ BOOL subSelectorsMatchObjectAtZoom(NSArray *subSelectors, NSInteger lastIndex, O
     
     if (nil != self)
     {
-        [self setSubselectors:[[syntaxTree children] objectAtIndex:0]];
+        NSArray *subSelectors = [[syntaxTree children] objectAtIndex:0];
+        NSMutableArray *realSubselectors = [NSMutableArray arrayWithCapacity:[subSelectors count]];
+        for (NSArray *a in subSelectors)
+        {
+            [realSubselectors addObject:[a objectAtIndex:0]];
+        }
+        [self setSubselectors:realSubselectors];
         NSArray *maybeLayerIdentifier = [[syntaxTree children] objectAtIndex:1];
         [self setLayerIdentifier:[maybeLayerIdentifier count] > 0 ? [[[[maybeLayerIdentifier objectAtIndex:0] children] objectAtIndex:1] identifier] : @"default"];
     }

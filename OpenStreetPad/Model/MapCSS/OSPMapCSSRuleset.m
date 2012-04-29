@@ -34,7 +34,7 @@
     return self;
 }
 
-- (void)loadImportsRelativeToURL:(NSURL *)baseURL
+- (void)deleteMetaAndLoadImportsRelativeToURL:(NSURL *)baseURL
 {
     NSMutableArray *newRules = [[self rules] mutableCopy];
     OSPMapCSSParser *parser = [[OSPMapCSSParser alloc] init];
@@ -48,14 +48,14 @@
             if (nil != completeURL)
             {
                 OSPMapCSSStyleSheet *stylesheet = [parser parse:[NSString stringWithContentsOfURL:completeURL encoding:NSUTF8StringEncoding error:NULL]];
-                [stylesheet loadImportsRelativeToURL:[completeURL URLByDeletingLastPathComponent]];
+                [stylesheet deleteMetaAndLoadImportsRelativeToURL:[completeURL URLByDeletingLastPathComponent]];
                 for (OSPMapCSSRule *importedRule in [[stylesheet ruleset] rules])
                 {
                     [newRules addObject:importedRule];
                 }
             }
         }
-        else
+        else if (![rule isOnlyMeta])
         {
             [newRules addObject:rule];
         }

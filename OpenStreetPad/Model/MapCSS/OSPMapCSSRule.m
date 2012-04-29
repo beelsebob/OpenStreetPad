@@ -9,6 +9,7 @@
 #import "OSPMapCSSRule.h"
 
 #import "OSPMapCSSSelector.h"
+#import "OSPMapCSSSubselector.h"
 #import "OSPMapCSSDeclaration.h"
 
 #import "OSPAPIObjectReference.h"
@@ -172,6 +173,18 @@ extern char styleKey;
     }
     
     return [NSDictionary dictionary];
+}
+
+- (BOOL)isOnlyMeta
+{
+    for (OSPMapCSSSelector *selector in selectors)
+    {
+        if ([[[selector subselectors] objectAtIndex:0] objectType] != OSPMapCSSObjectTypeMeta)
+        {
+            return NO;
+        }
+    }
+    return YES;
 }
 
 @end

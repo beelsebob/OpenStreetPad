@@ -24,6 +24,8 @@ NSString *NSStringFromOSPMapCSSObjectType(OSPMapCSSObjectType t)
             return @"node";
         case OSPMapCSSObjectTypeCanvas:
             return @"canvas";
+        case OSPMapCSSObjectTypeMeta:
+            return @"meta";
         case OSPMapCSSObjectTypeRelation:
             return @"relation";
     }
@@ -54,6 +56,10 @@ OSPMapCSSObjectType OSPMapCSSObjectTypeFromNSString(NSString *s)
     else if ([s isEqualToString:@"canvas"])
     {
         return OSPMapCSSObjectTypeCanvas;
+    }
+    else if ([s isEqualToString:@"meta"])
+    {
+        return OSPMapCSSObjectTypeMeta;
     }
     else
     {
