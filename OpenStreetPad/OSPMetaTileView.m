@@ -670,7 +670,7 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     CGFloat scaledOffset = offset * scale;
     
     OSPMapCSSSize *widthSize = [[[[style objectForKey:@"max-width"] specifiers] objectAtIndex:0] sizeValue];
-    CGFloat width = nil == widthSize ? 100.0f : [widthSize value];
+    CGFloat width = nil == widthSize ? 256.0f : [widthSize value];
     
     CGFloat scaledWidth = width * scale;
     
@@ -797,6 +797,13 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
         for (int runNumber = 0; runNumber < numRuns; runNumber++)
         {
             CTRunRef run = CFArrayGetValueAtIndex(runs, runNumber);
+            CFDictionaryRef attrs = CTRunGetAttributes(run);
+            CTFontRef f = CFDictionaryGetValue(attrs, kCTFontAttributeName);
+            if (NULL != f)
+            {
+                CGFontRef gf = CTFontCopyGraphicsFont(f, NULL);
+                CGContextSetFont(ctx, gf);
+            }
             CFIndex numGlyphs = CTRunGetGlyphCount(run);
             const CGGlyph *glyphs = CTRunGetGlyphsPtr(run);
             const CGPoint *glyphOffsets = CTRunGetPositionsPtr(run);
