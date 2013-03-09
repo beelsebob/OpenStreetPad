@@ -9,7 +9,7 @@ ScreenShot
 
 CoreParse
 =========
-To use OpenStreetPad, you must clone [CoreParse](http://www.github.org/beelsebob/CoreParse) into the same directory you clone OpenStreetPad into:
+To use OpenStreetPad, you must clone [CoreParse](http://www.github.com/beelsebob/CoreParse) into the same directory you clone OpenStreetPad into:
 
 > git clone git://github.com/beelsebob/CoreParse.git
 > 
