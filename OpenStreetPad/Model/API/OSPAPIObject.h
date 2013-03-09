@@ -18,6 +18,8 @@ typedef enum
     OSPMemberTypeNone     = 0x3
 } OSPMemberType;
 
+NSString *NSStringFromOSPMemberType(OSPMemberType t);
+
 @class OSPMap;
 
 @class OSPAPIObjectReference;

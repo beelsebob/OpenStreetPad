@@ -159,7 +159,7 @@ NSArray *OSPCoordinateRectSubtract(OSPCoordinateRect a, OSPCoordinateRect b)
     }
     else
     {
-        return [NSArray arrayWithObject:[OSPValue valueWithRect:a]];
+        return @[[OSPValue valueWithRect:a]];
     }
 }
 
@@ -187,11 +187,11 @@ NSArray *NSArrayOfTilesFromCoordinateRectWithinTile(OSPCoordinateRect r, double 
         }
         else
         {
-            return [NSArray arrayWithObject:[OSPValue valueWithTile:t]];
+            return @[[OSPValue valueWithTile:t]];
         }
     }
     
-    return [NSArray array];
+    return @[];
 }
 
 OSPCoordinateRect OSPCoordinateRectFromTile(OSPTile t)

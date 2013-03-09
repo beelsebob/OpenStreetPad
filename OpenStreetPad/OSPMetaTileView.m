@@ -135,7 +135,16 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
         CGContextSetFillColorSpace(ctx, patternSpace);
         CGColorSpaceRelease(patternSpace);
         static const CGPatternCallbacks callbacks = { 0, &patternCallback, NULL };
-        CGPatternRef pat = CGPatternCreate((__bridge void *)[NSDictionary dictionaryWithObjectsAndKeys:fillImage, @"I", [NSValue valueWithCGSize:s], @"s", nil], CGRectMake(0.0f, 0.0f, s.width, s.height), CGAffineTransformMakeScale(1.0, -1.0), s.width, s.height, kCGPatternTilingNoDistortion, true, &callbacks);
+        CGPatternRef pat = CGPatternCreate((__bridge void *)@{
+                                           @"I" : fillImage,
+                                           @"s" : [NSValue valueWithCGSize:s]},
+                                           CGRectMake(0.0f, 0.0f, s.width, s.height),
+                                           CGAffineTransformMakeScale(1.0, -1.0),
+                                           s.width,
+                                           s.height,
+                                           kCGPatternTilingNoDistortion,
+                                           true,
+                                           &callbacks);
         CGFloat alpha = 1;
         CGContextSetFillPattern(ctx, pat, &alpha);
         CGPatternRelease(pat);
@@ -374,7 +383,16 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
             CGContextSetFillColorSpace(ctx, patternSpace);
             CGColorSpaceRelease(patternSpace);
             static const CGPatternCallbacks callbacks = { 0, &patternCallback, NULL };
-            CGPatternRef pat = CGPatternCreate((__bridge void *)[NSDictionary dictionaryWithObjectsAndKeys:fillImage, @"I", [NSValue valueWithCGSize:s], @"s", nil], CGRectMake(0.0f, 0.0f, s.width, s.height), CGAffineTransformMakeScale(1.0, -1.0), s.width, s.height, kCGPatternTilingNoDistortion, true, &callbacks);
+            CGPatternRef pat = CGPatternCreate((__bridge void *)@{
+                                               @"I" : fillImage,
+                                               @"s" : [NSValue valueWithCGSize:s]},
+                                               CGRectMake(0.0f, 0.0f, s.width, s.height),
+                                               CGAffineTransformMakeScale(1.0, -1.0),
+                                               s.width,
+                                               s.height,
+                                               kCGPatternTilingNoDistortion,
+                                               true,
+                                               &callbacks);
             CGFloat alpha = 1;
             CGContextSetFillPattern(ctx, pat, &alpha);
             CGPatternRelease(pat);
@@ -527,7 +545,16 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
             CGContextSetStrokeColorSpace(ctx, patternSpace);
             CGColorSpaceRelease(patternSpace);
             static const CGPatternCallbacks callbacks = { 0, &patternCallback, NULL };
-            CGPatternRef pat = CGPatternCreate((__bridge void *)[NSDictionary dictionaryWithObjectsAndKeys:strokeImage, @"I", [NSValue valueWithCGSize:s], @"s", nil], CGRectMake(0.0f, 0.0f, s.width, s.height), CGAffineTransformMakeScale(1.0, -1.0), s.width, s.height, kCGPatternTilingNoDistortion, true, &callbacks);
+            CGPatternRef pat = CGPatternCreate((__bridge void *)@{
+                                               @"I" : strokeImage,
+                                               @"s" : [NSValue valueWithCGSize:s]},
+                                               CGRectMake(0.0f, 0.0f, s.width, s.height),
+                                               CGAffineTransformMakeScale(1.0, -1.0),
+                                               s.width,
+                                               s.height,
+                                               kCGPatternTilingNoDistortion,
+                                               true,
+                                               &callbacks);
             CGFloat alpha = 1;
             CGContextSetStrokePattern(ctx, pat, &alpha);
             CGPatternRelease(pat);
@@ -679,15 +706,11 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     const CTLineBreakMode lineBreakMode = kCTLineBreakByWordWrapping;
     const CTParagraphStyleSetting paragraphStyleSettings[] = {{.spec = kCTParagraphStyleSpecifierLineBreakMode, .valueSize = sizeof(lineBreakMode), .value = &lineBreakMode}};
     CTParagraphStyleRef paragraphStyle = CTParagraphStyleCreate(paragraphStyleSettings, sizeof(paragraphStyleSettings) / sizeof(paragraphStyleSettings[0]));
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                (__bridge id)font, kCTFontAttributeName,
-                                paragraphStyle, kCTParagraphStyleAttributeName,
-                                nil];
-    NSMutableDictionary *scaledAttributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                             (__bridge id)scaledFont, kCTFontAttributeName,
-                                             kCFBooleanTrue, kCTForegroundColorFromContextAttributeName,
-                                             paragraphStyle, kCTParagraphStyleAttributeName,
-                                             nil];
+    NSDictionary *attributes = @{(__bridge NSString *)kCTFontAttributeName           : (__bridge id)font,
+                                 (__bridge NSString *)kCTParagraphStyleAttributeName : (__bridge id)paragraphStyle};
+    NSMutableDictionary *scaledAttributes = [@{(__bridge NSString *)kCTFontAttributeName                       : (__bridge id)scaledFont,
+                                               (__bridge NSString *)kCTForegroundColorFromContextAttributeName : (__bridge NSNumber *)kCFBooleanTrue,
+                                               (__bridge NSString *)kCTParagraphStyleAttributeName             : (__bridge id)paragraphStyle} mutableCopy];
     CFRelease(paragraphStyle);
     
     CFAttributedStringRef attrString = CFAttributedStringCreate(kCFAllocatorDefault, (__bridge CFStringRef)text, (__bridge CFDictionaryRef)attributes);
@@ -741,6 +764,7 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     }
     while (start < length);
     CFRelease(typesetter);
+    CFRelease(scaledTypesetter);
     
     CFRelease(font);
     CFRelease(scaledFont);
@@ -762,10 +786,8 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
     CGFloat offset = nil == vOffsetSize ? 0.0f : [vOffsetSize value];
     CGFloat scaledOffset = offset * scale;
     
-    NSMutableDictionary *scaledAttributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                             (__bridge id)scaledFont, kCTFontAttributeName,
-                                             kCFBooleanTrue, kCTForegroundColorFromContextAttributeName,
-                                             nil];
+    NSMutableDictionary *scaledAttributes = [@{(__bridge NSString *)kCTFontAttributeName                       : (__bridge id)scaledFont,
+                                               (__bridge NSString *)kCTForegroundColorFromContextAttributeName : (__bridge NSNumber *)kCFBooleanTrue} mutableCopy];
     
     CFAttributedStringRef scaledAttrString = CFAttributedStringCreate(kCFAllocatorDefault, (__bridge CFStringRef)text, (__bridge CFDictionaryRef)scaledAttributes);
     CTTypesetterRef scaledTypesetter = CTTypesetterCreateWithAttributedString(scaledAttrString);

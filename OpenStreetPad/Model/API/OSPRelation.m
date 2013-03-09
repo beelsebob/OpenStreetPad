@@ -39,7 +39,7 @@
     
     if (nil != self)
     {
-        [self setMembers:[NSArray array]];
+        [self setMembers:@[]];
     }
     
     return self;

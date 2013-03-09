@@ -172,7 +172,7 @@ extern char styleKey;
         return layerIdentifiers;
     }
     
-    return [NSDictionary dictionary];
+    return @{};
 }
 
 - (BOOL)isOnlyMeta

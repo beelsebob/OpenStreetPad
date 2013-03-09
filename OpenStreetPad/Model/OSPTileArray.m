@@ -83,7 +83,7 @@ typedef enum
                     OSPTileTree *bottomRight = [[OSPTileTree alloc] initWithTile:(OSPTile){.x = t.x * 2 + 1, .y = t.y * 2    , .zoom = t.zoom + 1}];
                     OSPTileTree *topLeft     = [[OSPTileTree alloc] initWithTile:(OSPTile){.x = t.x * 2    , .y = t.y * 2 + 1, .zoom = t.zoom + 1}];
                     OSPTileTree *topRight    = [[OSPTileTree alloc] initWithTile:(OSPTile){.x = t.x * 2 + 1, .y = t.y * 2 + 1, .zoom = t.zoom + 1}];
-                    [self setSubTrees:[NSArray arrayWithObjects:bottomLeft, bottomRight, topLeft, topRight, nil]];
+                    [self setSubTrees:@[bottomLeft, bottomRight, topLeft, topRight]];
                 }
                 [[[self subTrees] objectAtIndex:[self indexForChild:tile]] addTile:tile];
                 BOOL allIncluded = YES;
@@ -141,12 +141,12 @@ typedef enum
     {
         if ([self isIncluded])
         {
-            return [NSArray array];
+            return @[];
         }
         
         if ([self isLeaf])
         {
-            return [NSArray arrayWithObjects:[OSPValue valueWithTile:tile], nil];
+            return @[[OSPValue valueWithTile:tile]];
         }
         
         OSPTile t = [self representedTile];
@@ -165,12 +165,12 @@ typedef enum
     {
         if ([self isIncluded])
         {
-            return [NSArray array];
+            return @[];
         }
         
         if ([self isLeaf])
         {
-            return [NSArray arrayWithObjects:[OSPValue valueWithTile:[self representedTile]], nil];
+            return @[[OSPValue valueWithTile:[self representedTile]]];
         }
         
         NSMutableArray *childNotIncludedTiles = [NSMutableArray array];

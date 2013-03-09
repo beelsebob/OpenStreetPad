@@ -171,7 +171,7 @@
             }
         }
     }
-    return [NSDictionary dictionary];
+    return @{};
 }
 
 @end

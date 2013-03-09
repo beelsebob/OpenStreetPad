@@ -83,7 +83,7 @@ NSString *XMLEncodingNameFromNSStringEncoding(NSStringEncoding enc);
 
 - (void)writeElement:(NSString *)element
 {
-    [self writeElement:element withAttributes:[NSDictionary dictionary]];
+    [self writeElement:element withAttributes:@{}];
 }
 
 - (void)writeElement:(NSString *)element withAttributes:(NSDictionary *)attributes
@@ -106,7 +106,7 @@ NSString *XMLEncodingNameFromNSStringEncoding(NSStringEncoding enc);
 
 - (void)writeStartElement:(NSString *)element
 {
-    [self writeStartElement:element withAttributes:[NSDictionary dictionary]];
+    [self writeStartElement:element withAttributes:@{}];
 }
 
 - (void)writeStartElement:(NSString *)element withAttributes:(NSDictionary *)attributes

@@ -71,11 +71,7 @@
         }
     }
     
-    [[self writer] writeStartElement:@"osm"
-                      withAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                      @"0.6", @"version",
-                                      @"OpenStreetPad", @"generator",
-                                      nil]];
+    [[self writer] writeStartElement:@"osm" withAttributes:@{@"version" : @"0.6", @"generator" : @"OpenStreetPad"}];
     if ([nodes count] > 0)
     {
         OSPCoordinateRect b;
@@ -92,12 +88,11 @@
         }
         
         [[self writer] writeElement:@"bounds"
-                     withAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                     [NSString stringWithFormat:@"%f", b.origin.y], @"minlat",
-                                     [NSString stringWithFormat:@"%f", b.origin.x], @"minlon",
-                                     [NSString stringWithFormat:@"%f", b.origin.y + b.size.y], @"maxlat",
-                                     [NSString stringWithFormat:@"%f", b.origin.x + b.size.x], @"maxlon",
-                                     nil]];
+                     withAttributes:@{@"minlat" : [NSString stringWithFormat:@"%f", b.origin.y],
+                                      @"minlon" : [NSString stringWithFormat:@"%f", b.origin.x],
+                                      @"maxlat" : [NSString stringWithFormat:@"%f", b.origin.y + b.size.y],
+                                      @"maxlon" : [NSString stringWithFormat:@"%f", b.origin.x + b.size.x]}];
+         
         for (OSPNode *node in nodes)
         {
             [self writeNode:node];
@@ -118,25 +113,23 @@
 {
     CLLocationCoordinate2D l = [node location];
     [[self writer] writeStartElement:@"node"
-                      withAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                      [NSString stringWithFormat:@"%ld", (long)[node identity]],    @"id",
-                                      [NSString stringWithFormat:@"%f", l.longitude],         @"lon",
-                                      [NSString stringWithFormat:@"%f", l.latitude],          @"lat",
-                                      [node user],                                            @"user",
-                                      [NSString stringWithFormat:@"%lu", (long)[node userId]],      @"uid",
-                                      [node visible] ? @"true" : @"false",                    @"visible",
-                                      [NSString stringWithFormat:@"%lu", (long)[node version]],     @"version",
-                                      [NSString stringWithFormat:@"%lu", (long)[node changesetId]], @"changeset",
-                                      [[self dateFormatter] stringFromDate:[node timestamp]], @"timestamp",
-                                      nil]];
+                      withAttributes:@{
+     @"id"        : [NSString stringWithFormat:@"%ld", (long)[node identity]],
+     @"lon"       : [NSString stringWithFormat:@"%f", l.longitude],
+     @"lat"       : [NSString stringWithFormat:@"%f", l.latitude],
+     @"user"      : [node user],
+     @"uid"       : [NSString stringWithFormat:@"%lu", (long)[node userId]],
+     @"visible"   : [node visible] ? @"true" : @"false",
+     @"version"   : [NSString stringWithFormat:@"%lu", (long)[node version]],
+     @"changeset" : [NSString stringWithFormat:@"%lu", (long)[node changesetId]],
+     @"timestamp" : [[self dateFormatter] stringFromDate:[node timestamp]]}];
     NSDictionary *ts = [node tags];
     for (NSString *tagKey in ts)
     {
         [[self writer] writeElement:@"tag"
-                     withAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                     tagKey,                   @"k",
-                                     [ts objectForKey:tagKey], @"v",
-                                     nil]];
+                     withAttributes:@{
+         @"k" : tagKey,
+         @"v" : ts[tagKey]}];
     }
     [[self writer] writeEndElement];
 }
@@ -144,30 +137,26 @@
 - (void)writeWay:(OSPWay *)way
 {
     [[self writer] writeStartElement:@"way"
-                      withAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                      [NSString stringWithFormat:@"%ld", (long)[way identity]],    @"id",
-                                      [way user],                                            @"user",
-                                      [NSString stringWithFormat:@"%lu", (long)[way userId]],      @"uid",
-                                      [way visible] ? @"true" : @"false",                    @"visible",
-                                      [NSString stringWithFormat:@"%lu", (long)[way version]],     @"version",
-                                      [NSString stringWithFormat:@"%lu", (long)[way changesetId]], @"changeset",
-                                      [[self dateFormatter] stringFromDate:[way timestamp]], @"timestamp",
-                                      nil]];
+                      withAttributes:@{
+     @"id"        : [NSString stringWithFormat:@"%ld", (long)[way identity]],
+     @"user"      : [way user],
+     @"uid"       : [NSString stringWithFormat:@"%lu", (long)[way userId]],
+     @"visible"   : [way visible] ? @"true" : @"false",
+     @"version"   : [NSString stringWithFormat:@"%lu", (long)[way version]],
+     @"changeset" : [NSString stringWithFormat:@"%lu", (long)[way changesetId]],
+     @"timestamp" : [[self dateFormatter] stringFromDate:[way timestamp]]}];
     for (NSNumber *nodeRef in [way nodes])
     {
         [[self writer] writeElement:@"nd"
-                     withAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                     [NSString stringWithFormat:@"%@", nodeRef], @"ref",
-                                     nil]];
+                     withAttributes:@{ @"ref" : [nodeRef description] }];
     }
     NSDictionary *ts = [way tags];
     for (NSString *tagKey in ts)
     {
         [[self writer] writeElement:@"tag"
-                     withAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                     tagKey,                   @"k",
-                                     [ts objectForKey:tagKey], @"v",
-                                     nil]];
+                     withAttributes:@{
+         @"k" : tagKey,
+         @"v" : ts[tagKey]}];
     }
     [[self writer] writeEndElement];
 }
@@ -175,32 +164,29 @@
 - (void)writeRelation:(OSPRelation *)relation
 {
     [[self writer] writeStartElement:@"relation"
-                      withAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                      [NSString stringWithFormat:@"%ld", (long)[relation identity]],    @"id",
-                                      [relation user],                                            @"user",
-                                      [NSString stringWithFormat:@"%lu", (long)[relation userId]],      @"uid",
-                                      [relation visible] ? @"true" : @"false",                    @"visible",
-                                      [NSString stringWithFormat:@"%lu", (long)[relation version]],     @"version",
-                                      [NSString stringWithFormat:@"%lu", (long)[relation changesetId]], @"changeset",
-                                      [[self dateFormatter] stringFromDate:[relation timestamp]], @"timestamp",
-                                      nil]];
+                      withAttributes:@{
+     @"id"        : [NSString stringWithFormat:@"%ld", (long)[relation identity]],
+     @"user"      : [relation user],
+     @"uid"       : [NSString stringWithFormat:@"%lu", (long)[relation userId]],
+     @"visible"   : [relation visible] ? @"true" : @"false",
+     @"version"   : [NSString stringWithFormat:@"%lu", (long)[relation version]],
+     @"changeset" : [NSString stringWithFormat:@"%lu", (long)[relation changesetId]],
+     @"timestamp" : [[self dateFormatter] stringFromDate:[relation timestamp]]}];
     for (OSPMember *member in [relation members])
     {
         [[self writer] writeElement:@"member"
-                     withAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                     [member referencedObjectType] == OSPMemberTypeNode ? @"node" : [member referencedObjectType] == OSPMemberTypeWay ? @"way" : @"relation", @"type",
-                                     [NSString stringWithFormat:@"%lu", (long)[member referencedObjectId]], @"ref",
-                                     [member role], @"role",
-                                     nil]];
+                     withAttributes:@{
+         @"type" : NSStringFromOSPMemberType([member referencedObjectType]),
+         @"ref"  : [NSString stringWithFormat:@"%lu", (long)[member referencedObjectId]],
+         @"role" : [member role]}];
     }
     NSDictionary *ts = [relation tags];
     for (NSString *tagKey in ts)
     {
         [[self writer] writeElement:@"tag"
-                     withAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                     tagKey,                   @"k",
-                                     [ts objectForKey:tagKey], @"v",
-                                     nil]];
+                     withAttributes:@{
+         @"k" : tagKey,
+         @"v" : ts[tagKey]}];
     }
     [[self writer] writeEndElement];
 }

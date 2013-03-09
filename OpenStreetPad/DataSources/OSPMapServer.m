@@ -98,7 +98,7 @@ typedef enum
     {
         [self setCompleted:NO];
         [self setData:[NSMutableData data]];
-        [self setReceivedObjects:[NSArray array]];
+        [self setReceivedObjects:@[]];
     }
     
     return self;

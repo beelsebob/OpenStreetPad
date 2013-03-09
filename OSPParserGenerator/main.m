@@ -115,10 +115,8 @@ int main (int argc, const char * argv[])
             }
             else
             {
-                [NSKeyedArchiver archiveRootObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                    mapCssTokeniser, @"tokeniser",
-                                                    mapCssParser   , @"parser",
-                                                    nil]
+                [NSKeyedArchiver archiveRootObject:@{@"tokeniser" : mapCssTokeniser,
+                                                     @"parser"    : mapCssParser}
                                             toFile:[[NSString stringWithCString:argv[1] encoding:NSASCIIStringEncoding] stringByExpandingTildeInPath]];
             }
         }

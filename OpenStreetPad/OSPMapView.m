@@ -126,7 +126,7 @@
 
 - (void)dataSource:(OSPDataSource *)mapServer didLoadObjectsInArea:(OSPCoordinateRect)area
 {
-    for (OSPMetaTileView *metaTileView in [NSArray arrayWithObjects:[self bottomLeft], [self bottomRight], [self topLeft], [self topRight], nil])
+    for (OSPMetaTileView *metaTileView in @[[self bottomLeft], [self bottomRight], [self topLeft], [self topRight]])
     {
         [metaTileView setNeedsDisplayInMapArea:area];
     }
@@ -163,7 +163,7 @@
     int yMetaTile = (int)yFloatingMetaTile;
     float yMetaTilePosition = 1024.0f * (yFloatingMetaTile - (float)yMetaTile);
     double metaTileSize = 1.0 / numberOfMetaTilesAcrossWorld;
-    for (OSPMetaTileView *metaView in [NSArray arrayWithObjects:[self bottomLeft], [self bottomRight], [self topLeft], [self topRight], nil])
+    for (OSPMetaTileView *metaView in @[[self bottomLeft], [self bottomRight], [self topLeft], [self topRight]])
     {
         CGPoint p = [metaView center];
         [metaView setCenter:CGPointMake((c.x - newC.x) * invPixelSize + p.x, (c.y - newC.y) * invPixelSize + p.y)];

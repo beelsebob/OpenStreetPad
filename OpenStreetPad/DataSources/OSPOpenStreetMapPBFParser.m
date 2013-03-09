@@ -216,7 +216,7 @@ OSPMemberType OSPMemberTypeFromRelation_MemberType(Relation_MemberType t)
         OSPNode *ospNode = [[OSPNode alloc] init];
         
         NSMutableDictionary *tags = [NSMutableDictionary dictionaryWithCapacity:[[node valsList] count]];
-        PSYMultiEnumerator([NSArray arrayWithObjects:[node valsList], [node keysList], nil], NO, ^ (__unsafe_unretained id const *objects, BOOL *stop)
+        PSYMultiEnumerator(@[[node valsList], [node keysList]], NO, ^ (__unsafe_unretained id const *objects, BOOL *stop)
                            {
                                [tags setValue:[stringTable objectAtIndex:[objects[0] unsignedLongValue]]
                                        forKey:[stringTable objectAtIndex:[objects[1] unsignedLongValue]]];
@@ -355,14 +355,14 @@ OSPMemberType OSPMemberTypeFromRelation_MemberType(Relation_MemberType t)
         OSPRelation *ospRelation = [[OSPRelation alloc] init];
         
         NSMutableDictionary *tags = [NSMutableDictionary dictionaryWithCapacity:[[relation valsList] count]];
-        PSYMultiEnumerator([NSArray arrayWithObjects:[relation valsList], [relation keysList], nil], NO, ^ (__unsafe_unretained id const *objects, BOOL *stop)
+        PSYMultiEnumerator(@[[relation valsList], [relation keysList]], NO, ^ (__unsafe_unretained id const *objects, BOOL *stop)
                            {
                                [tags setValue:[stringTable objectAtIndex:[objects[0] unsignedLongValue]]
                                        forKey:[stringTable objectAtIndex:[objects[1] unsignedLongValue]]];
                            });
         __block int64_t deltaMemberId = 0;
         NSMutableArray *members = [NSMutableArray arrayWithCapacity:[[relation rolesSidList] count]];
-        PSYMultiEnumerator([NSArray arrayWithObjects:[relation rolesSidList], [relation memidsList], [relation typesList], nil], NO, ^ (__unsafe_unretained id const *objects, BOOL *stop)
+        PSYMultiEnumerator(@[[relation rolesSidList], [relation memidsList], [relation typesList]], NO, ^ (__unsafe_unretained id const *objects, BOOL *stop)
                            {
                                deltaMemberId += [objects[1] longLongValue];
                                [members addObject:[[OSPMember alloc] initWithType:OSPMemberTypeFromRelation_MemberType([objects[2] intValue])

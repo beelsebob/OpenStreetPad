@@ -27,7 +27,7 @@
 
 - (id)init
 {
-    return [self initWithRects:[NSArray array]];
+    return [self initWithRects:@[]];
 }
 
 + (id)areaWithRects:(NSArray *)rects

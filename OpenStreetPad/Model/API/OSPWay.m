@@ -84,8 +84,8 @@
     
     if (nil != self)
     {
-        [self setNodes:[NSArray array]];
-        nodeObjects = [NSArray array];
+        [self setNodes:@[]];
+        nodeObjects = [NSMutableArray array];
         nodeObjectsValid = YES;
     }
     

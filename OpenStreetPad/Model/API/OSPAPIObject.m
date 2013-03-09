@@ -59,7 +59,7 @@
     {
         [self setUser:@""];
         [self setTimestamp:[NSDate date]];
-        [self setTags:[NSDictionary dictionary]];
+        [self setTags:@{}];
         [self setParents:[NSSet set]];
     }
     
@@ -119,3 +119,14 @@
 }
 
 @end
+
+NSString *NSStringFromOSPMemberType(OSPMemberType t)
+{
+    switch (t)
+    {
+        case OSPMemberTypeNode:     return @"node";
+        case OSPMemberTypeWay:      return @"way";
+        case OSPMemberTypeRelation: return @"relation";
+        case OSPMemberTypeNone:     return @"";
+    }
+}
