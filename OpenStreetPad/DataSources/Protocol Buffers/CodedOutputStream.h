@@ -150,9 +150,6 @@ int32_t computeEnumSize(int32_t fieldNumber, int32_t value);
 - (void) writeRawVarint32:(int32_t) value;
 - (void) writeRawVarint64:(int64_t) value;
 
-- (void) writeRawLittleEndian32:(int32_t) value;
-- (void) writeRawLittleEndian64:(int64_t) value;
-
 - (void) writeRawData:(NSData*) data;
 - (void) writeRawData:(NSData*) data offset:(int32_t) offset length:(int32_t) length;
 

@@ -22,7 +22,6 @@
 - (PBMutableField*) mergeFromField:(PBField*) other;
 
 - (PBMutableField*) clear;
-- (PBMutableField*) mergeFromField:(PBField*) other;
 - (PBMutableField*) addVarint:(int64_t) value;
 - (PBMutableField*) addFixed32:(int32_t) value;
 - (PBMutableField*) addFixed64:(int64_t) value;

@@ -119,30 +119,31 @@
     return YES;
 }
 
-- (NSArray *)tokeniser:(CPTokeniser *)tokeniser willProduceToken:(CPToken *)token
+- (void)tokeniser:(CPTokeniser *)tokeniser requestsToken:(CPToken *)token pushedOntoStream:(CPTokenStream *)stream
 {
-    NSString *name = [token name];
-    
     if ([token isKindOfClass:[CPWhiteSpaceToken class]])
     {
         if (justTokenisedObject)
         {
-            return [NSArray arrayWithObject:token];
+            [stream pushToken:token];
         }
-        else
-        {
-            return [NSArray array];
-        }
+        return;
     }
     
+    NSString *name = [token name];
     justTokenisedObject = NO;
     if ([name isEqualToString:@"Comment"])
     {
-        return [NSArray array];
+        return;
     }
-        
-    if ([name isEqualToString:@"node"] || [name isEqualToString:@"way" ] || [name isEqualToString:@"relation"] ||
-        [name isEqualToString:@"area"] || [name isEqualToString:@"line"] || [name isEqualToString:@"canvas"] || ([name isEqualToString:@"*"] && !justTokenisedDoubleColon))
+    
+    if ([name isEqualToString:@"node"    ] ||
+        [name isEqualToString:@"way"     ] ||
+        [name isEqualToString:@"relation"] ||
+        [name isEqualToString:@"area"    ] ||
+        [name isEqualToString:@"line"    ] ||
+        [name isEqualToString:@"canvas"  ] ||
+        ([name isEqualToString:@"*"] && !justTokenisedDoubleColon))
     {
         justTokenisedObject = YES;
     }
@@ -153,12 +154,12 @@
         justTokenisedDoubleColon = YES;
     }
     
-    return [NSArray arrayWithObject:token];
+    [stream pushToken:token];
 }
 
 - (NSUInteger)tokeniser:(CPTokeniser *)tokeniser didNotFindTokenOnInput:(NSString *)input position:(NSUInteger)position error:(NSString *__autoreleasing *)errorMessage
 {
-    NSLog(@"Argh");
+    NSLog(@"Argh, my error reporting is really awesome");
     return 1;
 }
 

@@ -119,14 +119,14 @@
     CLLocationCoordinate2D l = [node location];
     [[self writer] writeStartElement:@"node"
                       withAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                      [NSString stringWithFormat:@"%ld", [node identity]],    @"id",
+                                      [NSString stringWithFormat:@"%ld", (long)[node identity]],    @"id",
                                       [NSString stringWithFormat:@"%f", l.longitude],         @"lon",
                                       [NSString stringWithFormat:@"%f", l.latitude],          @"lat",
                                       [node user],                                            @"user",
-                                      [NSString stringWithFormat:@"%lu", [node userId]],      @"uid",
+                                      [NSString stringWithFormat:@"%lu", (long)[node userId]],      @"uid",
                                       [node visible] ? @"true" : @"false",                    @"visible",
-                                      [NSString stringWithFormat:@"%lu", [node version]],     @"version",
-                                      [NSString stringWithFormat:@"%lu", [node changesetId]], @"changeset",
+                                      [NSString stringWithFormat:@"%lu", (long)[node version]],     @"version",
+                                      [NSString stringWithFormat:@"%lu", (long)[node changesetId]], @"changeset",
                                       [[self dateFormatter] stringFromDate:[node timestamp]], @"timestamp",
                                       nil]];
     NSDictionary *ts = [node tags];
@@ -145,12 +145,12 @@
 {
     [[self writer] writeStartElement:@"way"
                       withAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                      [NSString stringWithFormat:@"%ld", [way identity]],    @"id",
+                                      [NSString stringWithFormat:@"%ld", (long)[way identity]],    @"id",
                                       [way user],                                            @"user",
-                                      [NSString stringWithFormat:@"%lu", [way userId]],      @"uid",
+                                      [NSString stringWithFormat:@"%lu", (long)[way userId]],      @"uid",
                                       [way visible] ? @"true" : @"false",                    @"visible",
-                                      [NSString stringWithFormat:@"%lu", [way version]],     @"version",
-                                      [NSString stringWithFormat:@"%lu", [way changesetId]], @"changeset",
+                                      [NSString stringWithFormat:@"%lu", (long)[way version]],     @"version",
+                                      [NSString stringWithFormat:@"%lu", (long)[way changesetId]], @"changeset",
                                       [[self dateFormatter] stringFromDate:[way timestamp]], @"timestamp",
                                       nil]];
     for (NSNumber *nodeRef in [way nodes])
@@ -176,12 +176,12 @@
 {
     [[self writer] writeStartElement:@"relation"
                       withAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                      [NSString stringWithFormat:@"%ld", [relation identity]],    @"id",
+                                      [NSString stringWithFormat:@"%ld", (long)[relation identity]],    @"id",
                                       [relation user],                                            @"user",
-                                      [NSString stringWithFormat:@"%lu", [relation userId]],      @"uid",
+                                      [NSString stringWithFormat:@"%lu", (long)[relation userId]],      @"uid",
                                       [relation visible] ? @"true" : @"false",                    @"visible",
-                                      [NSString stringWithFormat:@"%lu", [relation version]],     @"version",
-                                      [NSString stringWithFormat:@"%lu", [relation changesetId]], @"changeset",
+                                      [NSString stringWithFormat:@"%lu", (long)[relation version]],     @"version",
+                                      [NSString stringWithFormat:@"%lu", (long)[relation changesetId]], @"changeset",
                                       [[self dateFormatter] stringFromDate:[relation timestamp]], @"timestamp",
                                       nil]];
     for (OSPMember *member in [relation members])
@@ -189,7 +189,7 @@
         [[self writer] writeElement:@"member"
                      withAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                      [member referencedObjectType] == OSPMemberTypeNode ? @"node" : [member referencedObjectType] == OSPMemberTypeWay ? @"way" : @"relation", @"type",
-                                     [NSString stringWithFormat:@"%lu", [member referencedObjectId]], @"ref",
+                                     [NSString stringWithFormat:@"%lu", (long)[member referencedObjectId]], @"ref",
                                      [member role], @"role",
                                      nil]];
     }

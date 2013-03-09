@@ -688,6 +688,7 @@ CGLineJoin CGLineJoinFromNSString(NSString *s)
                                              kCFBooleanTrue, kCTForegroundColorFromContextAttributeName,
                                              paragraphStyle, kCTParagraphStyleAttributeName,
                                              nil];
+    CFRelease(paragraphStyle);
     
     CFAttributedStringRef attrString = CFAttributedStringCreate(kCFAllocatorDefault, (__bridge CFStringRef)text, (__bridge CFDictionaryRef)attributes);
     CFAttributedStringRef scaledAttrString = CFAttributedStringCreate(kCFAllocatorDefault, (__bridge CFStringRef)text, (__bridge CFDictionaryRef)scaledAttributes);
