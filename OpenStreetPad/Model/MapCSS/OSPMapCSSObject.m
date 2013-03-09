@@ -77,7 +77,7 @@ OSPMapCSSObjectType OSPMapCSSObjectTypeFromNSString(NSString *s)
     
     if (nil != self)
     {
-        [self setObjectType:OSPMapCSSObjectTypeFromNSString([[[syntaxTree children] objectAtIndex:0] keyword])];
+        [self setObjectType:OSPMapCSSObjectTypeFromNSString([[syntaxTree children][0] keyword])];
     }
     
     return self;

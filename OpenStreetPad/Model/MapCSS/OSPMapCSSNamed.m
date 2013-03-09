@@ -18,7 +18,7 @@
     
     if (nil != self)
     {
-        [self setName:[[[syntaxTree children] objectAtIndex:0] identifier]];
+        [self setName:[[syntaxTree children][0] identifier]];
     }
     
     return self;

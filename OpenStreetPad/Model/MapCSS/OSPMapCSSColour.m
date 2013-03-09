@@ -15,18 +15,18 @@
 - (id)initWithSyntaxTree:(CPSyntaxTree *)syntaxTree
 {
 #if TARGET_OS_IPHONE
-    CPToken *firstToken = [[syntaxTree children] objectAtIndex:0];
+    CPToken *firstToken = [syntaxTree children][0];
     
     if ([firstToken isKindOfClass:[CPKeywordToken class]])
     {
         NSString *keyword = [(CPKeywordToken *)firstToken keyword];
         if ([keyword isEqualToString:@"rgb"])
         {
-            return (OSPMapCSSColour *)[UIColor colorWithRed:[[[[syntaxTree children] objectAtIndex:2] number] floatValue] green:[[[[syntaxTree children] objectAtIndex:4] number] floatValue] blue:[[[[syntaxTree children] objectAtIndex:6] number] floatValue] alpha:1.0f];
+            return (OSPMapCSSColour *)[UIColor colorWithRed:[[[syntaxTree children][2] number] floatValue] green:[[[syntaxTree children][4] number] floatValue] blue:[[[syntaxTree children][6] number] floatValue] alpha:1.0f];
         }
         else
         {
-            return (OSPMapCSSColour *)[UIColor colorWithRed:[[[[syntaxTree children] objectAtIndex:2] number] floatValue] green:[[[[syntaxTree children] objectAtIndex:4] number] floatValue] blue:[[[[syntaxTree children] objectAtIndex:6] number] floatValue] alpha:[[[[syntaxTree children] objectAtIndex:8] number] floatValue]];
+            return (OSPMapCSSColour *)[UIColor colorWithRed:[[[syntaxTree children][2] number] floatValue] green:[[[syntaxTree children][4] number] floatValue] blue:[[[syntaxTree children][6] number] floatValue] alpha:[[[syntaxTree children][8] number] floatValue]];
         }
     }
     else if ([firstToken isKindOfClass:[OSPMapCSSHashColourToken class]])

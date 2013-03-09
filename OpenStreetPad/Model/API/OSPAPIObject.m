@@ -115,7 +115,7 @@
     {
         return [tags count] > 0 ? @"yes" : @"no";
     }
-    return [tags objectForKey:tagName];
+    return tags[tagName];
 }
 
 @end

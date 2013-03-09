@@ -280,7 +280,7 @@ typedef enum
     {
         while ([[self currentConnections] count] < OSPMapServerMaxSimultaneousConnections && [[self connectionQueue] count] > 0)
         {
-            OSPConnection *rec = [[self connectionQueue] objectAtIndex:0];
+            OSPConnection *rec = [self connectionQueue][0];
             [[self connectionQueue] removeObjectAtIndex:0];
             
             if ([[self delegate] dataSource:self shouldLoadObjectsInArea:OSPCoordinateRectFromTile([rec tile])] &&

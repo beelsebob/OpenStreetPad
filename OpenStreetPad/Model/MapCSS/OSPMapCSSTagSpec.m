@@ -18,7 +18,7 @@
     
     if (nil != self)
     {
-        [self setTag:[[[syntaxTree children] objectAtIndex:2] content]];
+        [self setTag:[[syntaxTree children][2] content]];
     }
     
     return self;

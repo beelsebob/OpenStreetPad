@@ -218,8 +218,8 @@ OSPMemberType OSPMemberTypeFromRelation_MemberType(Relation_MemberType t)
         NSMutableDictionary *tags = [NSMutableDictionary dictionaryWithCapacity:[[node valsList] count]];
         PSYMultiEnumerator(@[[node valsList], [node keysList]], NO, ^ (__unsafe_unretained id const *objects, BOOL *stop)
                            {
-                               [tags setValue:[stringTable objectAtIndex:[objects[0] unsignedLongValue]]
-                                       forKey:[stringTable objectAtIndex:[objects[1] unsignedLongValue]]];
+                               [tags setValue:stringTable[[objects[0] unsignedLongValue]]
+                                       forKey:stringTable[[objects[1] unsignedLongValue]]];
                            });
 		
         [ospNode setLocation:CLLocationCoordinate2DMake([node lat] * granularity + latOffset, [node lon] * granularity + lonOffset)];
@@ -228,7 +228,7 @@ OSPMemberType OSPMemberTypeFromRelation_MemberType(Relation_MemberType t)
         [ospNode setTimestamp:[NSDate dateWithTimeIntervalSince1970:[info timestamp] * dateGranularity]];
         [ospNode setChangesetId:[info changeset]];
         [ospNode setUserId:[info uid]];
-        [ospNode setUser:[stringTable objectAtIndex:[info userSid]]];
+        [ospNode setUser:stringTable[[info userSid]]];
         [ospNode setVisible:[info visible]];
         [ospNode setVersion:[info version]];
         
@@ -284,7 +284,7 @@ OSPMemberType OSPMemberTypeFromRelation_MemberType(Relation_MemberType t)
                            {
                                while ([dense keysValsAtIndex:l] != 0 && l < maxKeyValue)
                                {
-                                   [tags setValue:[stringTable objectAtIndex:[dense keysValsAtIndex:l+1]] forKey:[stringTable objectAtIndex:[dense keysValsAtIndex:l]]];
+                                   [tags setValue:stringTable[[dense keysValsAtIndex:l+1]] forKey:stringTable[[dense keysValsAtIndex:l]]];
                                    l += 2;
                                }
                                l++; // Used to skip over the 0 id string between key value sets.
@@ -300,7 +300,7 @@ OSPMemberType OSPMemberTypeFromRelation_MemberType(Relation_MemberType t)
                            [node setTags:tags];
                            [node setTimestamp:[NSDate dateWithTimeIntervalSince1970:timestamp]];
                            [node setChangesetId:deltaChangeset];
-                           [node setUser:[stringTable objectAtIndex:deltaUserStringId]];
+                           [node setUser:stringTable[deltaUserStringId]];
                            [node setUserId:deltaUserId];
                            [node setVisible:hasVisible ? [objects[8] boolValue] : YES];
                            [node setVersion:deltaVersion];
@@ -328,8 +328,8 @@ OSPMemberType OSPMemberTypeFromRelation_MemberType(Relation_MemberType t)
         NSMutableDictionary *tags = [NSMutableDictionary dictionaryWithCapacity:[[way valsList] count]];
         PSYMultiEnumerator([NSArray arrayWithObjects:[way valsList], [way keysList], nil], NO, ^ (__unsafe_unretained id const *objects, BOOL *stop)
                            {
-                               [tags setValue:[stringTable objectAtIndex:[objects[0] unsignedLongValue]]
-                                       forKey:[stringTable objectAtIndex:[objects[1] unsignedLongValue]]];
+                               [tags setValue:stringTable[[objects[0] unsignedLongValue]]
+                                       forKey:stringTable[[objects[1] unsignedLongValue]]];
                            });
 		
         [ospWay setIdentity:[way id]];
@@ -337,7 +337,7 @@ OSPMemberType OSPMemberTypeFromRelation_MemberType(Relation_MemberType t)
         [ospWay setTimestamp:[NSDate dateWithTimeIntervalSince1970:[info timestamp] * dateGranularity]];
         [ospWay setChangesetId:[info changeset]];
         [ospWay setUserId:[info uid]];
-        [ospWay setUser:[stringTable objectAtIndex:[info userSid]]];
+        [ospWay setUser:stringTable[[info userSid]]];
         [ospWay setVisible:[info visible]];
         [ospWay setVersion:[info version]];
         
@@ -357,8 +357,8 @@ OSPMemberType OSPMemberTypeFromRelation_MemberType(Relation_MemberType t)
         NSMutableDictionary *tags = [NSMutableDictionary dictionaryWithCapacity:[[relation valsList] count]];
         PSYMultiEnumerator(@[[relation valsList], [relation keysList]], NO, ^ (__unsafe_unretained id const *objects, BOOL *stop)
                            {
-                               [tags setValue:[stringTable objectAtIndex:[objects[0] unsignedLongValue]]
-                                       forKey:[stringTable objectAtIndex:[objects[1] unsignedLongValue]]];
+                               [tags setValue:stringTable[[objects[0] unsignedLongValue]]
+                                       forKey:stringTable[[objects[1] unsignedLongValue]]];
                            });
         __block int64_t deltaMemberId = 0;
         NSMutableArray *members = [NSMutableArray arrayWithCapacity:[[relation rolesSidList] count]];
@@ -367,7 +367,7 @@ OSPMemberType OSPMemberTypeFromRelation_MemberType(Relation_MemberType t)
                                deltaMemberId += [objects[1] longLongValue];
                                [members addObject:[[OSPMember alloc] initWithType:OSPMemberTypeFromRelation_MemberType([objects[2] intValue])
                                                                referencedObjectId:deltaMemberId
-                                                                             role:[stringTable objectAtIndex:[objects[0] longValue]]]];
+                                                                             role:stringTable[[objects[0] longValue]]]];
                            });
         
         [ospRelation setIdentity:[relation id]];
@@ -375,7 +375,7 @@ OSPMemberType OSPMemberTypeFromRelation_MemberType(Relation_MemberType t)
         [ospRelation setTimestamp:[NSDate dateWithTimeIntervalSince1970:[info timestamp] * dateGranularity]];
         [ospRelation setChangesetId:[info changeset]];
         [ospRelation setUserId:[info uid]];
-        [ospRelation setUser:[stringTable objectAtIndex:[info userSid]]];
+        [ospRelation setUser:stringTable[[info userSid]]];
         [ospRelation setVisible:[info visible]];
         [ospRelation setVersion:[info version]];
         

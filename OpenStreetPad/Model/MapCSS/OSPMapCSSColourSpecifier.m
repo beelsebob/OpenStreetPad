@@ -19,7 +19,7 @@
     
     if (nil != self)
     {
-        [self setColour:[[syntaxTree children] objectAtIndex:0]];
+        [self setColour:[syntaxTree children][0]];
     }
     
     return self;

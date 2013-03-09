@@ -165,7 +165,7 @@ NSArray *PSYZipCollections(NSArray *collections, BOOL finishAll, id(^block)(__un
 {
     if([collections count] == 0) return [NSArray array];
     
-    NSMutableArray *ret = [NSMutableArray arrayWithCapacity:[[collections objectAtIndex:0] count]];
+    NSMutableArray *ret = [NSMutableArray arrayWithCapacity:[collections[0] count]];
     
     PSYMultiEnumerator(collections, finishAll, ^(__unsafe_unretained id const *objects, BOOL *stop) {
         [ret addObject:block(objects, stop)];
@@ -178,7 +178,7 @@ NSDictionary *PSYZipDictionaries(NSArray *dicts, BOOL finishAll, id(^block)(id k
 {
     if([dicts count] == 0) return [NSDictionary dictionary];
     
-    NSMutableDictionary *ret = [NSMutableDictionary dictionaryWithCapacity:[[dicts objectAtIndex:0] count]];
+    NSMutableDictionary *ret = [NSMutableDictionary dictionaryWithCapacity:[dicts[0] count]];
     
     PSYMultiDictionaryEnumerator(dicts, finishAll, ^(id key, __unsafe_unretained id const *objects, BOOL *stop) {
         [ret setObject:block(key, objects, stop) forKey:key];

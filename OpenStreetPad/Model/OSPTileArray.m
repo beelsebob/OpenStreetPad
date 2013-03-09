@@ -85,7 +85,7 @@ typedef enum
                     OSPTileTree *topRight    = [[OSPTileTree alloc] initWithTile:(OSPTile){.x = t.x * 2 + 1, .y = t.y * 2 + 1, .zoom = t.zoom + 1}];
                     [self setSubTrees:@[bottomLeft, bottomRight, topLeft, topRight]];
                 }
-                [[[self subTrees] objectAtIndex:[self indexForChild:tile]] addTile:tile];
+                [[self subTrees][[self indexForChild:tile]] addTile:tile];
                 BOOL allIncluded = YES;
                 for (OSPTileTree *t in [self subTrees])
                 {
@@ -131,7 +131,7 @@ typedef enum
             return NO;
         }
         
-        return [[[self subTrees] objectAtIndex:[self indexForChild:tile]] containsTile:tile];
+        return [[self subTrees][[self indexForChild:tile]] containsTile:tile];
     }
 }
 
@@ -155,7 +155,7 @@ typedef enum
             return [self notIncludedSubtiles];
         }
         
-        return [[[self subTrees] objectAtIndex:[self indexForChild:tile]] notIncludedSubtilesOfTile:tile];
+        return [[self subTrees][[self indexForChild:tile]] notIncludedSubtilesOfTile:tile];
     }
 }
 

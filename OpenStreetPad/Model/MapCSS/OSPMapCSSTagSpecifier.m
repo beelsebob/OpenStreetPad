@@ -25,7 +25,7 @@
     
     if (nil != self)
     {
-        [self setTag:[[syntaxTree children] objectAtIndex:0]];
+        [self setTag:[syntaxTree children][0]];
     }
     
     return self;
@@ -38,7 +38,7 @@
 
 - (OSPMapCSSSpecifier *)specifierWithAPIObject:(OSPAPIObject *)object
 {
-    id value = [[object tags] objectForKey:[[self tag] tag]];
+    id value = [object tags][[[self tag] tag]];
     if ([value isKindOfClass:[NSString class]])
     {
         return [[OSPMapCSSNamedSpecifier alloc] initWithName:value];

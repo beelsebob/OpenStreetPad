@@ -55,11 +55,11 @@ static char oldZoomRef;
              NSMutableArray *sos = [NSMutableArray arrayWithCapacity:[layerStyles count]];
              for (NSString *layerStyle in layerStyles)
              {
-                 [sos addObject:[OSPMapCSSStyledObject object:object withStyle:[layerStyles objectForKey:layerStyle]]];
+                 [sos addObject:[OSPMapCSSStyledObject object:object withStyle:layerStyles[layerStyle]]];
              }
              newStyledObjects = [sos copy];
              objc_setAssociatedObject(object, &styleRef, newStyledObjects, OBJC_ASSOCIATION_RETAIN);
-             objc_setAssociatedObject(object, &oldZoomRef, [NSNumber numberWithFloat:zoom], OBJC_ASSOCIATION_RETAIN);
+             objc_setAssociatedObject(object, &oldZoomRef, @(zoom), OBJC_ASSOCIATION_RETAIN);
          }
          dispatch_sync(addQueue, ^()
                        {

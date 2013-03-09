@@ -56,7 +56,7 @@
     if ([[self members] count] > 0)
     {
         
-        OSPCoordinateRect ownRect = [(OSPMember *)[[self members] objectAtIndex:0] bounds];
+        OSPCoordinateRect ownRect = [(OSPMember *)[self members][0] bounds];
         for (OSPMember *member in [self members])
         {
             ownRect = OSPCoordinateRectUnion(ownRect, [member bounds]);

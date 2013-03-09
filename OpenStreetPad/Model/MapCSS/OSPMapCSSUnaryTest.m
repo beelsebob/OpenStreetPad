@@ -25,11 +25,11 @@
         {
             case 1:
                 [self setNegated:NO];
-                [self setTagName:[[[syntaxTree children] objectAtIndex:0] description]];
+                [self setTagName:[[syntaxTree children][0] description]];
                 break;
             case 2:
                 [self setNegated:YES];
-                [self setTagName:[[[syntaxTree children] objectAtIndex:1] description]];
+                [self setTagName:[[syntaxTree children][1] description]];
             default:
                 break;
         }

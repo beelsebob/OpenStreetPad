@@ -21,7 +21,7 @@
     if (nil != self)
     {
         NSArray *c = [syntaxTree children];
-        [self setContent:[NSURL URLWithString:[[c objectAtIndex:[c count] == 1 ? 0 : 2] content]]];
+        [self setContent:[NSURL URLWithString:[c[[c count] == 1 ? 0 : 2] content]]];
     }
     
     return self;

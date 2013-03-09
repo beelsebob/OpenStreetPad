@@ -18,7 +18,7 @@
     
     if (nil != self)
     {
-        [self setUrl:[[syntaxTree children] objectAtIndex:0]];
+        [self setUrl:[syntaxTree children][0]];
     }
     
     return self;

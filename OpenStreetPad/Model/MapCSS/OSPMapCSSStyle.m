@@ -24,7 +24,7 @@
     
     if (nil != self)
     {
-        id styledef = [[syntaxTree children] objectAtIndex:0];
+        id styledef = [syntaxTree children][0];
         
         if ([styledef isKindOfClass:[OSPMapCSSRule class]])
         {
@@ -33,11 +33,11 @@
         }
         else
         {
-            [self setExit:[[[styledef children] objectAtIndex:0] isKindOfClass:[CPKeywordToken class]]];
+            [self setExit:[[styledef children][0] isKindOfClass:[CPKeywordToken class]]];
             if (![self isExit])
             {
-                [self setKey:[[[styledef children] objectAtIndex:0] key]];
-                [self setSpecifiers:[[styledef children] objectAtIndex:2]];
+                [self setKey:[[styledef children][0] key]];
+                [self setSpecifiers:[styledef children][2]];
             }
         }
     }

@@ -104,7 +104,7 @@
 {
     @synchronized(self)
     {
-        [nodes addObject:[NSNumber numberWithInteger:nodeId]];
+        [nodes addObject:@(nodeId)];
         OSPNode *n = [[self map] nodeWithId:nodeId];
         if (nil != n)
         {
@@ -130,7 +130,7 @@
     {
         if (!boundsValid)
         {
-            OSPNode *firstNode = [[self nodeObjects] objectAtIndex:0];
+            OSPNode *firstNode = [self nodeObjects][0];
             
             cachedBounds = [firstNode bounds];
             for (OSPNode *node in [self nodeObjects])
@@ -161,7 +161,7 @@
     {
         if (!centroidValid)
         {
-            OSPNode *node = [nodeObjs objectAtIndex:0];
+            OSPNode *node = nodeObjs[0];
             OSPCoordinate2D nip = [node projectedLocation];
             ox = nip.x;
             oy = nip.y;
@@ -213,7 +213,7 @@
 {
     NSArray *ns = [self nodeObjects];
     edgeLengths = malloc(([ns count] - 1) * sizeof(double));
-    OSPNode *lastNode = [ns objectAtIndex:0];
+    OSPNode *lastNode = ns[0];
     OSPCoordinate2D lastLoc = [lastNode projectedLocation];
     NSUInteger i = 0;
     for (OSPNode *currentNode in [ns subarrayWithRange:NSMakeRange(1, [ns count] - 1)])
@@ -326,8 +326,8 @@
         if (pointNumber >= 0)
         {
             distanceAlongEdge = xOffset - lengthSoFar;
-            nextPointLocation = [[ns objectAtIndex:pointNumber    ] projectedLocation];
-            prevPointLocation = [[ns objectAtIndex:pointNumber + 1] projectedLocation];
+            nextPointLocation = [ns[pointNumber    ] projectedLocation];
+            prevPointLocation = [ns[pointNumber + 1] projectedLocation];
         }
     }
     else
@@ -342,8 +342,8 @@
         if (pointNumber < numPoints - 1)
         {
             distanceAlongEdge = xOffset - lengthSoFar;
-            nextPointLocation = [[ns objectAtIndex:pointNumber + 1] projectedLocation];
-            prevPointLocation = [[ns objectAtIndex:pointNumber    ] projectedLocation];
+            nextPointLocation = [ns[pointNumber + 1] projectedLocation];
+            prevPointLocation = [ns[pointNumber    ] projectedLocation];
         }
     }
     
@@ -376,8 +376,8 @@
         
         if (pointNumber >= 0)
         {
-            nextPointLocation = [[ns objectAtIndex:pointNumber    ] projectedLocation];
-            prevPointLocation = [[ns objectAtIndex:pointNumber + 1] projectedLocation];
+            nextPointLocation = [ns[pointNumber    ] projectedLocation];
+            prevPointLocation = [ns[pointNumber + 1] projectedLocation];
         }
     }
     else
@@ -391,8 +391,8 @@
         
         if (pointNumber < numPoints)
         {
-            nextPointLocation = [[ns objectAtIndex:pointNumber + 1] projectedLocation];
-            prevPointLocation = [[ns objectAtIndex:pointNumber    ] projectedLocation];
+            nextPointLocation = [ns[pointNumber + 1] projectedLocation];
+            prevPointLocation = [ns[pointNumber    ] projectedLocation];
         }
     }
     
@@ -415,14 +415,14 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"Way with highway tag: %@", [[self tags] objectForKey:@"highway"]];
+    return [NSString stringWithFormat:@"Way with highway tag: %@", [self tags][@"highway"]];
 }
 
 - (id)valueForTag:(NSString *)tagName
 {
     if ([tagName isEqualToString:@":closed"])
     {
-        return [nodes count] > 0 && [[nodes objectAtIndex:0] isEqualToNumber:[nodes lastObject]] ? @"yes" : @"no";
+        return [nodes count] > 0 && [nodes[0] isEqualToNumber:[nodes lastObject]] ? @"yes" : @"no";
     }
     
     return [super valueForTag:tagName];

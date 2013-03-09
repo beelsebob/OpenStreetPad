@@ -40,8 +40,8 @@
         symbolsSet = [NSCharacterSet characterSetWithCharactersInString:@"*[]{}().,;@|-!=<>:!#%"];
         
         NSDictionary *pt = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"parser" ofType:@"osp"]];
-        [self setTokeniser:[pt objectForKey:@"tokeniser"]];
-        [self setParser:[pt objectForKey:@"parser"]];
+        [self setTokeniser:pt[@"tokeniser"]];
+        [self setParser:pt[@"parser"]];
         [[self tokeniser] setDelegate:self];
         [[self parser] setDelegate:self];
     }

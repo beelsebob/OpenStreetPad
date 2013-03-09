@@ -25,7 +25,7 @@
 
 - (id)initWithSyntaxTree:(CPSyntaxTree *)syntaxTree
 {
-    id item = [[syntaxTree children] objectAtIndex:0];
+    id item = [syntaxTree children][0];
     
     if ([item isKindOfClass:[OSPMapCSSNamed class]])
     {

@@ -65,7 +65,7 @@
     {
         if ([elementName isEqualToString:@"tag"])
         {
-            [[self currentObjectTags] setObject:[attributeDict objectForKey:@"v"] forKey:[attributeDict objectForKey:@"k"]];
+            [self currentObjectTags][attributeDict[@"k"]] = attributeDict[@"v"];
         }
         else if ([elementName isEqualToString:@"node"])
         {
@@ -74,11 +74,11 @@
             [self setCurrentObject:node];
             [self setCurrentObjectTags:[NSMutableDictionary dictionary]];
             [self setupAPIObject:node withAttributes:attributeDict];
-            [node setLocation:CLLocationCoordinate2DMake([[attributeDict objectForKey:@"lat"] doubleValue], [[attributeDict objectForKey:@"lon"] doubleValue])];
+            [node setLocation:CLLocationCoordinate2DMake([attributeDict[@"lat"] doubleValue], [attributeDict[@"lon"] doubleValue])];
         }
         else if ([elementName isEqualToString:@"nd"])
         {
-            [(OSPWay *)[self currentObject] addNodeWithId:[[attributeDict objectForKey:@"ref"] integerValue]];
+            [(OSPWay *)[self currentObject] addNodeWithId:[attributeDict[@"ref"] integerValue]];
         }
         else if ([elementName isEqualToString:@"way"])
         {
@@ -97,9 +97,9 @@
         }
         else if ([elementName isEqualToString:@"member"])
         {
-            NSString *typeString = [attributeDict objectForKey:@"type"];
+            NSString *typeString = attributeDict[@"type"];
             OSPMemberType t = [typeString isEqualToString:@"node"] ? OSPMemberTypeNode : [typeString isEqualToString:@"way"] ? OSPMemberTypeWay : OSPMemberTypeRelation;
-            [(OSPRelation *)[self currentObject] addMember:[OSPMember memberWithType:t referencedObjectId:[[attributeDict objectForKey:@"ref"] integerValue] role:[attributeDict objectForKey:@"role"]]];
+            [(OSPRelation *)[self currentObject] addMember:[OSPMember memberWithType:t referencedObjectId:[attributeDict[@"ref"] integerValue] role:attributeDict[@"role"]]];
         }
     }
 }
@@ -119,13 +119,13 @@
 
 - (void)setupAPIObject:(OSPAPIObject *)object withAttributes:(NSDictionary *)attributes
 {
-    [object setChangesetId:[[attributes objectForKey:@"changeset"] integerValue]];
-    [object setIdentity:[[attributes objectForKey:@"id"] integerValue]];
-    [object setUserId:[[attributes objectForKey:@"uid"] integerValue]];
-    [object setUser:[attributes objectForKey:@"user"]];
-    [object setVersion:[[attributes objectForKey:@"version"] integerValue]];
-    [object setVisible:[[attributes objectForKey:@"visible"] boolValue]];
-    [object setTimestamp:[[self dateFormatter] dateFromString:[attributes objectForKey:@"timestamp"]]];
+    [object setChangesetId:[attributes[@"changeset"] integerValue]];
+    [object setIdentity:[attributes[@"id"] integerValue]];
+    [object setUserId:[attributes[@"uid"] integerValue]];
+    [object setUser:attributes[@"user"]];
+    [object setVersion:[attributes[@"version"] integerValue]];
+    [object setVisible:[attributes[@"visible"] boolValue]];
+    [object setTimestamp:[[self dateFormatter] dateFromString:attributes[@"timestamp"]]];
 }
 
 - (void)parserDidEndDocument:(NSXMLParser *)p

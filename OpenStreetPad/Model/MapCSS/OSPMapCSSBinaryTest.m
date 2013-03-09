@@ -72,9 +72,9 @@ NSString *NSStringFromOSPMapCSSBinaryOperator(OSPMapCSSBinaryOperator o)
     
     if (nil != self)
     {
-        [self setTagName:[[[syntaxTree children] objectAtIndex:0] description]];
-        [self setOperator:OSPMapCSSBinaryOperatorFromNSString([[[[[syntaxTree children] objectAtIndex:1] children] objectAtIndex:0] keyword])];
-        CPToken *t = [[[[syntaxTree children] objectAtIndex:2] children] objectAtIndex:0];
+        [self setTagName:[[syntaxTree children][0] description]];
+        [self setOperator:OSPMapCSSBinaryOperatorFromNSString([[[syntaxTree children][1] children][0] keyword])];
+        CPToken *t = [[syntaxTree children][2] children][0];
         if ([t isKindOfClass:[CPIdentifierToken class]])
         {
             [self setValue:[(CPIdentifierToken *)t identifier]];

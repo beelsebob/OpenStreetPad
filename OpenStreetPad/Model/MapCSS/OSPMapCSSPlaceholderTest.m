@@ -15,7 +15,7 @@
 
 - (id)initWithSyntaxTree:(CPSyntaxTree *)syntaxTree
 {
-    CPSyntaxTree *condition = [[syntaxTree children] objectAtIndex:1];
+    CPSyntaxTree *condition = [syntaxTree children][1];
     switch ([[condition children] count])
     {
         case 1:

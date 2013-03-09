@@ -20,16 +20,16 @@
     if (nil != self)
     {
         NSArray *c = [syntaxTree children];
-        id firstChild = [c objectAtIndex:0];
+        id firstChild = c[0];
         if ([firstChild isKindOfClass:[CPSyntaxTree class]])
         {
             [self setPositive:YES];
-            [self setClassName:[[[firstChild children] objectAtIndex:1] identifier]];
+            [self setClassName:[[firstChild children][1] identifier]];
         }
         else
         {
             [self setPositive:NO];
-            [self setClassName:[[[[c objectAtIndex:1] children] objectAtIndex:1] identifier]];
+            [self setClassName:[[c[1] children][1] identifier]];
         }
     }
     

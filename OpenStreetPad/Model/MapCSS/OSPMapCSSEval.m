@@ -18,7 +18,7 @@
     
     if (nil != self)
     {
-        [self setExpression:[[[syntaxTree children] objectAtIndex:2] content]];
+        [self setExpression:[[syntaxTree children][2] content]];
     }
     
     return self;

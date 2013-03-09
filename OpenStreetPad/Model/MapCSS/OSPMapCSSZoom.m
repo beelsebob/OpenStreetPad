@@ -19,35 +19,35 @@
     
     if (nil != self)
     {
-        CPSyntaxTree *range = [[syntaxTree children] objectAtIndex:1];
+        CPSyntaxTree *range = [syntaxTree children][1];
         
         switch ([[range children] count])
         {
             case 1:
             {
-                float r = [[[[range children] objectAtIndex:0] number] floatValue];
+                float r = [[[range children][0] number] floatValue];
                 [self setMinimumZoom:r];
                 [self setMaximumZoom:r];
                 break;
             }
             case 2:
             {
-                if ([[[range children] objectAtIndex:0] isKindOfClass:[CPKeywordToken class]])
+                if ([[range children][0] isKindOfClass:[CPKeywordToken class]])
                 {
                     [self setMinimumZoom:-1.0];
-                    [self setMaximumZoom:[[[[range children] objectAtIndex:1] number] floatValue]];
+                    [self setMaximumZoom:[[[range children][1] number] floatValue]];
                 }
                 else
                 {
-                    [self setMinimumZoom:[[[[range children] objectAtIndex:0] number] floatValue]];
+                    [self setMinimumZoom:[[[range children][0] number] floatValue]];
                     [self setMaximumZoom:-1.0];
                 }
                 break;
             }
             case 3:
             {
-                [self setMinimumZoom:[[[[range children] objectAtIndex:0] number] floatValue]];
-                [self setMaximumZoom:[[[[range children] objectAtIndex:2] number] floatValue]];
+                [self setMinimumZoom:[[[range children][0] number] floatValue]];
+                [self setMaximumZoom:[[[range children][2] number] floatValue]];
                 break;
             }
             default:

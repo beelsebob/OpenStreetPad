@@ -18,7 +18,7 @@
     
     if (nil != self)
     {
-        [self setEval:[[syntaxTree children] objectAtIndex:0]];
+        [self setEval:[syntaxTree children][0]];
     }
     
     return self;

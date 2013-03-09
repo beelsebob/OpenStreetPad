@@ -93,7 +93,7 @@ NSString *XMLEncodingNameFromNSStringEncoding(NSStringEncoding enc);
     NSMutableString *s = [NSMutableString stringWithFormat:@"<%@ ", element];
     for (NSString *key in attributes)
     {
-        [s appendFormat:@"%@=\"%@\" ", key, [[attributes objectForKey:key] stringByAddingXMLEscaping]];
+        [s appendFormat:@"%@=\"%@\" ", key, [attributes[key] stringByAddingXMLEscaping]];
     }
     [s appendString:@"/>"];
     NSData *encodedString = [s dataUsingEncoding:[self encoding]];
@@ -117,7 +117,7 @@ NSString *XMLEncodingNameFromNSStringEncoding(NSStringEncoding enc);
     NSMutableString *s = [NSMutableString stringWithFormat:@"<%@ ", element];
     for (NSString *key in attributes)
     {
-        [s appendFormat:@"%@=\"%@\" ", key, [[attributes objectForKey:key] stringByAddingXMLEscaping]];
+        [s appendFormat:@"%@=\"%@\" ", key, [attributes[key] stringByAddingXMLEscaping]];
     }
     [self setWrittenFullEnclosingTag:NO];
     NSData *encodedString = [s dataUsingEncoding:[self encoding]];

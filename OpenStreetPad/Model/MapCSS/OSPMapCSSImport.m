@@ -19,8 +19,8 @@
     
     if (nil != self)
     {
-        [self setUrl:[[[syntaxTree children] objectAtIndex:3] content]];
-        [self setMediaType:[[[syntaxTree children] objectAtIndex:5] identifier]];
+        [self setUrl:[[syntaxTree children][3] content]];
+        [self setMediaType:[[syntaxTree children][5] identifier]];
     }
     
     return self;

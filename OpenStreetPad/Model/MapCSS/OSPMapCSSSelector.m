@@ -18,10 +18,10 @@ BOOL subSelectorsMatchObjectAtZoom(NSArray *subSelectors, NSInteger lastIndex, O
 {
     if (lastIndex == 0)
     {
-        return [[subSelectors objectAtIndex:0] matchesObject:object atZoom:zoom];
+        return [subSelectors[0] matchesObject:object atZoom:zoom];
     }
         
-    if (![[subSelectors objectAtIndex:lastIndex] matchesObject:object atZoom:zoom])
+    if (![subSelectors[lastIndex] matchesObject:object atZoom:zoom])
     {
         return NO;
     }
@@ -49,17 +49,17 @@ BOOL subSelectorsMatchObjectAtZoom(NSArray *subSelectors, NSInteger lastIndex, O
     
     if (nil != self)
     {
-        NSArray *subSelectors = [[syntaxTree children] objectAtIndex:0];
+        NSArray *subSelectors = [syntaxTree children][0];
         NSMutableArray *realSubselectors = [NSMutableArray arrayWithCapacity:[subSelectors count]];
         for (NSArray *a in subSelectors)
         {
-            [realSubselectors addObject:[a objectAtIndex:0]];
+            [realSubselectors addObject:a[0]];
         }
         [self setSubselectors:realSubselectors];
-        NSArray *maybeLayerIdentifier = [[syntaxTree children] objectAtIndex:1];
+        NSArray *maybeLayerIdentifier = [syntaxTree children][1];
         if ([maybeLayerIdentifier count] > 0)
         {
-            id identifier = [[[maybeLayerIdentifier objectAtIndex:0] children] objectAtIndex:1];
+            id identifier = [maybeLayerIdentifier[0] children][1];
             [self setLayerIdentifier:[identifier isKindOfClass:[CPKeywordToken class]] ? @"*": [identifier identifier]];
         }
         else

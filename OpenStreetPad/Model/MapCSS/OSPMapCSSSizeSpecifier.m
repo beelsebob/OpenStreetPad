@@ -20,7 +20,7 @@
     
     if (nil != self)
     {
-        [self setSize:[[syntaxTree children] objectAtIndex:0]];
+        [self setSize:[syntaxTree children][0]];
     }
     
     return self;

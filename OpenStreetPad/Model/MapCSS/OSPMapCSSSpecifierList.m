@@ -20,8 +20,8 @@
     
     if (nil != self)
     {
-        NSMutableArray *allButOneChild = [[[syntaxTree children] objectAtIndex:1] mutableCopy];
-        [allButOneChild insertObject:[[syntaxTree children] objectAtIndex:0] atIndex:0];
+        NSMutableArray *allButOneChild = [[syntaxTree children][1] mutableCopy];
+        [allButOneChild insertObject:[syntaxTree children][0] atIndex:0];
         [self setSpecifiers:allButOneChild];
     }
     

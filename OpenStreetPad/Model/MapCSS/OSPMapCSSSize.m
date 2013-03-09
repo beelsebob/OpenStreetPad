@@ -50,10 +50,10 @@ NSString *NSStringFromOSPMapCSSUnit(OSPMapCSSUnit u)
     
     if (nil != self)
     {
-        [self setValue:[[[[syntaxTree children] objectAtIndex:0] number] floatValue]];
-        if ([[[[syntaxTree children] objectAtIndex:1] children] count] > 0)
+        [self setValue:[[[syntaxTree children][0] number] floatValue]];
+        if ([[[syntaxTree children][1] children] count] > 0)
         {
-            [self setUnit:OSPMapCSSUnitFromNSString([[[[[syntaxTree children] objectAtIndex:1] children] objectAtIndex:0] keyword])];
+            [self setUnit:OSPMapCSSUnitFromNSString([[[syntaxTree children][1] children][0] keyword])];
         }
         else
         {
@@ -79,7 +79,7 @@ NSString *NSStringFromOSPMapCSSUnit(OSPMapCSSUnit u)
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    return [[OSPMapCSSSize allocWithZone:zone] initWithValue:[NSNumber numberWithFloat:[self value]] units:[self unit]];
+    return [[OSPMapCSSSize allocWithZone:zone] initWithValue:@([self value]) units:[self unit]];
 }
 
 - (NSString *)description

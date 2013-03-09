@@ -38,18 +38,18 @@
         NSArray *c = [syntaxTree children];
         if ([c count] == 1)
         {
-            return [c objectAtIndex:0];
+            return c[0];
         }
         else
         {
-            NSArray *selectorCommas = [c objectAtIndex:0];
+            NSArray *selectorCommas = c[0];
             NSMutableArray *ses = [NSMutableArray arrayWithCapacity:[selectorCommas count]];
             for (NSArray *t in selectorCommas)
             {
-                [ses addObject:[t objectAtIndex:0]];
+                [ses addObject:t[0]];
             }
             [self setSelectors:ses];
-            [self setDeclarations:[c objectAtIndex:1]];
+            [self setDeclarations:c[1]];
         }
     }
     
@@ -91,7 +91,7 @@ extern char styleKey;
         NSMutableDictionary *layerIdentifiers = [NSMutableDictionary dictionaryWithCapacity:[matchingLayerIdentifiers count]];
         for (NSString *layerIdentifier in matchingLayerIdentifiers)
         {
-            [layerIdentifiers setObject:[NSMutableDictionary dictionary] forKey:layerIdentifier];
+            layerIdentifiers[layerIdentifier] = [NSMutableDictionary dictionary];
         }
         for (OSPMapCSSDeclaration *decl in [self declarations])
         {
@@ -110,21 +110,21 @@ extern char styleKey;
                         {
                             for (NSString *subLayerIdentifier in subStyle)
                             {
-                                NSMutableDictionary *d = [layerIdentifiers objectForKey:subLayerIdentifier];
-                                NSDictionary *otherD = [subStyle objectForKey:subLayerIdentifier];
+                                NSMutableDictionary *d = layerIdentifiers[subLayerIdentifier];
+                                NSDictionary *otherD = subStyle[subLayerIdentifier];
                                 if (nil == d)
                                 {
                                     d = [NSMutableDictionary dictionaryWithCapacity:[otherD count]];
-                                    [layerIdentifiers setObject:d forKey:subLayerIdentifier];
+                                    layerIdentifiers[subLayerIdentifier] = d;
                                 }
                                 [d addEntriesFromDictionary:otherD];
                             }
                         }
                         else
                         {
-                            NSMutableDictionary *d = [layerIdentifiers objectForKey:layerIdentifier];
-                            [d addEntriesFromDictionary:[subStyle objectForKey:layerIdentifier]];
-                            [d addEntriesFromDictionary:[subStyle objectForKey:@"default"]];
+                            NSMutableDictionary *d = layerIdentifiers[layerIdentifier];
+                            [d addEntriesFromDictionary:subStyle[layerIdentifier]];
+                            [d addEntriesFromDictionary:subStyle[@"default"]];
                         }
                     }
                 }
@@ -154,7 +154,7 @@ extern char styleKey;
                         [newList setSpecifiers:processedSpecifiers];
                         for (NSString *layerIdentifier in matchingLayerIdentifiers)
                         {
-                            [[layerIdentifiers objectForKey:layerIdentifier] setObject:newList forKey:[st key]];
+                            layerIdentifiers[layerIdentifier][[st key]] = newList;
                         }
                     }
                 }
@@ -179,7 +179,7 @@ extern char styleKey;
 {
     for (OSPMapCSSSelector *selector in selectors)
     {
-        if ([[[selector subselectors] objectAtIndex:0] objectType] != OSPMapCSSObjectTypeMeta)
+        if ([[selector subselectors][0] objectType] != OSPMapCSSObjectTypeMeta)
         {
             return NO;
         }

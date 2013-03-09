@@ -20,7 +20,7 @@
     
     if (nil != self)
     {
-        [self setStyles:[[syntaxTree children] objectAtIndex:1]];
+        [self setStyles:[syntaxTree children][1]];
     }
     
     return self;

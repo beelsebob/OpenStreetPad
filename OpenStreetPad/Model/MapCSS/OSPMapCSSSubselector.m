@@ -40,9 +40,9 @@
     if (nil != self)
     {
         NSArray *c = [syntaxTree children];
-        OSPMapCSSObject *first = [c objectAtIndex:0];
+        OSPMapCSSObject *first = c[0];
         [self setObjectType:[first objectType]];
-        id second = [c objectAtIndex:1];
+        id second = c[1];
         if ([second isKindOfClass:[CPWhiteSpaceToken class]])
         {
             [self setConstrainedToZoomRange:NO];
@@ -50,12 +50,12 @@
         }
         else
         {
-            NSArray *ts = [c objectAtIndex:2];
-            NSArray *pseudoClasses = [c objectAtIndex:3];
+            NSArray *ts = c[2];
+            NSArray *pseudoClasses = c[3];
             
             if ([(NSArray *)second count] != 0)
             {
-                OSPMapCSSZoom *zoom = [second objectAtIndex:0];
+                OSPMapCSSZoom *zoom = second[0];
                 [self setConstrainedToZoomRange:YES];
                 [self setMinimumZoom:[zoom minimumZoom]];
                 [self setMaximumZoom:[zoom maximumZoom]];
@@ -122,23 +122,23 @@
         case OSPMapCSSObjectTypeLine:
             if (t == OSPMemberTypeWay)
             {
-                if (![[[object tags] objectForKey:@"area"] ospTruthValue])
+                if (![[object tags][@"area"] ospTruthValue])
                 {
                     return YES;
                 }
                 NSArray *nodes = [(OSPWay *)object nodes];
-                return [[nodes objectAtIndex:0] integerValue] != [[nodes lastObject] integerValue];
+                return [nodes[0] integerValue] != [[nodes lastObject] integerValue];
             }
             return NO;
         case OSPMapCSSObjectTypeArea:
             if (t == OSPMemberTypeWay)
             {
-                if ([[[object tags] objectForKey:@"area"] ospTruthValue])
+                if ([[object tags][@"area"] ospTruthValue])
                 {
                     return YES;
                 }
                 NSArray *nodes = [(OSPWay *)object nodes];
-                return [[nodes objectAtIndex:0] integerValue] == [[nodes lastObject] integerValue];
+                return [nodes[0] integerValue] == [[nodes lastObject] integerValue];
             }
             return NO;
         case OSPMapCSSObjectTypeAll:

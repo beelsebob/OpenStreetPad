@@ -28,7 +28,7 @@
     
     if (nil != self)
     {
-        [self setRules:[[syntaxTree children] objectAtIndex:0]];
+        [self setRules:[syntaxTree children][0]];
     }
     
     return self;
@@ -88,18 +88,18 @@
             
             for (NSString *layerIdentifier in ruleStyles)
             {
-                NSMutableDictionary *currentStyle = [styles objectForKey:layerIdentifier];
-                NSDictionary *style = [ruleStyles objectForKey:layerIdentifier];
+                NSMutableDictionary *currentStyle = styles[layerIdentifier];
+                NSDictionary *style = ruleStyles[layerIdentifier];
                 
                 if (nil == currentStyle)
                 {
                     if ([layerIdentifier isEqualToString:@"*"])
                     {
-                        [styles setObject:[style mutableCopy] forKey:layerIdentifier];
+                        styles[layerIdentifier] = [style mutableCopy];
                     }
                     else
                     {
-                        currentStyle = [[styles objectForKey:@"*"] mutableCopy];
+                        currentStyle = [styles[@"*"] mutableCopy];
                         if (nil == currentStyle)
                         {
                             currentStyle = [style mutableCopy];
@@ -108,7 +108,7 @@
                         {
                             [currentStyle addEntriesFromDictionary:style];
                         }
-                        [styles setObject:currentStyle forKey:layerIdentifier];
+                        styles[layerIdentifier] = currentStyle;
                     }
                 }
                 else
@@ -122,7 +122,7 @@
                     {
                         if (![existingLayerIdentifier isEqualToString:@"*"])
                         {
-                            currentStyle = [styles objectForKey:existingLayerIdentifier];
+                            currentStyle = styles[existingLayerIdentifier];
                             [currentStyle addEntriesFromDictionary:style];
                         }
                     }
@@ -149,7 +149,7 @@
             {
                 if ([[selector subselectors] count] == 1)
                 {
-                    OSPMapCSSSubselector *subSelector = [[selector subselectors] objectAtIndex:0];
+                    OSPMapCSSSubselector *subSelector = [selector subselectors][0];
                     if ([subSelector objectType] == OSPMapCSSObjectTypeCanvas && [subSelector zoomIsInRange:zoom])
                     {
                         matches = YES;
@@ -164,7 +164,7 @@
                 {
                     for (OSPMapCSSStyle *st in [decl styles])
                     {
-                        [style setObject:[st specifiers] forKey:[[st key] description]];
+                        style[[[st key] description]] = [st specifiers];
                     }
                 }
                 return [style copy];

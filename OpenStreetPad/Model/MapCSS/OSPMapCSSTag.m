@@ -26,7 +26,7 @@
         
         if ([c count] == 1)
         {
-            tn = [[c objectAtIndex:0] content];
+            tn = [c[0] content];
             if ([tn characterAtIndex:0] == ':')
             {
                 [self setPseudoTag:YES];
@@ -34,13 +34,13 @@
         }
         else
         {
-            NSArray *possiblyTag = [c objectAtIndex:0];
+            NSArray *possiblyTag = c[0];
             BOOL ps = [possiblyTag count] == 0;
             [self setPseudoTag:ps];
-            tn = ps ? [NSMutableString string] : [[[possiblyTag objectAtIndex:0] key] mutableCopy];
-            for (NSArray *k in [c objectAtIndex:1])
+            tn = ps ? [NSMutableString string] : [[possiblyTag[0] key] mutableCopy];
+            for (NSArray *k in c[1])
             {
-                [(NSMutableString *)tn appendFormat:@":%@", [[k objectAtIndex:1] key]];
+                [(NSMutableString *)tn appendFormat:@":%@", [k[1] key]];
             }
         }
         
